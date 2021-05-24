@@ -1,0 +1,852 @@
+<!doctype html>
+<html>
+<head>
+  <title>Timeline</title>
+  	<!--<link rel="stylesheet" type="text/css" href="https://visjs.github.io/vis-timeline/styles/vis-timeline-graph2d.min.css">-->
+	<!--<script type="text/javascript" src="https://visjs.github.io/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<!-- Include Bootstrap Datepicker -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+
+  <style type="text/css">
+		body,
+		html {
+		  font-family: arial, sans-serif;
+		  font-size: 11pt;
+		}
+
+		div.vis-editable,
+		div.vis-editable.vis-selected {
+		  /* custom styling for editable items... */
+		}
+
+		div.vis-readonly,
+		div.vis-readonly.vis-selected {
+		  /* custom styling for readonly items... */
+			/*
+		  background-color: #ff4500;
+		  border-color: red;
+		  color: white;
+		  */
+		}
+
+	.code10001 {
+	  fill: #0000D5;
+	  fill-opacity:0;
+	  stroke-width:2px;
+	  stroke: #0000D5;
+	}
+	.code10002 {
+	  fill: #B95C00;
+	  fill-opacity:0;
+	  stroke-width:2px;
+	  stroke: #B95C00;
+	}
+	.code10003 {
+	  fill: #008040;
+	  fill-opacity:0;
+	  stroke-width:2px;
+	  stroke: #008040;
+	}
+
+  .vis-item.code10001 {
+    color: white;
+    background-color: #0000D5;
+    border-color: #0000D5;
+  }
+  .vis-item.code10002 {
+    color: white;
+    background-color: #B95C00;
+    border-color: #B95C00;
+  }
+  .vis-item.code10003 {
+    color: white;
+    background-color: #008040;
+    border-color: #008040;
+  }
+  .vis-item.code90001 {
+    color: white;
+    background-color: #800080;
+    border-color: #800080;
+  }
+  .vis-item.code90002 {
+    color: white;
+    background-color: #800080;
+    border-color: #800080;
+  }
+  
+  .swal-content {
+    background-color: #E6F5F5;
+    padding: 5px;
+    border: #BED7F5 solid 1px;
+    border-radius: 5px;
+    display: block;
+    margin: 10px;
+    text-align: justify;
+    color: #61534e;
+	}
+	
+	.fa {
+    display: inline;
+	}
+  </style>
+</head>
+<body>
+<h2>Balance</h2>
+<div id="balance_graph"></div>
+<!--
+<div>
+		<button id="refresh-btn">Refresh</button>
+</div>
+-->
+<h2>Available Research Student Quota</h2>
+<div class="col-xs-12">
+		<div class="form-group">
+			<label for="inputRotateQuota" class="col-sm-2 col-form-label">Rotating Quota: 1</label>
+			<label for="inputRotateQuota" class="col-sm-2 col-form-label">Partial Grant: 0</label>
+		</div>
+</div>
+<br>
+<h2>Expense</h2>
+<div class="col-xs-12">
+    <div class="input-group">
+        <div class="input-group-btn">
+						<button id="itemadd-btn" class="btn btn-default">+ New Cost Item</button>
+        </div>
+        <select id="itemadd-select" class="form-control form-select form-select-sm" style="max-width:200px"><option value=1>Research Student 1</option><option value=2>Research Student 2</option><option value=3>General Expense</option></select>
+        <select id="itemadd-selectproj" class="form-control form-select form-select-sm" style="max-width:200px"><option value=90001>Rotating Quota 1</option><option value=90002>Rotating Quota 2</option><option value=10001>Proj. 10001</option><option value=10002>Proj. 10002</option><option value=10003>Proj. 10003</option></select>
+    </div>
+    <br>
+</div>
+<br>
+<div id="visualization"></div>
+<script type="text/javascript">
+  // DOM element where the Timeline will be attached
+  var container = document.getElementById('visualization');
+
+  // create groups to highlight groupUpdate
+	var groups = new vis.DataSet([
+	  { id: 1, 
+	  	content: "Research Student 1",
+	  	nature: "staff"
+	  },
+	  { id: 2, 
+	  	content: "Research Student 2",
+	  	nature: "staff"
+	  },
+	  { id: 3, 
+	  	content: "General Expense",
+	  	nature: "oneoff"
+	  },
+	]);
+	
+	var options = {};
+	
+	// create a DataSet with projects
+	var projects = new vis.DataSet(options);
+	projects.add([
+	  { id: 10001,
+	  	source: "grant",
+	  	content: "Proj. 10001",
+	  	className: 'code10001',
+	  	balance: 500000,
+	  	start: "2020-09-01",
+			end: "2022-01-28"
+	  },
+	  { id: 10002,
+	  	source: "grant",
+	  	content: "Proj. 10002",
+	  	className: 'code10002',
+	  	balance: 300000,
+	  	start: "2020-09-01",
+		end: "2022-01-28"
+	  },
+	  { id: 10003,
+	  	source: "grant",
+	  	content: "Proj. 10003",
+	  	className: 'code10003',
+	  	balance: 200000,
+	  	start: "2020-09-01",
+		end: "2022-01-28"
+	  },
+	]);
+
+	// create a DataSet with projects
+	var other_projects = new vis.DataSet(options);
+	other_projects.add([
+	  { id: 90001,
+	  	source: "department",
+	  	content: "Rotating Quota 1",
+	  	className: 'code90001',
+	  },
+	  { id: 90002,
+	  	source: "department",
+	  	content: "Rotating Quota 2",
+	  	className: 'code90002',
+	  }
+	]);
+
+	// Create a DataSet with projects and department grant
+	var all_projects = new vis.DataSet(options);
+	all_projects.add(projects.get());
+	var other_project_ids = other_projects.getIds();
+	for (var i=0; i<other_project_ids.length; i++) {
+		var other_project_id = other_project_ids[i];
+		var other_project = other_projects.get(other_project_id);
+		all_projects.add(other_project);
+	}
+	
+	// create a DataSet with items
+	var items = new vis.DataSet([
+	  { id: 1, 
+	  	project_id: 10001,
+	  	content: all_projects.get(10001).content, 
+	  	title: all_projects.get(10001).content, 
+	  	start: "2020-10-02",
+	  	end: "2020-11-30",
+	  	group: 1,
+	  	amount: 40000,
+	  	className: all_projects.get(10001).className,
+	  },
+	  { id: 2, 
+	  	project_id: 10002,
+	  	content: all_projects.get(10002).content, 
+	  	title: all_projects.get(10002).content, 
+	  	start: "2020-12-01",
+	  	end: "2021-04-30",
+	  	group: 1,
+			amount: 100000,
+	  	className: all_projects.get(10002).className,
+	  },
+	  { id: 3, 
+	  	project_id: 10001,
+	  	content: all_projects.get(10001).content, 
+	  	title: all_projects.get(10001).content, 
+	  	start: "2021-05-01",
+	  	end: "2021-12-31",
+	  	group: 1,
+	  	amount: 160000,
+	  	className: all_projects.get(10001).className,
+	  },
+	  {
+	    id: 4,
+	  	project_id: 10003,
+	  	content: all_projects.get(10003).content, 
+	  	title: all_projects.get(10003).content, 
+	    start: "2020-10-01",
+	    end: "2021-01-31",
+	    group: 2,
+	    amount: 60000,
+	  	className: all_projects.get(10003).className,
+	  },
+	  {
+	    id: 5,
+	    project_id: 10001,
+	  	content: all_projects.get(10001).content, 
+	  	title: all_projects.get(10001).content, 
+	    start: "2020-10-01",
+	    group: 3,
+	    amount: 50000,
+	  	className: all_projects.get(10001).className,
+	  },
+		{
+	    id: 6,
+	    project_id: 90001,
+	  	content: all_projects.get(90001).content, 
+	  	title: all_projects.get(90001).content, 
+	    start: "2021-02-01",
+	    end: "2021-05-31",
+	    group: 2,
+	    amount: 50000,
+	  	className: all_projects.get(90001).className,
+	  },
+		{
+	    id: 7,
+	    project_id: 10002,
+	  	content: all_projects.get(10002).content, 
+	  	title: all_projects.get(10002).content, 
+	    start: "2021-06-01",
+	    end: "2021-12-31",
+	    group: 2,
+	    amount: 100000,
+	  	className: all_projects.get(10002).className,
+	  }
+	]);
+
+	var container = document.getElementById("visualization");
+	var options = {
+    editable: true,
+/*
+    groupEditable: true,
+    verticalScroll: true,
+    orientation: {
+        axis: "both",
+        item: "top"
+    },
+    groupOrder: "id",
+    width: "100%",
+    height: timelineHeight,
+    stack: false,
+    multiselect: true,
+	  timeAxis: { scale: 'day', step: 1 },
+*/
+		margin: { item : {
+	    horizontal : 0
+			}
+    },
+    
+    onUpdate: function(item, callback) {
+			prettyPromptItemUpdate('Modify Item', 'Expense', item, groups, timeline, callback);
+		},
+
+		onMove: function(item, callback) {
+			callback(null); // cancel moving item
+		},
+		
+		onRemove: function(item, callback) {
+			prettyConfirmRemove('Remove Item', 'Do you really want to remove expense item:\n', item, items, groups, timeline, callback)
+		},
+		
+		onAdd: function(item, callback) {
+			var group = groups.get(item.group);
+      console.log(item);
+		}
+	};
+
+function prettyConfirmRemove(title, text, item, items, groups, timeline, callback) {
+    
+    swal(title, text + item.content + " ?", {
+        buttons: {
+            cancel: "Cancel",
+            catch: {
+                text: "Remove",
+                value: "remove",
+            }
+        }
+    }).then(value => {
+        console.log(value);
+        console.log(item.id);
+        switch (value) {
+            case "remove":
+                if (value && item.id != null) {
+                		var group = groups.get(item.group),
+                				groupParent
+                				delta = 0,
+                        globalDelta = 0;
+                    items.remove(item.id);
+                    callback(item); // send back adjusted item
+                    timeline.redraw();
+                    refresh_expense();
+                } else {
+                    callback(null); // cancel updating the item
+                    swal("Remove", "item has not been deleted", "success");
+                }
+                break;
+            default:
+                ;
+        }
+    });
+}
+
+function htmlForStudent(item, groups) {
+
+	  var group = groups.get(item.group);
+	  var nature = group.nature;
+	  console.log(nature);
+	  
+    var form = document.createElement('FORM');
+    form.setAttribute("role", "form");
+    form.setAttribute("class", "form-horizontal");
+
+    var divForm_row01 = document.createElement('DIV');
+    divForm_row01.setAttribute("class", "form-group");
+    
+    var divTitle = document.createElement('DIV');
+    divTitle.setAttribute("class", "col-sm-6");
+    var labelTitle = document.createElement('LABEL');
+    labelTitle.innerHTML = "Category";
+    labelTitle.setAttribute("for", "inputTitle");
+    labelTitle.setAttribute("class", "col-form-label")
+    var inputTitle = document.createElement('INPUT');
+    inputTitle.id = "inputTitle";
+    inputTitle.setAttribute("class", "form-control");
+    inputTitle.setAttribute("type", "text");
+    inputTitle.setAttribute("readonly", "readonly");
+    inputTitle.setAttribute("value", group["content"])
+
+    var divResources = document.createElement('DIV');
+    divResources.setAttribute("class", "col-sm-6");
+    var labelResources = document.createElement('LABEL');
+    labelResources.innerHTML = "Project Name";
+    labelResources.setAttribute("for", "inputResources");
+    labelResources.setAttribute("class", "col-form-label")
+    var inputResources = document.createElement('INPUT');
+    inputResources.id = "inputResources";
+    inputResources.setAttribute("class", "form-control");
+    inputResources.setAttribute("type", "text");
+    inputResources.setAttribute("readonly", "readonly");
+    inputResources.setAttribute("value", item["content"])
+
+    /* row 2 */
+    var divForm_row02 = document.createElement('DIV');
+    divForm_row02.setAttribute("class", "form-group");
+
+		if (nature == 'staff') {
+	    var divStartDate = document.createElement('DIV');
+	    divStartDate.setAttribute("class", "col-sm-6");
+	    var labelStartDate = document.createElement('LABEL');
+	    labelStartDate.innerHTML = "Start Date";
+	    labelStartDate.setAttribute("for", "inputStartDate");
+	    labelStartDate.setAttribute("class", "col-form-label")
+	    var inputStartDate = document.createElement('INPUT');
+	    inputStartDate.id = "inputStartDate";
+	    inputStartDate.setAttribute("class", "form-control datepicker");
+	    inputStartDate.setAttribute("type", "text");
+	    inputStartDate.setAttribute("placeholder", "YYYY-MM-DD");
+	    inputStartDate.setAttribute("data-date-format", "yyyy-mm-dd");
+	    inputStartDate.setAttribute("value", moment(item.start).format("YYYY-MM-DD"));
+
+	    var divEndDate = document.createElement('DIV');
+	    divEndDate.setAttribute("class", "col-sm-6");
+	    var labelEndDate = document.createElement('LABEL');
+	    labelEndDate.innerHTML = "End Date";
+	    labelEndDate.setAttribute("for", "inputEndDate");
+	    labelEndDate.setAttribute("class", "col-form-label")
+	    var inputEndDate = document.createElement('INPUT');
+	    inputEndDate.id = "inputEndDate";
+	    inputEndDate.setAttribute("class", "form-control datepicker");
+	    inputEndDate.setAttribute("type", "text");
+	    inputEndDate.setAttribute("placeholder", "YYYY-MM-DD");
+	    inputEndDate.setAttribute("data-date-format", "yyyy-mm-dd");
+	    inputEndDate.setAttribute("value", moment(item.end).format("YYYY-MM-DD"));
+		} else {
+	    var divStartDate = document.createElement('DIV');
+	    divStartDate.setAttribute("class", "col-sm-6");
+	    var labelStartDate = document.createElement('LABEL');
+	    labelStartDate.innerHTML = "Transaction Date";
+	    labelStartDate.setAttribute("for", "inputStartDate");
+	    labelStartDate.setAttribute("class", "col-form-label")
+	    var inputStartDate = document.createElement('INPUT');
+	    inputStartDate.id = "inputStartDate";
+	    inputStartDate.setAttribute("class", "form-control datepicker");
+	    inputStartDate.setAttribute("type", "text");
+	    inputStartDate.setAttribute("placeholder", "YYYY-MM-DD");
+	    inputStartDate.setAttribute("data-date-format", "yyyy-mm-dd");
+	    inputStartDate.setAttribute("value", moment(item.start).format("YYYY-MM-DD"));
+		}
+
+    /* row 3 */
+    var divForm_row03 = document.createElement('DIV');
+    divForm_row03.setAttribute("class", "form-group");
+    
+    var divAmount = document.createElement('DIV');
+    divAmount.setAttribute("class", "col-sm-12");
+    var labelAmount = document.createElement('LABEL');
+    labelAmount.innerHTML = "Amount (HK$)";
+    labelAmount.setAttribute("for", "amount");
+    labelAmount.setAttribute("class", "col-form-label")
+    var inputAmount = document.createElement('INPUT');
+    inputAmount.id = "inputAmount";
+    inputAmount.setAttribute("class", "form-control");
+    inputAmount.setAttribute("type", "text");
+    inputAmount.setAttribute("value", item.amount);
+
+	/* hidden field */
+	var inputProjectId = document.createElement("INPUT");
+	inputProjectId.setAttribute("type", "hidden");
+	inputProjectId.id = "inputProjectId";
+	inputProjectId.setAttribute("value", item.project_id);
+
+    /* BUILD FORM */
+    /* ROW 01*/
+    divTitle.appendChild(inputTitle);
+    inputTitle.parentNode.insertBefore(labelTitle, inputTitle);
+
+    divResources.appendChild(inputResources);
+    inputResources.parentNode.insertBefore(labelResources, inputResources);
+
+    divForm_row01.appendChild(divTitle);
+    divForm_row01.appendChild(divResources);
+
+    /* ROW 02 */
+		if (nature == 'staff') {
+	    divStartDate.appendChild(inputStartDate);
+	    inputStartDate.parentNode.insertBefore(labelStartDate, inputStartDate);
+	    divEndDate.appendChild(inputEndDate);
+	    inputEndDate.parentNode.insertBefore(labelEndDate, inputEndDate);
+	    divForm_row02.appendChild(divStartDate);
+	    divForm_row02.appendChild(divEndDate);
+		} else{
+	    divStartDate.appendChild(inputStartDate);
+	    inputStartDate.parentNode.insertBefore(labelStartDate, inputStartDate);
+	    divForm_row02.appendChild(divStartDate);
+		}
+		
+    /* ROW 03 */
+    divAmount.appendChild(inputAmount);
+    inputAmount.parentNode.insertBefore(labelAmount, inputAmount);
+    divForm_row03.appendChild(divAmount);
+
+    form.appendChild(divForm_row01);
+    form.appendChild(divForm_row02);
+    form.appendChild(divForm_row03);
+    form.appendChild(inputProjectId);
+    return form;
+}
+
+function prettyPromptItemUpdate(title, text, item, groups, timeline, callback) {
+	
+		var html = htmlForStudent(item, groups);
+    swal({
+        title: title,
+        text: text,
+        content: html,
+        // icon: "success"
+    }).then(value => {
+        if (value) {
+            var delta = 0,
+                start = moment(item.start).format("YYYY-MM-DD"),
+                end = moment(item.end).format("YYYY-MM-DD"),
+                classDelta,
+                category;
+
+            console.log(start);
+            console.log(end);
+
+            var group = groups.get(item.group);
+					  var nature = group.nature;
+
+            item["start"] = document.getElementById('inputStartDate').value;
+						nature == 'staff'? item["end"] = document.getElementById('inputEndDate').value : null;
+            item["amount"] = parseInt(document.getElementById('inputAmount').value);
+
+            callback(item); // send back item as confirmation (can be changed)
+            
+            // https://github.com/almende/vis/issues/577
+            timeline.redraw();
+            refresh_expense();
+        } else {
+            callback(null); // cancel editing item
+        }
+    });
+}
+
+    // ===== item add =========== //
+    document.getElementById('itemadd-btn').onclick = function(e) {
+        var categorySelect = document.getElementById('itemadd-select');
+        var categoryIdSelected = categorySelect.options[categorySelect.selectedIndex].value;
+        
+        var categorySelectProj = document.getElementById('itemadd-selectproj');
+        var categoryIdSelectedProj = categorySelectProj.options[categorySelectProj.selectedIndex].value;
+
+        var index = getItemsIds()[getItemsIds().length - 1];
+        
+        prettyPromptAddItem("Add item", "Expense", categoryIdSelected, categoryIdSelectedProj, groups, all_projects, items, timeline, index, function(item) {
+            items.add(item);
+            //timeline.redraw();
+            refresh_expense();
+        });
+    };
+
+		var getItemsIds = function() {
+        var itemIds = [];
+        items.forEach(function(item) {
+            itemIds.push(item.id);
+        });
+        return itemIds;
+    }
+
+
+function prettyPromptAddItem(title, text, categoryIdSelected, categoryIdSelectedProj, groups, projects, items, timeline, index, callback) {
+
+    var group = groups.get(parseInt(categoryIdSelected));
+    
+    var nature = group.nature;
+    console.log(nature);
+		
+    var project = projects.get(parseInt(categoryIdSelectedProj));
+    console.log(project);
+
+    var start = moment().startOf("day");
+    var end = moment(start).add(1, 'months');
+    var amount = 0;
+    //var testItem = (item.hasOwnProperty("start"));
+
+		var item = {
+			content: project.content,
+			title: project.content,
+			group: group.id,
+			project_id: project.id,
+			start: start,
+			end: end,
+			amount: amount,
+		};
+		
+    var html = htmlForStudent(item, groups);
+    swal({
+        title: title,
+        text: text,
+        content: html,
+        // icon: "success"
+    }).then(value => {
+        if (value) {
+            var group = groups.get(item.group);
+            var nature = group.nature;
+            
+            item["start"] = document.getElementById('inputStartDate').value;
+            
+            if (nature == 'staff') {
+            	item["end"] = document.getElementById('inputEndDate').value;
+            } else {
+            	item["end"] = null;
+            }
+            console.log(nature);
+            
+            item["id"] = index + 1;
+            item["className"] = 'code'+project.id;
+            item["project_id"] = document.getElementById('inputProjectId').value;
+            item["amount"] = parseInt(document.getElementById('inputAmount').value);
+
+            callback(item);
+
+            // add item group
+            timeline.redraw();
+            timeline.setWindow(moment(item["start"]).toISOString(), moment(moment(item["end"]).endOf("day")).toISOString(), {
+                animation: {
+                    duration: 1000,
+                    easingFunction: "linear"
+                }
+            });
+        } else {
+            //callback(null); // cancel updating the item
+        }
+    });
+}
+
+
+	var timeline = new vis.Timeline(container, items, groups, options);
+
+	$('body').on('focus',".datepicker", function(){
+	    $(this).datepicker({
+	    	autoclose: true,
+		    changeYear: true,
+		    showWeek: true,
+		    firstDay: 1
+	    });
+	});
+
+</script>
+
+<script type="text/javascript">
+// create a dataSet with groups
+var balance_groups = new vis.DataSet();
+var project_ids = projects.getIds();
+
+for (var i=0; i<project_ids.length; i++) {
+	var project_id = project_ids[i];
+	var project = projects.get(project_id);
+	balance_groups.add({
+	  id: project_id,
+	  content: project.content,
+	  className: project.className,
+	  options: {
+	    drawPoints: {
+	      style: "square", // square, circle
+	    },
+	  },
+	});
+}
+
+var balance_container = document.getElementById("balance_graph");
+var balance_items_init = [];
+var balance_result = [];
+
+var project_ids = projects.getIds();
+var project_balance_result = [];
+
+for (var i=0; i<project_ids.length; i++) {
+	var project_id = project_ids[i];
+	var project = projects.get(project_id);
+	var startDate = moment(project.start);
+	var endDate = moment(project.end);
+
+    project_balance_result[project_id] = [];
+
+	if (startDate.format("DD") != "01") {
+		var obj = {};
+	    obj.currdate = startDate;
+	    obj.balance = project.balance;
+	    project_balance_result[project_id].push(obj);
+	}
+	while (startDate.isBefore(endDate)) {
+		var obj = {};
+	    obj.currdate = startDate;
+	    obj.balance = project.balance;
+		project_balance_result[project_id].push(obj);
+	    startDate.add(1, 'month');
+	}
+	if (endDate.format("DD") != "01") {
+		var obj = {};
+	    obj.currdate = endDate;
+	    obj.balance = project.balance;
+	    project_balance_result[project_id].push(obj);
+	}
+}
+
+var balance_items = Array.from(balance_items_init);
+
+var balance_dataset = new vis.DataSet(balance_items);
+var balance_options = {
+  dataAxis: {
+    //showMinorLabels: false,
+    left: {
+      title: {
+        text: "Amount",
+      },
+    },
+  },
+  defaultGroup: '',
+  legend: { left: { position: "bottom-left" } },
+  style: "line",
+  interpolation: false,
+};
+//setGraphRange();
+var balance_graph2d = new vis.Graph2d(balance_container, balance_items, balance_groups, balance_options);
+refresh_expense ();
+
+balance_graph2d.on('rangechange', () => balance_graph2d.redraw());
+
+/*
+document.getElementById('refresh-btn').onclick = function() {
+		refresh_expense ();
+}
+*/
+
+function refresh_expense () {
+
+	var project_ids = projects.getIds();
+	
+	var project_balance_result = [];
+	
+	for (var i=0; i<project_ids.length; i++) {
+		var project_id = project_ids[i];
+		var project = projects.get(project_id);
+		var startDate = moment(project.start);
+		var endDate = moment(project.end);
+		var index = 0;
+	
+	    project_balance_result[project_id] = [];
+	
+		if (startDate.format("DD") != "01") {
+			var obj = {};
+			obj.index = index++;
+		    obj.project_id = project_id;
+		    obj.currdate = startDate;
+		    obj.balance = 0;
+		    project_balance_result[project_id].push(obj);
+		}
+		while (startDate.isBefore(endDate)) {
+			var obj = {};
+			obj.index = index++;
+		    obj.project_id = project_id;
+		    obj.currdate = moment(startDate.format("YYYY-MM-01"));
+		    obj.balance = 0;
+			project_balance_result[project_id].push(obj);
+		    startDate.add(1, 'month');
+		}
+		if (endDate.format("DD") != "01") {
+			var obj = {};
+			obj.index = index++;
+		    obj.project_id = project_id;
+		    obj.currdate = endDate;
+		    obj.balance = 0;
+		    project_balance_result[project_id].push(obj);
+		}
+	}
+
+	var expense_item1 = items.get(); // use the item variable in timeline chart
+	
+	//console.log(expense_item1.length);
+	for (var i=0; i< expense_item1.length; i++) {
+		var each_expense_item = expense_item1[i];
+		
+		var item_project_id = each_expense_item.project_id;
+		
+		var item_source = all_projects.get(item_project_id).source;
+
+		if (item_source != "department") {
+			var matchIndex = project_balance_result[item_project_id].findIndex(element => element.currdate >= moment(each_expense_item.start));
+			//update amount
+			project_balance_result[item_project_id][matchIndex].balance += each_expense_item.amount;
+		}
+	}
+
+	var balance_group_result = [];
+	// plot graph
+	for (var i=0; i<project_ids.length; i++) {
+		var project_id = project_ids[i];
+		var project_balance = projects.get(project_id).balance;
+	
+	    for (var j=0; j<project_balance_result[project_id].length; j++) {
+	    	var each_project_balance_result = project_balance_result[project_id][j];
+	    	project_balance = project_balance - each_project_balance_result.balance;
+	    	var xaxis = each_project_balance_result.currdate.format("YYYY-MM-DD");
+	    	var yaxis = project_balance;
+	    	var groupby = project_id;
+
+		    balance_group_result.push(
+		      { "x": xaxis, "y": yaxis, "group": groupby },
+		    );
+	    	
+		}
+	}
+
+	balance_graph2d.setItems(balance_group_result);
+	setGraphRange();
+	
+}
+
+
+function setGraphRange() {
+	var date_list = [];
+	for (var i=0; i<balance_items.length; i++) {
+		date_list.push(new Date(balance_items[i].x));
+	}
+	for (var i=0; i<items.get().length; i++) {
+		date_list.push(new Date(items.get()[i].start));
+		if (items.get()[i].end != undefined)
+			date_list.push(new Date(items.get()[i].end));
+	}
+ 
+	//console.log(date_list);
+  var start_range = Math.min.apply(null, date_list) - (1000 * 60 * 60 * 24 * 30),
+  end_range = Math.max.apply(null, date_list) + (1000 * 60 * 60 * 24 * 30);
+
+	//console.log('min', start_range);
+	//console.log('max', end_range);
+	
+	balance_options.start = start_range;
+	balance_options.end = end_range;
+	if (balance_graph2d != undefined)
+		balance_graph2d.setOptions(balance_options);
+	
+	options.start = start_range;
+	options.end = end_range;
+	timeline.setOptions(options);
+}
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+projects = {
+	id: Index (starting from 1xxxx), Autoincreament,
+	source: String,
+	content: String,
+	className: String,
+	balance: Int,
+	start: Date,
+	end: Date
+}
+
+
+other_projects = {
+	id: Index (starting from 9xxxx), Autoincreament,
+	source: "department",
+	content: "Rotating Quota 1",
+	className: 'code90001',
+}
+
+I will concat projects and other_projects into all_project.
+
+items = {
+	id: Index (starting from 1), Autoincreament, 
+	project_id: FK(all_project),
+	content: FK(all_project), 
+	title: FK(all_project), 
+	start: Date,
+	end: Date,
+	group: Int,
+	amount: Int,
+	className: FK(all_project),
+}

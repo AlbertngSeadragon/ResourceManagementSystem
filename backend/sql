@@ -1,0 +1,24 @@
+use project;
+create table projects(
+	id int NOT NULL AUTO_INCREMENT,
+	_source varchar(255),
+	content varchar(255),
+	className varchar(255),
+    balance int,
+	start_date char(10),
+	end_date char(10),
+	PRIMARY KEY (id)
+);
+
+ALTER TABLE projects AUTO_INCREMENT=10000;
+
+use project;
+create table other_projects(
+	id int NOT NULL AUTO_INCREMENT,
+	_source varchar(255),
+	content varchar(255),
+	className varchar(255),
+	PRIMARY KEY (id)
+);
+
+ALTER TABLE projects AUTO_INCREMENT=90000;
