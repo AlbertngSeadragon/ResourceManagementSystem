@@ -1,8 +1,10 @@
+import ray
 import mysql.connector
 import os
 import json
 from dotenv import load_dotenv
 load_dotenv()
+ray.init()
 
 mydb = mysql.connector.connect(
   host=os.getenv('host'),
@@ -11,6 +13,7 @@ mydb = mysql.connector.connect(
   database=os.getenv('database')
 )
 
+@ray.remote
 def Jsonifly(rows):
     data = []
     for row in rows:
@@ -25,7 +28,9 @@ def returnprojects(id):
 
         mycursor.execute(f"select * from project.projects where id={id}")
 
-        jsondata = Jsonifly(mycursor.fetchall())
+        promisefuturedata = Jsonifly.remote(mycursor.fetchall())
+
+        jsondata = ray.get(promisefuturedata)
 
         jsondata = {'projects': jsondata}
 
@@ -43,7 +48,9 @@ def returnotherprojects(id):
 
         mycursor.execute(f"select * from project.other_projects where id={id}")
 
-        jsondata = Jsonifly(mycursor.fetchall())
+        promisefuturedata = Jsonifly.remote(mycursor.fetchall())
+
+        jsondata = ray.get(promisefuturedata)
 
         jsondata = {'projects': jsondata}
 
