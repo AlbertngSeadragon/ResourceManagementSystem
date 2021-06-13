@@ -1,5 +1,6 @@
 import React from 'react'
 import { Admin, Resource } from 'react-admin'
+import { authProvider, httpClient } from './Auth';
 import simpleRestProvider from 'ra-data-simple-rest'
 import { fetchUtils } from 'ra-core';
 //import lb4Provider from 'react-admin-lb4'
@@ -16,10 +17,9 @@ import GoStaffList from './components/GoStaff/GoStaffList'
 import GoStaffCreate from './components/GoStaff/GoStaffCreate'
 import GoStaffEdit from './components/GoStaff/GoStaffEdit'
 
-
 function App() {
   return (
-    <Admin dataProvider={simpleRestProvider('http://localhost:3005')}>
+    <Admin dataProvider={simpleRestProvider('http://localhost:3005', httpClient)} authProvider={authProvider}>
       <Resource
         name='admins'
         list={AdminList}
