@@ -1,4 +1,4 @@
-const Admin = require("../models/Admin");
+const Admin = require("../models/Adminv1");
 let _hash = require("./bcrypt");
 const express = require("express");
 
@@ -27,15 +27,15 @@ module.exports = {
 
     },
     fetchOne: async (req, res) => {
-        var admin_id = req.params.admin_id;
+        var id = req.params.id;
 
-        if (admin_id && isNaN(admin_id) == false) {
+        if (id && isNaN(id) == false) {
             try {
-                var admin = await Admin.findByPk(admin_id);
+                var admin = await Admin.findByPk(id);
                 if (admin == null) {
                     return res.status(404).json({ error: "Could not find admin" })
                 }
-                return res.status(200).json({ admin });
+                return res.status(200).json(admin);
 
             } catch (err) {
                 console.log(err);
@@ -51,17 +51,17 @@ module.exports = {
             //var admins = await Admin.findAll();
             //return res.status(200).json({admins});
             //res.set('Content-Range', 'posts 0-25/100');
-            function renameKey(obj, oldKey, newKey) {
-                obj[newKey] = obj[oldKey];
-                delete obj[oldKey];
-            }
+            // function renameKey(obj, oldKey, newKey) {
+            //     obj[newKey] = obj[oldKey];
+            //     delete obj[oldKey];
+            // }
             
-            const arr = (await Admin.findAll());
-            arr.forEach(obj => renameKey(obj, 'admin_id', 'id'));
-            //const updatedJson = (arr);
-            console.log("arr", arr)
-            return res.status(200).json(arr);
-            //return res.status(200).json(await Admin.findAll());
+            // const arr = (await Admin.findAll());
+            // arr.forEach(obj => renameKey(obj, 'admin_id', 'id'));
+            // //const updatedJson = (arr);
+            // console.log("arr", arr)
+            // return res.status(200).json(arr);
+            return res.status(200).json(await Admin.findAll());
 
         } catch (err) {
             console.log(err);
@@ -69,7 +69,7 @@ module.exports = {
         }
     },
     update: async (req, res) => {
-        var admin_id = req.params.admin_id;
+        var id = req.params.id;
         var { email, username, password } = req.body;
         // try{
         //     _hash.decrypt()
@@ -80,10 +80,10 @@ module.exports = {
         // }
         password = _hash.encrypt(password);
 
-        if (admin_id && isNaN(admin_id) == false) {
+        if (id && isNaN(id) == false) {
             if (email && username && password) {
                 try {
-                    var admin = await Admin.findByPk(admin_id);
+                    var admin = await Admin.findByPk(id);
                     if (admin == null) {
                         return res.status(404).json({ error: "Could not find admin" })
                     }
@@ -95,7 +95,7 @@ module.exports = {
                     //     }
                     // }
 
-                    const update = await Admin.update({ email, username, password }, { where: { admin_id } });
+                    const update = await Admin.update({ email, username, password }, { where: { id } });
                     if (update.length > 0 && update[0] == 1) {
                         return res.status(200).json({ message: "Admin details updated" });
                     } else {
@@ -115,16 +115,16 @@ module.exports = {
         }
     },
     delete: async (req, res) => {
-        var admin_id = req.params.admin_id;
+        var id = req.params.id;
 
-        if (admin_id && isNaN(admin_id) == false) {
+        if (id && isNaN(id) == false) {
             try {
-                var adminExists = await Admin.findByPk(admin_id)
+                var adminExists = await Admin.findByPk(id)
                 if (adminExists === null) {
                     return res.status(404).json({ error: "Could not find admin" });
                 }
 
-                await Admin.destroy({ where: { admin_id } });
+                await Admin.destroy({ where: { id } });
                 return res.status(200).json({ message: "Admin deleted" });
 
             } catch (err) {
