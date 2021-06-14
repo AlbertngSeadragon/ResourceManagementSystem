@@ -24,8 +24,8 @@ const GoStaffList = (props) => {
         <TextField source='id' />
         <TextField source='email' />
         <TextField source='username' />
-        <EditButton basePath='/professors' />
-        <DeleteButton basePath='/professors' />
+        <EditButton basePath='/general_office_go_staffs' />
+        <DeleteButton basePath='/general_office_go_staffs' />
       </Datagrid>
     </List>
   )
