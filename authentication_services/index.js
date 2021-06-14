@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
@@ -7,7 +8,12 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const saltRounds = 10;
 
-require("dotenv").config();
+const db = mysql.createConnection({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+})
 
 const app = express();
 app.use(cors())
@@ -27,12 +33,6 @@ app.use(
     })
 );
 
-const db = mysql.createConnection({
-    user: "admin",
-    host: "fyp2021-2022.cysnvin5kbik.us-east-1.rds.amazonaws.com",
-    password: "adminfyp2021",
-    database: "user_management",
-})
 
 app.get("/login", (req, res) => {
     if (req.session.user) {
