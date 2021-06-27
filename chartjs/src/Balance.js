@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "./Balance.css";
+import axios from "axios";
 
 function Balance() {
+  const [projects, setProjects] = useState([]);
+  const color = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 159, 64)"];
   let project1 = [
     { balance: 500000, date: "2020-09-01" },
     { balance: 400000, date: "2020-11-01" },
@@ -29,8 +32,57 @@ function Balance() {
     { balance: 250000, date: "2021-02-15" },
     { balance: 100000, date: "2021-03-01" },
   ];
+
+  // const getData = async () => {
+  //   const response = await fetch("http://localhost:3001/api/balance");
+  //   const projectData = await response.json();
+  //   // const projectId = new Set(res.data.map((project) => project.project));
+  //   // let projectData = [...projectId].map((id) => {
+  //   //   return {
+  //   //     label: `Project${id}`,
+  //   //     backgroundColor: color[id - 1],
+  //   //     borderColor: color[id - 1],
+  //   //     data: res.data
+  //   //       .filter((project) => project.project === id)
+  //   //       .map((project) => {
+  //   //         return { x: project.date, y: project.balance };
+  //   //       }),
+  //   //   };
+  //   // });
+  //   // setProjects(projectData);
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
   useEffect(() => {
     Chart.register(zoomPlugin);
+    axios
+      .get("http://localhost:3001/api/balance")
+      .then((res) => {
+        const projectId = new Set(res.data.map((project) => project.project));
+        // console.log(projectId);
+        let projectData = [...projectId].map((id) => {
+          return {
+            label: `Project${id}`,
+            backgroundColor: color[id - 1],
+            borderColor: color[id - 1],
+            data: res.data
+              .filter((project) => project.project === id)
+              .map((project) => {
+                return { x: project.date, y: project.balance };
+              }),
+          };
+        });
+        setProjects(projectData);
+        console.log(projects);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+
     const data = {
       datasets: [
         {
@@ -59,6 +111,7 @@ function Balance() {
           borderColor: "rgb(255, 159, 64)",
         },
       ],
+      // datasets: projects,
     };
     const config = {
       type: "line",
@@ -72,7 +125,7 @@ function Balance() {
           },
           title: {
             display: true,
-            text: "Chart.js Line Chart",
+            text: "Balance Chart",
           },
           zoom: {
             zoom: {
