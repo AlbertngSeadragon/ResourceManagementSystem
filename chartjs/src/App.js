@@ -17,7 +17,6 @@ function App() {
           <Route path="/charts" component={Charts}></Route>
           <Route path="/account" component={Account}></Route>
           <Route path="/settings" component={Settings}></Route>
-          <Route path="/settings" component={Settings}></Route>
         </Switch>
       </Router>
     </div>
