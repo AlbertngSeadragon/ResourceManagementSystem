@@ -56,6 +56,21 @@ function Expense() {
     console.log("Moved", itemId, dragTime, newGroupOrder);
   };
 
+  const handleItemResize = (itemId, time, edge) => {
+    setItems(
+      items.map((item) =>
+        item.id === itemId
+          ? {
+              ...item,
+              start_time: edge === "left" ? time : item.start_time,
+              end_time: edge === "left" ? item.end_time : time,
+            }
+          : item
+      )
+    );
+    console.log("Resized", itemId, time, edge);
+  };
+
   return (
     <div className="chart-container">
       <h2>Expense</h2>
@@ -65,6 +80,7 @@ function Expense() {
         defaultTimeStart={moment("2021-03-01").add(-3, "month")}
         defaultTimeEnd={moment("2021-08-01").add(3, "month")}
         onItemMove={handleItemMove}
+        onItemResize={handleItemResize}
         canMove={true}
         stackItems
       >
