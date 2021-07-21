@@ -11,31 +11,32 @@ import moment from "moment";
 
 function Expense() {
   const [groups, setGroups] = useState([
-    { id: 1, title: "Research Student 1" },
-    { id: 2, title: "Research Student 2" },
+    { id: 1, title: "Reasearch Student" },
+    { id: 2, title: "Reasearch Assistant" },
     { id: 3, title: "General Expense" },
+    { id: 4, title: "Equipement Expense" },
   ]);
   const [items, setItems] = useState([
     {
       id: 1,
       group: 1,
-      title: "Proj. 1",
-      start_time: moment("2021-03-01"),
-      end_time: moment("2021-05-01"),
+      title: "Project 1",
+      start_time: moment("2020-11-01"),
+      end_time: moment("2020-11-02"),
     },
     {
       id: 2,
-      group: 2,
-      title: "Proj. 2",
-      start_time: moment("2021-04-01"),
-      end_time: moment("2021-05-01"),
+      group: 1,
+      title: "Project 1",
+      start_time: moment("2021-01-01"),
+      end_time: moment("2021-01-02"),
     },
     {
-      id: 3,
-      group: 3,
-      title: "Proj. 3",
-      start_time: moment("2021-05-01"),
-      end_time: moment("2021-08-01"),
+      id: 4,
+      group: 2,
+      title: "Project 3",
+      start_time: moment("2020-10-31"),
+      end_time: moment("2020-11-01"),
     },
   ]);
 

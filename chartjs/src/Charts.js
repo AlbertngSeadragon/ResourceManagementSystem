@@ -7,7 +7,7 @@ function Charts() {
   return (
     <div>
       <Balance></Balance>
-      <Form></Form>
+      {/* <Form></Form> */}
       <Expense></Expense>
     </div>
   );

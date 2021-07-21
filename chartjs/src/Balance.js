@@ -7,14 +7,11 @@ import axios from "axios";
 
 function Balance() {
   const [projects, setProjects] = useState([]);
-  const color = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 159, 64)"];
+  const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(255, 99, 132)"];
   let project1 = [
     { balance: 500000, date: "2020-09-01" },
     { balance: 400000, date: "2020-11-01" },
-    { balance: 400000, date: "2021-01-01" },
-    { balance: 300000, date: "2021-02-01" },
-    { balance: 300000, date: "2021-03-01" },
-    { balance: 200000, date: "2021-04-01" },
+    { balance: 300000, date: "2021-01-01" },
   ];
   let project2 = [
     { balance: 500000, date: "2020-09-01" },
@@ -26,11 +23,7 @@ function Balance() {
   ];
   let project3 = [
     { balance: 400000, date: "2020-09-01" },
-    { balance: 350000, date: "2020-10-17" },
-    { balance: 350000, date: "2021-01-20" },
-    { balance: 250000, date: "2021-02-11" },
-    { balance: 250000, date: "2021-02-15" },
-    { balance: 100000, date: "2021-03-01" },
+    { balance: 350000, date: "2020-10-31" },
   ];
 
   // const getData = async () => {
@@ -90,8 +83,10 @@ function Balance() {
           data: project1.map((project) => {
             return { x: project.date, y: project.balance };
           }),
-          backgroundColor: "rgb(255, 99, 132)",
-          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgb(54, 162, 235)",
+          borderColor: "rgb(54, 162, 235)",
+
+          stepped: true,
         },
 
         {
@@ -99,8 +94,9 @@ function Balance() {
           data: project2.map((project) => {
             return { x: project.date, y: project.balance };
           }),
-          backgroundColor: "rgb(54, 162, 235)",
-          borderColor: "rgb(54, 162, 235)",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          stepped: true,
         },
         {
           label: "Project3",
@@ -109,6 +105,7 @@ function Balance() {
           }),
           backgroundColor: "rgb(255, 159, 64)",
           borderColor: "rgb(255, 159, 64)",
+          stepped: true,
         },
       ],
       // datasets: projects,
@@ -154,6 +151,11 @@ function Balance() {
           y: {
             suggestedMin: 0,
             suggestedMax: 500000,
+            ticks: {
+              callback: function (value, index, values) {
+                return "$" + value;
+              },
+            },
           },
         },
       },
