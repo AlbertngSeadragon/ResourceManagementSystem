@@ -7,23 +7,23 @@ import axios from "axios";
 
 function Balance() {
   const [projects, setProjects] = useState([]);
-  const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(255, 99, 132)"];
+  const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(43, 178, 76)"];
   let project1 = [
-    { balance: 500000, date: "2020-09-01" },
+    { balance: 550000, date: "2020-09-01" },
     { balance: 400000, date: "2020-11-01" },
-    { balance: 300000, date: "2021-01-01" },
+    { balance: 300000, date: "2021-03-01" },
   ];
   let project2 = [
     { balance: 500000, date: "2020-09-01" },
     { balance: 450000, date: "2020-10-01" },
-    { balance: 450000, date: "2021-01-01" },
-    { balance: 210000, date: "2021-02-01" },
-    { balance: 210000, date: "2021-02-15" },
-    { balance: 130000, date: "2021-03-01" },
+    { balance: 150000, date: "2021-03-01" },
   ];
   let project3 = [
     { balance: 400000, date: "2020-09-01" },
-    { balance: 350000, date: "2020-10-31" },
+    { balance: 350000, date: "2020-11-01" },
+    { balance: 300000, date: "2020-12-01" },
+    { balance: 250000, date: "2021-02-01" },
+    { balance: 250000, date: "2021-03-01" },
   ];
 
   // const getData = async () => {
@@ -51,30 +51,30 @@ function Balance() {
 
   useEffect(() => {
     Chart.register(zoomPlugin);
-    axios
-      .get("http://localhost:3001/api/balance")
-      .then((res) => {
-        const projectId = new Set(res.data.map((project) => project.project));
-        // console.log(projectId);
-        let projectData = [...projectId].map((id) => {
-          return {
-            label: `Project${id}`,
-            backgroundColor: color[id - 1],
-            borderColor: color[id - 1],
-            data: res.data
-              .filter((project) => project.project === id)
-              .map((project) => {
-                return { x: project.date, y: project.balance };
-              }),
-          };
-        });
-        setProjects(projectData);
-        console.log(projects);
-      })
+    // axios
+    //   .get("http://localhost:3001/api/balance")
+    //   .then((res) => {
+    //     const projectId = new Set(res.data.map((project) => project.project));
+    //     // console.log(projectId);
+    //     let projectData = [...projectId].map((id) => {
+    //       return {
+    //         label: `Project${id}`,
+    //         backgroundColor: color[id - 1],
+    //         borderColor: color[id - 1],
+    //         data: res.data
+    //           .filter((project) => project.project === id)
+    //           .map((project) => {
+    //             return { x: project.date, y: project.balance };
+    //           }),
+    //       };
+    //     });
+    //     setProjects(projectData);
+    //     console.log(projects);
+    //   })
 
-      .catch((err) => {
-        console.log(err);
-      });
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     const data = {
       datasets: [
@@ -103,8 +103,8 @@ function Balance() {
           data: project3.map((project) => {
             return { x: project.date, y: project.balance };
           }),
-          backgroundColor: "rgb(255, 159, 64)",
-          borderColor: "rgb(255, 159, 64)",
+          backgroundColor: "rgb(43, 178, 76)",
+          borderColor: "rgb(43, 178, 76)",
           stepped: true,
         },
       ],

@@ -1,0 +1,29 @@
+.rct-item:nth-child(1) {
+  background: rgb(54, 162, 235) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(2) {
+  background: rgb(54, 162, 235) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(3) {
+  background: rgb(255, 99, 132) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(4) {
+  background: rgb(255, 99, 132) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(5) {
+  background: rgb(43, 178, 76) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(6) {
+  background: rgb(43, 178, 76) !important;
+  border: rgb(26, 111, 179) !important;
+}
+.rct-item:nth-child(7) {
+  background: rgb(43, 178, 76) !important;
+  border: rgb(26, 111, 179) !important;
+  color: black !important;
+}

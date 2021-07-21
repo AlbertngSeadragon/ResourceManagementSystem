@@ -8,6 +8,7 @@ import Timeline, {
 // make sure you include the timeline stylesheet or the timeline will not be styled
 import "react-calendar-timeline/lib/Timeline.css";
 import moment from "moment";
+import "./Expense.css";
 
 function Expense() {
   const [groups, setGroups] = useState([
@@ -22,21 +23,56 @@ function Expense() {
       group: 1,
       title: "Project 1",
       start_time: moment("2020-11-01"),
-      end_time: moment("2020-11-02"),
+      end_time: moment("2020-12-01"),
+      bgColor: "rgb(54, 162, 235)",
     },
     {
       id: 2,
-      group: 1,
+      group: 2,
       title: "Project 1",
-      start_time: moment("2021-01-01"),
-      end_time: moment("2021-01-02"),
+      start_time: moment("2021-03-01"),
+      end_time: moment("2021-04-01"),
+      bgColor: "rgb(54, 162, 235)",
+    },
+    {
+      id: 3,
+      group: 1,
+      title: "Project 2",
+      start_time: moment("2020-10-01"),
+      end_time: moment("2020-11-01"),
+      bgColor: "rgb(255, 99, 132)",
     },
     {
       id: 4,
       group: 2,
+      title: "Project 2",
+      start_time: moment("2021-03-01"),
+      end_time: moment("2021-04-01"),
+      bgColor: "rgb(255, 99, 132)",
+    },
+    {
+      id: 5,
+      group: 2,
       title: "Project 3",
-      start_time: moment("2020-10-31"),
-      end_time: moment("2020-11-01"),
+      start_time: moment("2020-11-01"),
+      end_time: moment("2020-12-01"),
+      bgColor: "rgb(43, 178, 76)",
+    },
+    {
+      id: 6,
+      group: 1,
+      title: "Project 3",
+      start_time: moment("2021-02-01"),
+      end_time: moment("2021-03-01"),
+      bgColor: "rgb(43, 178, 76)",
+    },
+    {
+      id: 7,
+      group: 4,
+      title: "Project 3",
+      start_time: moment("2020-12-01"),
+      end_time: moment("2020-12-02"),
+      bgColor: "rgb(43, 178, 76)",
     },
   ]);
 
@@ -84,6 +120,7 @@ function Expense() {
         onItemResize={handleItemResize}
         canMove={true}
         stackItems
+        backgroundColor
       >
         <TimelineMarkers>
           <TodayMarker></TodayMarker>
