@@ -105,3 +105,5 @@ dist
 
 #node_module all sub directory
 node_modules/
+
+.env
