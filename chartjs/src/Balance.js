@@ -3,7 +3,6 @@ import Chart from "chart.js/auto";
 import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "./Balance.css";
-import axios from "axios";
 
 function Balance() {
   const [projects, setProjects] = useState([]);
