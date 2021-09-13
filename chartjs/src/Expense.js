@@ -11,6 +11,7 @@ import moment from "moment";
 import "./Expense.css";
 
 function Expense() {
+  const [isModifiable, setIsModifiable] = useState(false);
   const [groups, setGroups] = useState([
     { id: 1, title: "Reasearch Student" },
     { id: 2, title: "Reasearch Assistant" },
@@ -111,6 +112,9 @@ function Expense() {
   return (
     <div className="chart-container">
       <h2>Expense</h2>
+      <h2>isModifiable: {isModifiable.toString()}</h2>
+      <button onClick={() => setIsModifiable(!isModifiable)}>Modify</button>
+
       <Timeline
         groups={groups}
         items={items}
@@ -118,7 +122,7 @@ function Expense() {
         defaultTimeEnd={moment("2021-08-01").add(3, "month")}
         onItemMove={handleItemMove}
         onItemResize={handleItemResize}
-        canMove={true}
+        canMove={isModifiable}
         stackItems
         backgroundColor
       >
