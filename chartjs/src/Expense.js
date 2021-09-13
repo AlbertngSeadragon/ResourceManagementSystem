@@ -77,6 +77,18 @@ function Expense() {
     },
   ]);
 
+  const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
+
+  const handleModify = () => {
+    setIsModifiable(!isModifiable);
+    setBeforeModifiedItems(items);
+  };
+
+  const handleRestore = () => {
+    setIsModifiable(false);
+    setItems(beforeModifiedItems);
+  };
+
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const group = groups[newGroupOrder];
     setItems(
@@ -113,7 +125,8 @@ function Expense() {
     <div className="chart-container">
       <h2>Expense</h2>
       <h2>isModifiable: {isModifiable.toString()}</h2>
-      <button onClick={() => setIsModifiable(!isModifiable)}>Modify</button>
+      <button onClick={handleModify}>Modify</button>
+      {isModifiable && <button onClick={handleRestore}>Restore</button>}
 
       <Timeline
         groups={groups}
