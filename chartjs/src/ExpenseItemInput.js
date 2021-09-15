@@ -28,6 +28,7 @@ export default function App({
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     data.bgColor = data.bgColor.value
     setItemsHandler([...items, data]);
+    console.log("items inside the Expense", ...items);
     // console.log(ExpenseItems.push(data));
   };
   // const onSubmit = (data) => {
@@ -71,8 +72,14 @@ export default function App({
         defaultValue=""
         render={({ field }) => <Input placeholder="title" {...field} />}
       />
-      {/* <br />
-      title
+      <Controller
+        name="balance"
+        control={control}
+        defaultValue=""
+        render={({ field }) => <Input type="number" placeholder="Balance" {...field} />}
+      />
+      <br />
+      {/*title
       <input {...register("title")} /> */}
       start_time
       <Controller
