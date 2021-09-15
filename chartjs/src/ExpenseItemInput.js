@@ -5,7 +5,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
-export default function App(items, groups, setItemsHandler, setGroupsHandler) {
+export default function App({
+  items,
+  groups,
+  setItemsHandler,
+  setGroupsHandler,
+}) {
   const {
     control,
     register,
@@ -19,6 +24,7 @@ export default function App(items, groups, setItemsHandler, setGroupsHandler) {
     Object.assign(data, { id: items.length + 1 });
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
+    setItemsHandler([...items, data]);
     // console.log(ExpenseItems.push(data));
   };
   // const onSubmit = (data) => {
