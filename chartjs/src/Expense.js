@@ -10,72 +10,8 @@ import "react-calendar-timeline/lib/Timeline.css";
 import moment from "moment";
 import "./Expense.css";
 
-function Expense() {
+function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
   const [isModifiable, setIsModifiable] = useState(false);
-  const [groups, setGroups] = useState([
-    { id: 1, title: "Reasearch Student" },
-    { id: 2, title: "Reasearch Assistant" },
-    { id: 3, title: "General Expense" },
-    { id: 4, title: "Equipement Expense" },
-  ]);
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      group: 1,
-      title: "Project 1",
-      start_time: moment("2020-11-01"),
-      end_time: moment("2020-12-01"),
-      bgColor: "rgb(54, 162, 235)",
-    },
-    {
-      id: 2,
-      group: 2,
-      title: "Project 1",
-      start_time: moment("2021-03-01"),
-      end_time: moment("2021-04-01"),
-      bgColor: "rgb(54, 162, 235)",
-    },
-    {
-      id: 3,
-      group: 1,
-      title: "Project 2",
-      start_time: moment("2020-10-01"),
-      end_time: moment("2020-11-01"),
-      bgColor: "rgb(255, 99, 132)",
-    },
-    {
-      id: 4,
-      group: 2,
-      title: "Project 2",
-      start_time: moment("2021-03-01"),
-      end_time: moment("2021-04-01"),
-      bgColor: "rgb(255, 99, 132)",
-    },
-    {
-      id: 5,
-      group: 2,
-      title: "Project 3",
-      start_time: moment("2020-11-01"),
-      end_time: moment("2020-12-01"),
-      bgColor: "rgb(43, 178, 76)",
-    },
-    {
-      id: 6,
-      group: 1,
-      title: "Project 3",
-      start_time: moment("2021-02-01"),
-      end_time: moment("2021-03-01"),
-      bgColor: "rgb(43, 178, 76)",
-    },
-    {
-      id: 7,
-      group: 4,
-      title: "Project 3",
-      start_time: moment("2020-12-01"),
-      end_time: moment("2020-12-02"),
-      bgColor: "rgb(43, 178, 76)",
-    },
-  ]);
 
   const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
 
@@ -86,12 +22,12 @@ function Expense() {
 
   const handleRestore = () => {
     setIsModifiable(false);
-    setItems(beforeModifiedItems);
+    setItemsHandler(beforeModifiedItems);
   };
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const group = groups[newGroupOrder];
-    setItems(
+    setItemsHandler(
       items.map((item) =>
         item.id === itemId
           ? {
@@ -107,7 +43,7 @@ function Expense() {
   };
 
   const handleItemResize = (itemId, time, edge) => {
-    setItems(
+    setItemsHandler(
       items.map((item) =>
         item.id === itemId
           ? {
@@ -127,6 +63,9 @@ function Expense() {
       <h2>isModifiable: {isModifiable.toString()}</h2>
       <button onClick={handleModify}>Modify</button>
       {isModifiable && <button onClick={handleRestore}>Restore</button>}
+
+      {console.log(typeof (groups, items))}
+      {/* <h2>{groups}</h2> */}
 
       <Timeline
         groups={groups}
