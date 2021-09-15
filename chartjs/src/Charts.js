@@ -81,7 +81,6 @@ function Charts() {
   };
   return (
     <div>
-      <Balance></Balance>
       <Form
         groups={groups}
         items={items}
@@ -94,6 +93,7 @@ function Charts() {
         setItemsHandler={setItemsHandler}
         setGroupsHandler={setGroupsHandler}
       ></ExpenseItemInput>
+      <Balance></Balance>
       <Expense
         groups={groups}
         items={items}
