@@ -60,6 +60,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
   const itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
     const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
+    console.log("++++++++",item)
     const borderColor = itemContext.resizing ? "red" : item.color;
     return (
       <div

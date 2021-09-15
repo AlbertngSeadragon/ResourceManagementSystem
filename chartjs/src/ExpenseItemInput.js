@@ -26,6 +26,7 @@ export default function App({
     Object.assign(data, { id: items.length + 1 });
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
+    data.bgColor = data.bgColor.value
     setItemsHandler([...items, data]);
     // console.log(ExpenseItems.push(data));
   };
@@ -98,12 +99,12 @@ export default function App({
         )}
       />
       <Controller
-        name="iceCreamType"
+        name="bgColor"
         control={control}
         render={({ field }) => <Select 
           {...field} 
           options={[
-            { value: "rgb(54, 162, 235)", label: "Bluew" },
+            { value: "rgb(54, 162, 235)", label: "Blue" },
             { value: "rgb(255, 159, 64)", label: "Red" },
             { value: "rgb(43, 178, 76)", label: "Green" }
           ]} 
