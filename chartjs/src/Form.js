@@ -1,6 +1,7 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import "./Form.css";
+import Input from "@material-ui/core/Input";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
@@ -10,6 +11,7 @@ export default function App({
   setGroupsHandler,
 }) {
   const {
+    control,
     register,
     handleSubmit,
     watch,
@@ -18,6 +20,7 @@ export default function App({
   const onSubmit = (data) => {
     Object.assign(data, { id: groups.length + 1 });
     setGroupsHandler([...groups, data]);
+    console.log("++", ...groups)
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
   };
@@ -35,8 +38,14 @@ export default function App({
         <option value="Project2">Project2</option>
         <option value="Project3">Project3</option>
         </select> */}
-      Title
-      <input {...register("title")} />
+      {/* Title
+      <input {...register("title")} /> */}
+      <Controller
+        name="title"
+        control={control}
+        defaultValue=""
+        render={({ field }) => <Input placeholder="Title" {...field} />}
+      />
       <br />
       {errors.exampleRequired && <span>This field is required</span>}
       <input type="submit" />

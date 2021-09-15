@@ -57,6 +57,47 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
     console.log("Resized", itemId, time, edge);
   };
 
+  const itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
+    const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+    const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
+    const borderColor = itemContext.resizing ? "red" : item.color;
+    return (
+      <div
+        {...getItemProps({
+          style: {
+            backgroundColor,
+            color: item.color,
+            borderColor,
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderRadius: 4,
+            borderLeftWidth: itemContext.selected ? 3 : 1,
+            borderRightWidth: itemContext.selected ? 3 : 1
+          },
+          onMouseDown: () => {
+            console.log("on item click", item);
+          }
+        })}
+      >
+        {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
+
+        <div
+          style={{
+            height: itemContext.dimensions.height,
+            overflow: "hidden",
+            paddingLeft: 3,
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap"
+          }}
+        >
+          {itemContext.title}
+        </div>
+
+        {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null}
+      </div>
+    );
+  };
+
   return (
     <div className="chart-container">
       <h2>Expense</h2>
@@ -76,7 +117,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
         onItemResize={handleItemResize}
         canMove={isModifiable}
         stackItems
-        backgroundColor
+        itemRenderer={itemRenderer}
       >
         <TimelineMarkers>
           <TodayMarker></TodayMarker>

@@ -3,6 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import Select from "react-select";
+import Input from "@material-ui/core/Input";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
@@ -55,12 +57,22 @@ export default function App({
         <option value="Project2">Project2</option>
         <option value="Project3">Project3</option>
         </select>  id<input type="number" {...register("id", { valueAsNumber: true })} /><br /> */}
-      group id
-      <input type="number" {...register("group", { valueAsNumber: true })} />
-      <br />
+      <Controller
+        name="group"
+        control={control}
+        defaultValue=""
+        render={({ field }) => <Input type="number" placeholder="Group" {...field} />}
+      />
+      {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
+      <Controller
+        name="title"
+        control={control}
+        defaultValue=""
+        render={({ field }) => <Input placeholder="title" {...field} />}
+      />
+      {/* <br />
       title
-      <input {...register("title")} />
-      <br />
+      <input {...register("title")} /> */}
       start_time
       <Controller
         name="start_time"
@@ -85,8 +97,20 @@ export default function App({
           />
         )}
       />
-      bgColor
-      <input {...register("bgColor")} />
+      <Controller
+        name="iceCreamType"
+        control={control}
+        render={({ field }) => <Select 
+          {...field} 
+          options={[
+            { value: "rgb(54, 162, 235)", label: "Bluew" },
+            { value: "rgb(255, 159, 64)", label: "Red" },
+            { value: "rgb(43, 178, 76)", label: "Green" }
+          ]} 
+        />}
+      />
+      {/* bgColor
+      <input {...register("bgColor")} /> */}
       <br />
       {errors.exampleRequired && <span>This field is required</span>}
       <input type="submit" />
