@@ -26,9 +26,9 @@ export default function App({
     Object.assign(data, { id: items.length + 1 });
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
-    data.bgColor = data.bgColor.value
+    data.bgColor = data.bgColor.value;
     setItemsHandler([...items, data]);
-    console.log("items inside the Expense", ...items);
+    // console.log("items inside the Expense", ...items);
     // console.log(ExpenseItems.push(data));
   };
   // const onSubmit = (data) => {
@@ -63,7 +63,9 @@ export default function App({
         name="group"
         control={control}
         defaultValue=""
-        render={({ field }) => <Input type="number" placeholder="Group" {...field} />}
+        render={({ field }) => (
+          <Input type="number" placeholder="Group" {...field} />
+        )}
       />
       {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
       <Controller
@@ -73,10 +75,12 @@ export default function App({
         render={({ field }) => <Input placeholder="title" {...field} />}
       />
       <Controller
-        name="balance"
+        name="expense"
         control={control}
         defaultValue=""
-        render={({ field }) => <Input type="number" placeholder="Balance" {...field} />}
+        render={({ field }) => (
+          <Input type="number" placeholder="Expense" {...field} />
+        )}
       />
       <br />
       {/*title
@@ -108,14 +112,16 @@ export default function App({
       <Controller
         name="bgColor"
         control={control}
-        render={({ field }) => <Select 
-          {...field} 
-          options={[
-            { value: "rgb(54, 162, 235)", label: "Blue" },
-            { value: "rgb(255, 159, 64)", label: "Red" },
-            { value: "rgb(43, 178, 76)", label: "Green" }
-          ]} 
-        />}
+        render={({ field }) => (
+          <Select
+            {...field}
+            options={[
+              { value: "rgb(54, 162, 235)", label: "Blue" },
+              { value: "rgb(255, 159, 64)", label: "Red" },
+              { value: "rgb(43, 178, 76)", label: "Green" },
+            ]}
+          />
+        )}
       />
       {/* bgColor
       <input {...register("bgColor")} /> */}

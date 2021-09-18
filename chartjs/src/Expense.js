@@ -57,10 +57,20 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
     console.log("Resized", itemId, time, edge);
   };
 
-  const itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
+  const itemRenderer = ({
+    item,
+    timelineContext,
+    itemContext,
+    getItemProps,
+    getResizeProps,
+  }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
-    const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
-    console.log("++++++++",item)
+    const backgroundColor = itemContext.selected
+      ? itemContext.dragging
+        ? "red"
+        : item.selectedBgColor
+      : item.bgColor;
+    console.log("++++++++", item);
     const borderColor = itemContext.resizing ? "red" : item.color;
     return (
       <div
@@ -73,11 +83,11 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
             borderWidth: 1,
             borderRadius: 4,
             borderLeftWidth: itemContext.selected ? 3 : 1,
-            borderRightWidth: itemContext.selected ? 3 : 1
+            borderRightWidth: itemContext.selected ? 3 : 1,
           },
           onMouseDown: () => {
             console.log("on item click", item);
-          }
+          },
         })}
       >
         {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
@@ -88,7 +98,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
             overflow: "hidden",
             paddingLeft: 3,
             textOverflow: "ellipsis",
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
           }}
         >
           {itemContext.title}
@@ -106,7 +116,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
       <button onClick={handleModify}>Modify</button>
       {isModifiable && <button onClick={handleRestore}>Restore</button>}
 
-      {console.log(typeof (groups, items))}
+      {/* {console.log(typeof (groups, items))} */}
       {/* <h2>{groups}</h2> */}
 
       <Timeline
