@@ -4,8 +4,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import Select from "react-select";
-import Input from "@material-ui/core/Input";
+import { Input, Button } from "@material-ui/core";
+import { Input as AntdInput } from "antd";
+import { RgbaColorPicker } from "react-colorful";
+import { color } from "@mui/system";
+import "./ExpenseItemInput.css";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
+import chroma from "chroma-js";
 
 export default function App({
   items,
@@ -35,6 +40,55 @@ export default function App({
   //     console.log(moment(selectedDate).format("DD/MM/yyyy"));
   //  };
 
+  const dot = (color = "#ccc") => ({
+    alignItems: "center",
+    display: "flex",
+
+    ":before": {
+      backgroundColor: color,
+      borderRadius: 10,
+      content: '" "',
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10,
+    },
+  });
+
+  const colourStyles = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? null
+          : isSelected
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : null,
+        color: isDisabled
+          ? "#ccc"
+          : isSelected
+          ? chroma.contrast(color, "white") > 2
+            ? "white"
+            : "black"
+          : data.color,
+        cursor: isDisabled ? "not-allowed" : "default",
+
+        ":active": {
+          ...styles[":active"],
+          backgroundColor:
+            !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+        },
+      };
+    },
+    input: (styles) => ({ ...styles, ...dot() }),
+    placeholder: (styles) => ({ ...styles, ...dot() }),
+    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+  };
+
   //start_time<input {...register("start_time", { valueAsDate: true })} /><br />
   //end_time<input {...register("end_time", { valueAsDate: true })} /><br />
   //const [selectedDate, setselectedDate] = useState(null);
@@ -51,6 +105,7 @@ export default function App({
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h5>New Project</h5>
       {/* register your input into the hook by invoking the "register" function */}
       {/**<input {...register("example")} />*/}
       {/* errors will return when field validation fails  */}
@@ -72,7 +127,9 @@ export default function App({
         name="title"
         control={control}
         defaultValue=""
-        render={({ field }) => <Input placeholder="title" {...field} />}
+        render={({ field }) => (
+          <AntdInput placeholder="Project Item" {...field} />
+        )}
       />
       <Controller
         name="expense"
@@ -82,10 +139,8 @@ export default function App({
           <Input type="number" placeholder="Expense" {...field} />
         )}
       />
-      <br />
       {/*title
       <input {...register("title")} /> */}
-      start_time
       <Controller
         name="start_time"
         control={control}
@@ -94,10 +149,10 @@ export default function App({
           <DatePicker
             onChange={(date) => field.onChange(date)}
             selected={field.value}
+            placeholderText="Start Date"
           />
         )}
       />
-      end_time
       <Controller
         name="end_time"
         control={control}
@@ -106,6 +161,7 @@ export default function App({
           <DatePicker
             onChange={(date) => field.onChange(date)}
             selected={field.value}
+            placeholderText="End Date"
           />
         )}
       />
@@ -123,11 +179,18 @@ export default function App({
           />
         )}
       />
+      {/* <Controller
+        name="bgColor"
+        defaultValue={'r: 200, g: 150, b: 35'}
+        control={control}
+        render={({ field }) => <RgbaColorPicker onChange={setColor} color={field.value = color}  />}
+      /> */}
       {/* bgColor
       <input {...register("bgColor")} /> */}
       <br />
       {errors.exampleRequired && <span>This field is required</span>}
       <input type="submit" />
+      {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );
 }

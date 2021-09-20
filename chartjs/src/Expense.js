@@ -90,7 +90,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
           },
         })}
       >
-        {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
+        {/* {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null} */}
 
         <div
           style={{
@@ -104,7 +104,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
           {itemContext.title}
         </div>
 
-        {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null}
+        {/* {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null} */}
       </div>
     );
   };

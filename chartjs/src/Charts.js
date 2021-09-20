@@ -3,6 +3,14 @@ import Balance from "./Balance";
 import Expense from "./Expense";
 import Form from "./Form";
 import ExpenseItemInput from "./ExpenseItemInput";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import Switch from "@mui/material/Switch";
+import Collapse from "@mui/material/Collapse";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import moment from "moment";
 
@@ -84,6 +92,7 @@ const ExpenseItems = [
     expense: 50000,
   },
 ];
+
 function Charts() {
   const [groups, setGroups] = useState(ExpenseGroups);
   const [items, setItems] = useState(ExpenseItems);
