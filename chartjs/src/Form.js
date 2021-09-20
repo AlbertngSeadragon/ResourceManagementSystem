@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import "./Form.css";
-import Input from "@material-ui/core/Input";
+import { Input, Button } from "@material-ui/core";
+import { Input as AntdInput } from "antd";
+import TextField from '@mui/material/TextField';
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
@@ -30,6 +32,7 @@ export default function App({
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h5>New Expense</h5>
       {/* register your input into the hook by invoking the "register" function */}
       {/* <input {...register("example")} /> */}
       {/* errors will return when field validation fails  */}
@@ -44,11 +47,11 @@ export default function App({
         name="title"
         control={control}
         defaultValue=""
-        render={({ field }) => <Input placeholder="Title" {...field} />}
+        render={({ field }) => <AntdInput placeholder="Expense Item" {...field} />}
       />
-      <br />
       {errors.exampleRequired && <span>This field is required</span>}
       <input type="submit" />
+      {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );
 }

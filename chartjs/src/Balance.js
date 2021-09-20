@@ -50,6 +50,7 @@ function Balance() {
   // }, []);
 
   useEffect(() => {
+    //Chart.defaults.global.defaultFontColor = 'red';
     Chart.register(zoomPlugin);
     // axios
     //   .get("http://localhost:3001/api/balance")
@@ -76,6 +77,7 @@ function Balance() {
     //     console.log(err);
     //   });
 
+    
     const data = {
       datasets: [
         {
@@ -119,6 +121,12 @@ function Balance() {
         plugins: {
           legend: {
             position: "top",
+            labels: {
+              // This more specific font property overrides the global property
+              font: {
+                  size: 20
+              }
+            }
           },
           title: {
             display: true,

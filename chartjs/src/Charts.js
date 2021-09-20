@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import "./Charts.css";
 import Balance from "./Balance";
 import Expense from "./Expense";
 import Form from "./Form";
 import ExpenseItemInput from "./ExpenseItemInput";
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import Switch from '@mui/material/Switch';
+import Collapse from '@mui/material/Collapse';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import moment from "moment";
 const ExpenseGroups = [
@@ -70,6 +79,8 @@ const ExpenseItems = [
     bgColor: "rgb(43, 178, 76)",
   },
 ];
+
+
 function Charts() {
   const [groups, setGroups] = useState(ExpenseGroups);
   const [items, setItems] = useState(ExpenseItems);
@@ -79,27 +90,56 @@ function Charts() {
   const setGroupsHandler = function (groups) {
     setGroups(groups);
   };
+
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   return (
     <div>
-      <Form
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-      ></Form>
-      <ExpenseItemInput
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-      ></ExpenseItemInput>
-      <Balance></Balance>
-      <Expense
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-      ></Expense>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Balance></Balance>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Switch checked={checked} onChange={handleChange} />}
+            label="What-if"
+          />
+          <Collapse in={checked}>
+            <Grid item xs={12}>
+              <Card sx={{ maxWidth: 500 }}>
+                <Grid item xs={5}>
+                  <Form
+                    groups={groups}
+                    items={items}
+                    setItemsHandler={setItemsHandler}
+                    setGroupsHandler={setGroupsHandler}
+                  ></Form>
+                </Grid>
+                <Grid item xs={5}>
+                  <ExpenseItemInput
+                    groups={groups}
+                    items={items}
+                    setItemsHandler={setItemsHandler}
+                    setGroupsHandler={setGroupsHandler}
+                  ></ExpenseItemInput>
+                </Grid>
+              </Card>
+            </Grid>
+          </Collapse>
+        </Grid>
+        <Grid item xs={12}>
+          <Expense
+            groups={groups}
+            items={items}
+            setItemsHandler={setItemsHandler}
+            setGroupsHandler={setGroupsHandler}
+          ></Expense>
+        </Grid>
+      </Grid>
     </div>
   );
 }

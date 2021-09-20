@@ -58,7 +58,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
   };
 
   const itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
-    const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+    //const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
     const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
     console.log("++++++++",item)
     const borderColor = itemContext.resizing ? "red" : item.color;
@@ -80,7 +80,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
           }
         })}
       >
-        {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
+        {/* {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null} */}
 
         <div
           style={{
@@ -94,7 +94,7 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
           {itemContext.title}
         </div>
 
-        {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null}
+        {/* {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null} */}
       </div>
     );
   };
