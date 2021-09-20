@@ -12,6 +12,8 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-zoom": "^1.0.1",
     "datepicker": "^0.0.0",
+    "echarts": "^5.2.0",
+    "echarts-for-react": "^3.0.1",
     "frappe-gantt": "^0.5.0",
     "interactjs": "^1.10.11",
     "moment": "^2.29.1",

@@ -67,19 +67,19 @@ const ExpenseItems = [
   },
   {
     id: 6,
-    group: 1,
+    group: 4,
     title: "Project 3",
-    start_time: moment("2021-02-01"),
-    end_time: moment("2021-03-01"),
+    start_time: moment("2020-12-01"),
+    end_time: moment("2020-12-02"),
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
   },
   {
     id: 7,
-    group: 4,
+    group: 1,
     title: "Project 3",
-    start_time: moment("2020-12-01"),
-    end_time: moment("2020-12-02"),
+    start_time: moment("2021-02-01"),
+    end_time: moment("2021-03-01"),
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
   },
@@ -109,7 +109,7 @@ function Charts() {
       plots.push({
         projectName: project.projectName,
         balance: remainingBalance,
-        date: moment("2020-09-01"),
+        date: moment("2020-09-01").format("YYYY-MM-DD"),
       });
       items
         .filter((item) => item.title === project.projectName)
@@ -118,13 +118,13 @@ function Charts() {
           plots.push({
             projectName: project.projectName,
             balance: remainingBalance,
-            date: item.start_time,
+            date: item.start_time.format("YYYY-MM-DD"),
           });
         });
       plots.push({
         projectName: project.projectName,
         balance: remainingBalance,
-        date: moment("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
       });
     });
     // console.log("run 1", plots);
