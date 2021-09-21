@@ -47,10 +47,18 @@ export default function App({
         name="title"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field }) => <AntdInput placeholder="Expense Item" {...field} />}
       />
-      {errors.exampleRequired && <span>This field is required</span>}
-      <input type="submit" />
+      {errors.title && <span className="text-danger">This field is required</span>}
+      {/* {errors.title === "required" ? (
+        <div>
+          <span className="text-danger">
+            {"Device Type is required"}
+          </span>
+        </div>
+      ) : null} */}
+      <input type="submit" value="Add"/>
       {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );

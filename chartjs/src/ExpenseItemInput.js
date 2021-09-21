@@ -9,6 +9,7 @@ import { Input as AntdInput } from "antd";
 import { RgbaColorPicker } from "react-colorful";
 import { color } from "@mui/system";
 import "./ExpenseItemInput.css";
+
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 import chroma from "chroma-js";
 
@@ -119,23 +120,28 @@ export default function App({
         name="group"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field }) => (
           <AntdInput type="number" placeholder="Row No. Expense Item" {...field} />
         )}
       />
+      {errors.group && <span className="text-danger">This field is required</span>}
       {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
       <Controller
         name="title"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field }) => (
           <AntdInput placeholder="Project Item" {...field} />
         )}
       />
+      {errors.title && <span className="text-danger">This field is required</span>}
       <div className="container">
       <Controller
         name="bgColor"
         control={control}
+        rules={{ required: true }}
         render={({ field }) => (
           <Select
             class="select-size"
@@ -154,18 +160,22 @@ export default function App({
         )}
       />
       </div>
+      {errors.bgColor && <span className="text-danger">This field is required</span>}
       <Controller
         name="balance"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field }) => <AntdInput type="number" placeholder="Balance Deduction" {...field} />}
       />
+      {errors.balance && <span className="text-danger">This field is required</span>}
       {/*title
       <input {...register("title")} /> */}
       <Controller
         name="start_time"
         control={control}
         defaultValue={null}
+        rules={{ required: true }}
         render={({ field }) => (
           <DatePicker
             onChange={(date) => field.onChange(date)}
@@ -174,10 +184,12 @@ export default function App({
           />
         )}
       />
+      {errors.start_time && <span className="text-danger">This field is required</span>}
       <Controller
         name="end_time"
         control={control}
         defaultValue={null}
+        rules={{ required: true }}
         render={({ field }) => (
           <DatePicker
             onChange={(date) => field.onChange(date)}
@@ -186,6 +198,7 @@ export default function App({
           />
         )}
       />
+      {errors.end_time && <span className="text-danger">This field is required</span>}
       {/* <Controller
         name="bgColor"
         defaultValue={'r: 200, g: 150, b: 35'}
@@ -194,9 +207,8 @@ export default function App({
       /> */}
       {/* bgColor
       <input {...register("bgColor")} /> */}
-      <br />
-      {errors.exampleRequired && <span>This field is required</span>}
-      <input type="submit" />
+      {/* {errors.exampleRequired && <span>This field is required</span>} */}
+      <input type="submit" value="Add"/>
       {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );
