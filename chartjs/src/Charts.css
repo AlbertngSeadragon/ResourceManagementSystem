@@ -14,3 +14,20 @@
 .whatif {
   margin-left: 600px;
 }
+
+.whatifcontent {
+  cursor: move;
+  color: black;
+  max-width: fit-content;
+  border-radius: 5px;
+  padding: 1em;
+  margin: auto;
+  user-select: none;
+  position: relative;
+  z-index: 9999999999999999999999999999999999999;
+}
+
+.react-draggable {
+  position: relative !important;
+  z-index: 9999999999999999999999999999999999999 !important;
+}

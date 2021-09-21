@@ -16,6 +16,9 @@ import moment from "moment";
 
 import "./Charts.css";
 
+import Draggable from 'react-draggable';
+import zIndex from "@material-ui/core/styles/zIndex";
+
 const Projects = [
   { projectName: "Project 1", initialBalance: 550000 },
   { projectName: "Project 2", initialBalance: 500000 },
@@ -163,48 +166,52 @@ function Charts() {
 
   return (
     <div>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      {/* <Grid container spacing={2}>
+        <Grid item xs={12}> */}
           <Balance
             balanceChartPlots={balanceChartPlots}
             projects={projects}
           ></Balance>
-        </Grid>
-        <Grid item xs={18}>
-          <FormControlLabel
-            control={<Switch checked={checked} onChange={handleChange} />}
-            label="What-if"
-          />
-          <Collapse in={checked}>
-          <div class="whatifcontent">
-            <Grid item xs={12} style={{marginLeft: "100px"}}>
-              {/* <Card sx={{ maxWidth: 500 }}> */}
+        {/* </Grid> */}
+        <Draggable styled={{position: 'relative', zIndex: 999999999999999999999999}}>
+        <div class="whatifcontent">
+          {/* <Grid item xs={18}> */}
+            <FormControlLabel
+              control={<Switch checked={checked} onChange={handleChange} />}
+              label="What-if"
+            />
+            <Collapse in={checked}>
               
-                <Grid item xs={5}>
-                  <Form
-                    groups={groups}
-                    items={items}
-                    setItemsHandler={setItemsHandler}
-                    setGroupsHandler={setGroupsHandler}
-                    setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-                  ></Form>
-                </Grid>
-                <Grid item xs={5}>
-                  <ExpenseItemInput
-                    groups={groups}
-                    items={items}
-                    setItemsHandler={setItemsHandler}
-                    setGroupsHandler={setGroupsHandler}
-                    setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-                  ></ExpenseItemInput>
-                </Grid>
+                {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}
+                  {/* <Card sx={{ maxWidth: 500 }}> */}
+
+                  {/* <Grid item xs={5}> */}
+                    <Form
+                      groups={groups}
+                      items={items}
+                      setItemsHandler={setItemsHandler}
+                      setGroupsHandler={setGroupsHandler}
+                      setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                    ></Form>
+                  {/* </Grid> */}
+                  {/* <Grid item xs={5}> */}
+                    <ExpenseItemInput
+                      groups={groups}
+                      items={items}
+                      setItemsHandler={setItemsHandler}
+                      setGroupsHandler={setGroupsHandler}
+                      setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                    ></ExpenseItemInput>
+                  {/* </Grid> */}
+
+                  {/* </Card> */}
+                {/* </Grid> */}
               
-              {/* </Card> */}
-            </Grid>
-            </div>
-          </Collapse>
-        </Grid>
-        <Grid item xs={12}>
+            </Collapse>
+          {/* </Grid> */}
+          </div>
+        </Draggable>
+        {/* <Grid item xs={12}> */}
           <Expense
             groups={groups}
             items={items}
@@ -212,8 +219,8 @@ function Charts() {
             setGroupsHandler={setGroupsHandler}
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
           ></Expense>
-        </Grid>
-      </Grid>
+        {/* </Grid>
+      </Grid> */}
     </div>
   );
 }
