@@ -14,6 +14,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 
 import moment from "moment";
 
+import "./Charts.css";
+
 const Projects = [
   { projectName: "Project 1", initialBalance: 550000 },
   { projectName: "Project 2", initialBalance: 500000 },
@@ -168,7 +170,7 @@ function Charts() {
             projects={projects}
           ></Balance>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={18}>
           <FormControlLabel
             control={<Switch checked={checked} onChange={handleChange} />}
             label="What-if"

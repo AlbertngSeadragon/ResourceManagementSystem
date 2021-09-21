@@ -1,4 +1,8 @@
-select {
+Select {
+  width: 1000px !important;
+}
+
+.container {
   display: block;
   box-sizing: border-box;
   width: 300px;

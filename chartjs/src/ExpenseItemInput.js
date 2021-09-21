@@ -64,17 +64,17 @@ export default function App({
         backgroundColor: isDisabled
           ? null
           : isSelected
-          ? data.color
-          : isFocused
-          ? color.alpha(0.1).css()
-          : null,
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
         color: isDisabled
           ? "#ccc"
           : isSelected
-          ? chroma.contrast(color, "white") > 2
-            ? "white"
-            : "black"
-          : data.color,
+            ? chroma.contrast(color, "white") > 2
+              ? "white"
+              : "black"
+            : data.color,
         cursor: isDisabled ? "not-allowed" : "default",
 
         ":active": {
@@ -87,6 +87,7 @@ export default function App({
     input: (styles) => ({ ...styles, ...dot() }),
     placeholder: (styles) => ({ ...styles, ...dot() }),
     singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+    menu: (styles) => ({ ...styles, zIndex: 999999999999 })
   };
 
   //start_time<input {...register("start_time", { valueAsDate: true })} /><br />
@@ -131,6 +132,28 @@ export default function App({
           <AntdInput placeholder="Project Item" {...field} />
         )}
       />
+      <div className="container">
+      <Controller
+        name="bgColor"
+        control={control}
+        render={({ field }) => (
+          <Select
+            class="select-size"
+            {...field}
+            placeholder="Project Colour"
+            options={[
+              // { value: "rgb(54, 162, 235)", label: "Blue" },
+              // { value: "rgb(255, 159, 64)", label: "Red" },
+              // { value: "rgb(43, 178, 76)", label: "Green" },
+              { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
+              { value: "rgb(255, 159, 64)", label: "red", color: "red" },
+              { value: "rgb(43, 178, 76)", label: "green", color: "green" }
+            ]}
+            styles={colourStyles}
+          />
+        )}
+      />
+      </div>
       <Controller
         name="balance"
         control={control}
@@ -160,24 +183,6 @@ export default function App({
             onChange={(date) => field.onChange(date)}
             selected={field.value}
             placeholderText="End Date"
-          />
-        )}
-      />
-      <Controller
-        name="bgColor"
-        control={control}
-        render={({ field }) => (
-          <Select
-            {...field}
-            options={[
-              // { value: "rgb(54, 162, 235)", label: "Blue" },
-              // { value: "rgb(255, 159, 64)", label: "Red" },
-              // { value: "rgb(43, 178, 76)", label: "Green" },
-              { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
-              { value: "rgb(255, 159, 64)", label: "red", color: "red" },
-              { value: "rgb(43, 178, 76)", label: "green", color: "green" }
-            ]}
-            styles={colourStyles} 
           />
         )}
       />
