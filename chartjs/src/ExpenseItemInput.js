@@ -119,7 +119,7 @@ export default function App({
         control={control}
         defaultValue=""
         render={({ field }) => (
-          <Input type="number" placeholder="Group" {...field} />
+          <AntdInput type="number" placeholder="Row No. Expense Item" {...field} />
         )}
       />
       {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
@@ -132,12 +132,10 @@ export default function App({
         )}
       />
       <Controller
-        name="expense"
+        name="balance"
         control={control}
         defaultValue=""
-        render={({ field }) => (
-          <Input type="number" placeholder="Expense" {...field} />
-        )}
+        render={({ field }) => <AntdInput type="number" placeholder="Balance Deduction" {...field} />}
       />
       {/*title
       <input {...register("title")} /> */}
@@ -172,10 +170,14 @@ export default function App({
           <Select
             {...field}
             options={[
-              { value: "rgb(54, 162, 235)", label: "Blue" },
-              { value: "rgb(255, 159, 64)", label: "Red" },
-              { value: "rgb(43, 178, 76)", label: "Green" },
+              // { value: "rgb(54, 162, 235)", label: "Blue" },
+              // { value: "rgb(255, 159, 64)", label: "Red" },
+              // { value: "rgb(43, 178, 76)", label: "Green" },
+              { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
+              { value: "rgb(255, 159, 64)", label: "red", color: "red" },
+              { value: "rgb(43, 178, 76)", label: "green", color: "green" }
             ]}
+            styles={colourStyles} 
           />
         )}
       />

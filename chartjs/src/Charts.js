@@ -153,33 +153,61 @@ function Charts() {
     // console.log(balanceChartPlots);
   }, []);
 
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   return (
     <div>
-      <Form
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-        setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-      ></Form>
-      <ExpenseItemInput
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-        setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-      ></ExpenseItemInput>
-      <Balance
-        balanceChartPlots={balanceChartPlots}
-        projects={projects}
-      ></Balance>
-      <Expense
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-        setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-      ></Expense>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Balance
+            balanceChartPlots={balanceChartPlots}
+            projects={projects}
+          ></Balance>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Switch checked={checked} onChange={handleChange} />}
+            label="What-if"
+          />
+          <Collapse in={checked}>
+            <Grid item xs={12}>
+              <Card sx={{ maxWidth: 500 }}>
+                <Grid item xs={5}>
+                  <Form
+                    groups={groups}
+                    items={items}
+                    setItemsHandler={setItemsHandler}
+                    setGroupsHandler={setGroupsHandler}
+                    setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                  ></Form>
+                </Grid>
+                <Grid item xs={5}>
+                  <ExpenseItemInput
+                    groups={groups}
+                    items={items}
+                    setItemsHandler={setItemsHandler}
+                    setGroupsHandler={setGroupsHandler}
+                    setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                  ></ExpenseItemInput>
+                </Grid>
+              </Card>
+            </Grid>
+          </Collapse>
+        </Grid>
+        <Grid item xs={12}>
+          <Expense
+            groups={groups}
+            items={items}
+            setItemsHandler={setItemsHandler}
+            setGroupsHandler={setGroupsHandler}
+            setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+          ></Expense>
+        </Grid>
+      </Grid>
     </div>
   );
 }
