@@ -106,7 +106,7 @@ export default function App({
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h5>New Project</h5>
+      <label>New Project</label>
       {/* register your input into the hook by invoking the "register" function */}
       {/**<input {...register("example")} />*/}
       {/* errors will return when field validation fails  */}

@@ -176,8 +176,10 @@ function Charts() {
             label="What-if"
           />
           <Collapse in={checked}>
-            <Grid item xs={12}>
-              <Card sx={{ maxWidth: 500 }}>
+          <div class="whatifcontent">
+            <Grid item xs={12} style={{marginLeft: "100px"}}>
+              {/* <Card sx={{ maxWidth: 500 }}> */}
+              
                 <Grid item xs={5}>
                   <Form
                     groups={groups}
@@ -196,8 +198,10 @@ function Charts() {
                     setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
                   ></ExpenseItemInput>
                 </Grid>
-              </Card>
+              
+              {/* </Card> */}
             </Grid>
+            </div>
           </Collapse>
         </Grid>
         <Grid item xs={12}>

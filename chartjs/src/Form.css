@@ -43,5 +43,15 @@ button {
   width: 500px;
 }
 
-
+.label,
+form > label {
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 13px;
+  margin-top: 20px;
+  color: black;
+  font-size: 17px;
+  font-weight: 200;
+}
 
