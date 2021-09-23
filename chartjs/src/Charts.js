@@ -117,7 +117,7 @@ function Charts() {
   };
 
   const handleRestore = () => {
-    setIsModifiable(false);
+    //setIsModifiable(false);
     setItemsHandler(beforeModifiedItems);
     setGroupsHandler(beforeModifiedGroups);
   };
@@ -200,7 +200,7 @@ function Charts() {
             label="What-if"
           />
           <Collapse in={checked}>
-            {isModifiable && <button onClick={handleRestore}>Restore</button>}
+            {<button onMouseDown={handleRestore}>Reset</button>}
             <h2>isModifiable: {isModifiable.toString()}</h2>
 
             {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}

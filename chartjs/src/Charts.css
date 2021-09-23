@@ -31,3 +31,17 @@
   position: relative !important;
   z-index: 9999999999999999999999999999999999999 !important;
 }
+
+button,
+input[type="submit"] {
+  background: #ec5990;
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 20px;
+  padding: 20px;
+  font-size: 14px;
+  font-weight: 100;
+  letter-spacing: 10px;
+  width: 300px;
+}
