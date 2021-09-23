@@ -10,20 +10,20 @@ import "react-calendar-timeline/lib/Timeline.css";
 import moment from "moment";
 import "./Expense.css";
 
-function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
-  const [isModifiable, setIsModifiable] = useState(false);
+function Expense({ items, groups, setItemsHandler, isModifiable }) {
+  // const [isModifiable, setIsModifiable] = useState(false);
 
-  const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
+  // const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
 
-  const handleModify = () => {
-    setIsModifiable(!isModifiable);
-    setBeforeModifiedItems(items);
-  };
+  // const handleModify = () => {
+  //   setIsModifiable(!isModifiable);
+  //   setBeforeModifiedItems(items);
+  // };
 
-  const handleRestore = () => {
-    setIsModifiable(false);
-    setItemsHandler(beforeModifiedItems);
-  };
+  // const handleRestore = () => {
+  //   setIsModifiable(false);
+  //   setItemsHandler(beforeModifiedItems);
+  // };
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const group = groups[newGroupOrder];
@@ -112,9 +112,6 @@ function Expense({ items, groups, setItemsHandler, setGroupsHandler }) {
   return (
     <div className="chart-container">
       <h2>Expense</h2>
-      <h2>isModifiable: {isModifiable.toString()}</h2>
-      <button onClick={handleModify}>Modify</button>
-      {isModifiable && <button onClick={handleRestore}>Restore</button>}
 
       {/* {console.log(typeof (groups, items))} */}
       {/* <h2>{groups}</h2> */}
