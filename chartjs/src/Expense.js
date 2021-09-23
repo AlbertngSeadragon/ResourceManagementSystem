@@ -57,6 +57,16 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
     console.log("Resized", itemId, time, edge);
   };
 
+  const ItemDoubleClick = (itemId, e, time) => {
+    console.log("DoubleClick", itemId);
+    console.log("DoubleClickItem", items);
+    //const getItems = getCurrentitem();
+    const matchItem = items.filter((item) =>
+      item.id === itemId
+    )
+    console.log("Match", matchItem);
+  }
+
   const itemRenderer = ({
     item,
     timelineContext,
@@ -85,9 +95,9 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
             borderLeftWidth: itemContext.selected ? 3 : 1,
             borderRightWidth: itemContext.selected ? 3 : 1,
           },
-          onMouseDown: () => {
-            console.log("on item click", item);
-          },
+          // onMouseDown: () => {
+          //   console.log("on item click", item);
+          // },
         })}
       >
         {/* {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null} */}
@@ -126,6 +136,7 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
         canMove={isModifiable}
         stackItems
         itemRenderer={itemRenderer}
+        onItemDoubleClick={ItemDoubleClick}
       >
         <TimelineMarkers>
           <TodayMarker></TodayMarker>
