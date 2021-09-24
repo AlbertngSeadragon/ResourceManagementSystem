@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import "./Form.css";
 import { Input, Button } from "@material-ui/core";
 import { Input as AntdInput } from "antd";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
@@ -22,7 +22,7 @@ export default function App({
   const onSubmit = (data) => {
     Object.assign(data, { id: groups.length + 1 });
     setGroupsHandler([...groups, data]);
-    console.log("++", ...groups)
+    console.log("++", ...groups);
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
   };
@@ -48,9 +48,13 @@ export default function App({
         control={control}
         defaultValue=""
         rules={{ required: true }}
-        render={({ field }) => <AntdInput placeholder="Expense Item" {...field} />}
+        render={({ field }) => (
+          <AntdInput placeholder="Expense Item" {...field} />
+        )}
       />
-      {errors.title && <span className="text-danger">This field is required</span>}
+      {errors.title && (
+        <span className="text-danger">This field is required</span>
+      )}
       {/* {errors.title === "required" ? (
         <div>
           <span className="text-danger">
@@ -58,7 +62,7 @@ export default function App({
           </span>
         </div>
       ) : null} */}
-      <input type="submit" value="Add"/>
+      <input type="submit" value="Add" />
       {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );

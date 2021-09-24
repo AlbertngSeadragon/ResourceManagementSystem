@@ -10,6 +10,7 @@ function Balance({ balanceChartPlots, projects }) {
   const myChart = useRef(null);
   const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(43, 178, 76)"];
   const [plots, setPlots] = useState([]);
+  const [chart, setChart] = useState(null);
 
   useEffect(() => {
     let localPlots = [];
@@ -37,8 +38,14 @@ function Balance({ balanceChartPlots, projects }) {
     console.log("Plots useEffect called", plots);
     if (plots.length !== 0 && plots[0].data.length !== 0) {
       console.log("Plots useEffect", plots);
-      const chart = echarts.init(myChart.current);
-      chart.setOption({
+      let newChart;
+      if (chart === null) {
+        newChart = echarts.init(myChart.current);
+      } else {
+        newChart = chart;
+      }
+
+      newChart.setOption({
         title: {
           text: "Balance Chart",
         },
@@ -51,6 +58,7 @@ function Balance({ balanceChartPlots, projects }) {
         },
         series: plots,
       });
+      setChart(newChart);
     }
   }, [plots]);
   return (

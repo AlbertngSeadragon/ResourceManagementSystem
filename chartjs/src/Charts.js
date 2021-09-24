@@ -16,7 +16,7 @@ import moment from "moment";
 
 import "./Charts.css";
 
-import Draggable from 'react-draggable';
+import Draggable from "react-draggable";
 import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
@@ -112,9 +112,9 @@ function Charts() {
 
   const handleModify = () => {
     setIsModifiable(!isModifiable);
-    localStorage.setItem('BeforeItems', JSON.stringify(items));
-    localStorage.setItem('BeforeGroups', JSON.stringify(groups));
-    console.log("HandelModify", items)
+    localStorage.setItem("BeforeItems", JSON.stringify(items));
+    localStorage.setItem("BeforeGroups", JSON.stringify(groups));
+    console.log("HandelModify", items);
     //setBeforeModifiedItems(items);
     //setBeforeModifiedGroups(groups);
   };
@@ -122,15 +122,19 @@ function Charts() {
   const handleRestore = () => {
     //setIsModifiable(false);
     //console.log("Handrestoreeee",JSON.parse(localStorage.getItem('BeforeItems')));
-    let Beforeitems = JSON.parse(localStorage.getItem('BeforeItems'));
-    for (let i = 0; i < Beforeitems.length; i++){
-      Beforeitems[i].start_time = moment(moment(Beforeitems[i].start_time).format("YYYY-MM-DD"));
-      Beforeitems[i].end_time = moment(moment(Beforeitems[i].end_time).format("YYYY-MM-DD"));
+    let Beforeitems = JSON.parse(localStorage.getItem("BeforeItems"));
+    for (let i = 0; i < Beforeitems.length; i++) {
+      Beforeitems[i].start_time = moment(
+        moment(Beforeitems[i].start_time).format("YYYY-MM-DD")
+      );
+      Beforeitems[i].end_time = moment(
+        moment(Beforeitems[i].end_time).format("YYYY-MM-DD")
+      );
     }
     //console.log("Handle Restore", Beforeitems);
     setItemsHandler(Beforeitems);
     //setItems(JSON.parse(localStorage.getItem('BeforeItems')));
-    setGroupsHandler(JSON.parse(localStorage.getItem('BeforeGroups')));
+    setGroupsHandler(JSON.parse(localStorage.getItem("BeforeGroups")));
     //remove
     //localStorage.removeItem('BeforeItems');
     //remove
@@ -183,16 +187,12 @@ function Charts() {
   };
 
   useEffect(() => {
-    // setBalanceChartPlots([
-    //   { projectName: "Project 1", balance: 550000, date: "2020-09-01" },
-    //   { projectName: "Project 1", balance: 400000, date: "2020-11-01" },
-    //   { projectName: "Project 1", balance: 550000, date: "2020-09-01" },
-    //   { projectName: "Project 1", balance: 550000, date: "2020-09-01" },
-    // ]);
-    // console.log("run 2", balanceChartPlotsGenerator());
     setBalanceChartPlots(balanceChartPlotsGenerator());
-    // console.log(balanceChartPlots);
   }, []);
+
+  useEffect(() => {
+    setBalanceChartPlots(balanceChartPlotsGenerator());
+  }, [groups, items, projects]);
 
   const [checked, setChecked] = useState(false);
 
@@ -209,12 +209,20 @@ function Charts() {
         projects={projects}
       ></Balance>
       {/* </Grid> */}
-      <Draggable styled={{ position: 'relative', zIndex: 999999999999999999999999 }}>
+      <Draggable
+        styled={{ position: "relative", zIndex: 999999999999999999999999 }}
+      >
         <div class="whatifcontent">
           {/* <Grid item xs={18}> */}
           {/* <button onClick={handleModify}>Modify</button> */}
           <FormControlLabel
-            control={<Switch checked={checked} onChange={handleChange} onClick={handleModify} />}
+            control={
+              <Switch
+                checked={checked}
+                onChange={handleChange}
+                onClick={handleModify}
+              />
+            }
             label="What-if"
           />
           <Collapse in={checked}>
@@ -245,7 +253,6 @@ function Charts() {
 
             {/* </Card> */}
             {/* </Grid> */}
-
           </Collapse>
           {/* </Grid> */}
         </div>
