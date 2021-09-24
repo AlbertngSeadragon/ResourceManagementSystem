@@ -13,30 +13,60 @@ function Balance({ balanceChartPlots, projects }) {
   const [chart, setChart] = useState(null);
 
   useEffect(() => {
-    let localPlots = [];
     console.log(balanceChartPlots, projects);
-    projects.forEach((project, index) => {
-      localPlots.push({
-        name: project.projectName,
-        data: balanceChartPlots
-          .filter((plot) => project.projectName === plot.projectName)
-          .map((plot) => {
-            // TODO: Sort the plot.date
-            return [plot.date, plot.balance];
-          }),
-        type: "line",
-        step: "end",
-      });
-    });
-    console.log("localPlots", localPlots);
+    // projects.forEach((project, index) => {
+    //   localPlots.push({
+    //     name: project.projectName,
+    //     data: balanceChartPlots
+    //       .filter((plot) => project.projectName === plot.projectName)
+    //       .map((plot) => {
+    //         // TODO: Sort the plot.date
+    //         return [plot.date, plot.balance];
+    //       }),
+    //     type: "line",
+    //     step: "end",
+    //   });
+    // });
+    // let tmp = projects.map((project) => {
+    //   return {
+    //     transform: [
+    //       {
+    //         type: "filter",
+    //         config: {
+    //           dimension: "projectName",
+    //           value: project.projectName,
+    //         },
+    //       },
+    //       {
+    //         type: "sort",
+    //         config: [
+    //           { dimension: "balance", order: "desc" },
+    //           { dimension: "date", order: "asc", parser: "time" },
+    //         ],
+    //       },
+    //     ],
+    //   };
+    // });
+    // console.log("tmp", ...tmp);
 
-    setPlots(localPlots);
+    // let tmp = projects.forEach((project, index) => {
+    //   return {
+    //     type: "line",
+    //     step: "end",
+    //     encode: { x: 1, y: 2 },
+    //     datasetIndex: index + 1,
+    //   };
+    // });
+
+    // console.log("tmp", tmp);
+
+    setPlots(balanceChartPlots);
     console.log("Plots", plots);
   }, [balanceChartPlots, projects]);
 
   useEffect(() => {
     console.log("Plots useEffect called", plots);
-    if (plots.length !== 0 && plots[0].data.length !== 0) {
+    if (plots.length !== 0) {
       console.log("Plots useEffect", plots);
       let newChart;
       if (chart === null) {
@@ -56,7 +86,109 @@ function Balance({ balanceChartPlots, projects }) {
         yAxis: {
           type: "value",
         },
-        series: plots,
+        dataset: [
+          {
+            dimensions: ["projectName", "date", "balance"],
+            source: plots,
+          },
+
+          // ...projects.map((project) => {
+          //   return {
+          //     transform: [
+          //       {
+          //         type: "filter",
+          //         config: {
+          //           dimension: "projectName",
+          //           value: project.projectName,
+          //         },
+          //       },
+          //       {
+          //         type: "sort",
+          //         config: [
+          //           { dimension: "balance", order: "desc" },
+          //           { dimension: "date", order: "asc", parser: "time" },
+          //         ],
+          //       },
+          //     ],
+          //   };
+          // }),
+
+          {
+            transform: [
+              {
+                type: "filter",
+                config: { dimension: "projectName", value: "Project 1" },
+              },
+              {
+                type: "sort",
+                config: [
+                  { dimension: "balance", order: "desc" },
+                  { dimension: "date", order: "asc", parser: "time" },
+                ],
+              },
+            ],
+          },
+          {
+            transform: [
+              {
+                type: "filter",
+                config: { dimension: "projectName", value: "Project 2" },
+              },
+              {
+                type: "sort",
+                config: [
+                  { dimension: "balance", order: "desc" },
+                  { dimension: "date", order: "asc", parser: "time" },
+                ],
+              },
+            ],
+          },
+          {
+            transform: [
+              {
+                type: "filter",
+                config: { dimension: "projectName", value: "Project 3" },
+              },
+              {
+                type: "sort",
+                config: [
+                  { dimension: "balance", order: "desc" },
+                  { dimension: "date", order: "asc", parser: "time" },
+                ],
+              },
+            ],
+          },
+        ],
+
+        // series: projects.forEach((project, index) => {
+        //   return {
+        //     type: "line",
+        //     step: "end",
+        //     encode: { x: 1, y: 2 },
+        //     datasetIndex: index + 1,
+        //   };
+        // }),
+
+        series: [
+          {
+            type: "line",
+            step: "end",
+            encode: { x: 1, y: 2 },
+            datasetIndex: 1,
+          },
+          {
+            type: "line",
+            step: "end",
+            encode: { x: 1, y: 2 },
+            datasetIndex: 2,
+          },
+          {
+            type: "line",
+            step: "end",
+            encode: { x: 1, y: 2 },
+            datasetIndex: 3,
+          },
+        ],
       });
       setChart(newChart);
     }
