@@ -9,11 +9,18 @@ import Timeline, {
 import "react-calendar-timeline/lib/Timeline.css";
 import moment from "moment";
 import "./Expense.css";
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+
+import RemoveItem from "./RemoveItem";
+import EditItem from "./EditItem";
 
 function Expense({ items, groups, setItemsHandler, isModifiable }) {
   // const [isModifiable, setIsModifiable] = useState(false);
 
   // const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
+  const [matchItemforRemove, setmatchItemforRemove] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // const handleModify = () => {
   //   setIsModifiable(!isModifiable);
@@ -31,11 +38,11 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
       items.map((item) =>
         item.id === itemId
           ? {
-              ...item,
-              start_time: dragTime,
-              end_time: dragTime + (item.end_time - item.start_time),
-              group: group.id,
-            }
+            ...item,
+            start_time: dragTime,
+            end_time: dragTime + (item.end_time - item.start_time),
+            group: group.id,
+          }
           : item
       )
     );
@@ -47,10 +54,10 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
       items.map((item) =>
         item.id === itemId
           ? {
-              ...item,
-              start_time: edge === "left" ? time : item.start_time,
-              end_time: edge === "left" ? item.end_time : time,
-            }
+            ...item,
+            start_time: edge === "left" ? time : item.start_time,
+            end_time: edge === "left" ? item.end_time : time,
+          }
           : item
       )
     );
@@ -58,14 +65,26 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
   };
 
   const ItemDoubleClick = (itemId, e, time) => {
-    console.log("DoubleClick", itemId);
-    console.log("DoubleClickItem", items);
-    //const getItems = getCurrentitem();
-    const matchItem = items.filter((item) =>
-      item.id === itemId
-    )
-    console.log("Match", matchItem);
+    if (isModifiable == true) {
+      setAnchorEl(e.currentTarget);
+      console.log("DoubleClick", itemId);
+      console.log("DoubleClickItem", items);
+      //const getItems = getCurrentitem();
+      const matchItem = items.filter((item) =>
+        item.id === itemId
+      )
+      console.log("Match", matchItem[0]);
+      setmatchItemforRemove(matchItem[0]);
+    }
   }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
 
   const itemRenderer = ({
     item,
@@ -138,6 +157,26 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
         itemRenderer={itemRenderer}
         onItemDoubleClick={ItemDoubleClick}
       >
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            <RemoveItem
+              items={items}
+              selectedItemforRemove={matchItemforRemove}
+              setItemsHandler={setItemsHandler}
+            />
+            <EditItem/>
+          </Typography>
+        </Popover>
+
         <TimelineMarkers>
           <TodayMarker></TodayMarker>
         </TimelineMarkers>
