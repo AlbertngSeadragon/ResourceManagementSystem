@@ -107,8 +107,8 @@ function Charts() {
 
   const [isModifiable, setIsModifiable] = useState(false);
 
-  const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
-  const [beforeModifiedGroups, setBeforeModifiedGroups] = useState(null);
+  const [beforeModifiedItems, setBeforeModifiedItems] = useState(ExpenseGroups);
+  const [beforeModifiedGroups, setBeforeModifiedGroups] = useState(ExpenseItems);
 
   const handleModify = () => {
     setIsModifiable(!isModifiable);
@@ -120,6 +120,7 @@ function Charts() {
     //setIsModifiable(false);
     setItemsHandler(beforeModifiedItems);
     setGroupsHandler(beforeModifiedGroups);
+    console.log("Beforeitem", beforeModifiedItems)
   };
 
   const setBalanceChartPlotsHandler = function (plots) {

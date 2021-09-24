@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from "react";
 
-export default function RemoveItem({ items, selectedItemforRemove, setItemsHandler }) {
+export default function RemoveItem({ items, selectedItemforRemove, setItemsHandler, isModifiable }) {
 
     const itemRemovefromExpense = () => {
-        console.log("Removeitemjs items", items);
-        console.log("Removeitemjs selectedItem", selectedItemforRemove);
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].id === selectedItemforRemove.id) {
-                items = items.filter(item => item.id !== selectedItemforRemove.id);
-                let j = i;
-                //console.log("after", items[i].id, selectedItem.id)
-                while ((j) < items.length) {
-                    items[j].id = items[j].id - 1;
-                    console.log(items[j]);
-                    j++;
+        if (isModifiable){
+            let useitems = items
+            console.log("Removeitemjs items", useitems);
+            console.log("Removeitemjs selectedItem", selectedItemforRemove);
+            for (let i = 0; i < useitems.length; i++) {
+                if (useitems[i].id === selectedItemforRemove.id) {
+                    useitems = useitems.filter(item => item.id !== selectedItemforRemove.id);
+                    let j = i;
+                    //console.log("after", useitems[i].id, selectedItem.id)
+                    while ((j) < useitems.length) {
+                        useitems[j].id = useitems[j].id - 1;
+                        console.log(useitems[j]);
+                        j++;
+                    }
+                    break;
                 }
-                break;
             }
+            setItemsHandler(useitems)
+            console.log("After Remove ======>",useitems);
         }
-        setItemsHandler(items)
-        //console.log("After Remove ======>",items);
     }
     return (
         <div>
-            <button onClick={itemRemovefromExpense}>Delete</button>
+            <button onMouseDown={itemRemovefromExpense}>Delete</button>
         </div>
     )
 }

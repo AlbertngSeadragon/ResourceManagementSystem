@@ -172,6 +172,7 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
               items={items}
               selectedItemforRemove={matchItemforRemove}
               setItemsHandler={setItemsHandler}
+              isModifiable={isModifiable}
             />
             <EditItem/>
           </Typography>
