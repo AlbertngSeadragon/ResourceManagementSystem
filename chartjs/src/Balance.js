@@ -66,7 +66,7 @@ function Balance({ balanceChartPlots, projects }) {
 
   useEffect(() => {
     console.log("Plots useEffect called", plots);
-    if (plots.length !== 0) {
+    if (plots.length !== 0 && projects.length !== 0) {
       console.log("Plots useEffect", plots);
       let newChart;
       if (chart === null) {
@@ -92,107 +92,107 @@ function Balance({ balanceChartPlots, projects }) {
             source: plots,
           },
 
-          // ...projects.map((project) => {
-          //   return {
-          //     transform: [
-          //       {
-          //         type: "filter",
-          //         config: {
-          //           dimension: "projectName",
-          //           value: project.projectName,
-          //         },
-          //       },
-          //       {
-          //         type: "sort",
-          //         config: [
-          //           { dimension: "balance", order: "desc" },
-          //           { dimension: "date", order: "asc", parser: "time" },
-          //         ],
-          //       },
-          //     ],
-          //   };
-          // }),
+          ...projects.map((project) => {
+            return {
+              transform: [
+                {
+                  type: "filter",
+                  config: {
+                    dimension: "projectName",
+                    value: project.projectName,
+                  },
+                },
+                {
+                  type: "sort",
+                  config: [
+                    { dimension: "balance", order: "desc" },
+                    { dimension: "date", order: "asc", parser: "time" },
+                  ],
+                },
+              ],
+            };
+          }),
 
-          {
-            transform: [
-              {
-                type: "filter",
-                config: { dimension: "projectName", value: "Project 1" },
-              },
-              {
-                type: "sort",
-                config: [
-                  { dimension: "balance", order: "desc" },
-                  { dimension: "date", order: "asc", parser: "time" },
-                ],
-              },
-            ],
-          },
-          {
-            transform: [
-              {
-                type: "filter",
-                config: { dimension: "projectName", value: "Project 2" },
-              },
-              {
-                type: "sort",
-                config: [
-                  { dimension: "balance", order: "desc" },
-                  { dimension: "date", order: "asc", parser: "time" },
-                ],
-              },
-            ],
-          },
-          {
-            transform: [
-              {
-                type: "filter",
-                config: { dimension: "projectName", value: "Project 3" },
-              },
-              {
-                type: "sort",
-                config: [
-                  { dimension: "balance", order: "desc" },
-                  { dimension: "date", order: "asc", parser: "time" },
-                ],
-              },
-            ],
-          },
+          // {
+          //   transform: [
+          //     {
+          //       type: "filter",
+          //       config: { dimension: "projectName", value: "Project 1" },
+          //     },
+          //     {
+          //       type: "sort",
+          //       config: [
+          //         { dimension: "balance", order: "desc" },
+          //         { dimension: "date", order: "asc", parser: "time" },
+          //       ],
+          //     },
+          //   ],
+          // },
+          // {
+          //   transform: [
+          //     {
+          //       type: "filter",
+          //       config: { dimension: "projectName", value: "Project 2" },
+          //     },
+          //     {
+          //       type: "sort",
+          //       config: [
+          //         { dimension: "balance", order: "desc" },
+          //         { dimension: "date", order: "asc", parser: "time" },
+          //       ],
+          //     },
+          //   ],
+          // },
+          // {
+          //   transform: [
+          //     {
+          //       type: "filter",
+          //       config: { dimension: "projectName", value: "Project 3" },
+          //     },
+          //     {
+          //       type: "sort",
+          //       config: [
+          //         { dimension: "balance", order: "desc" },
+          //         { dimension: "date", order: "asc", parser: "time" },
+          //       ],
+          //     },
+          //   ],
+          // },
         ],
 
-        // series: projects.forEach((project, index) => {
-        //   return {
+        series: projects.map((project, index) => {
+          return {
+            type: "line",
+            step: "end",
+            encode: { x: 1, y: 2 },
+            datasetIndex: index + 1,
+          };
+        }),
+
+        // series: [
+        //   {
         //     type: "line",
         //     step: "end",
         //     encode: { x: 1, y: 2 },
-        //     datasetIndex: index + 1,
-        //   };
-        // }),
-
-        series: [
-          {
-            type: "line",
-            step: "end",
-            encode: { x: 1, y: 2 },
-            datasetIndex: 1,
-          },
-          {
-            type: "line",
-            step: "end",
-            encode: { x: 1, y: 2 },
-            datasetIndex: 2,
-          },
-          {
-            type: "line",
-            step: "end",
-            encode: { x: 1, y: 2 },
-            datasetIndex: 3,
-          },
-        ],
+        //     datasetIndex: 1,
+        //   },
+        //   {
+        //     type: "line",
+        //     step: "end",
+        //     encode: { x: 1, y: 2 },
+        //     datasetIndex: 2,
+        //   },
+        //   {
+        //     type: "line",
+        //     step: "end",
+        //     encode: { x: 1, y: 2 },
+        //     datasetIndex: 3,
+        //   },
+        // ],
       });
       setChart(newChart);
     }
-  }, [plots]);
+  }, [plots, projects]);
   return (
     <div className="chart-container">
       <div ref={myChart} style={{ width: "100%", height: "100%" }}></div>
