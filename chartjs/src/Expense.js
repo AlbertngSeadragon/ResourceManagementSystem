@@ -19,7 +19,7 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
   // const [isModifiable, setIsModifiable] = useState(false);
 
   // const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
-  const [matchItemforRemove, setmatchItemforRemove] = useState(null);
+  const [matchItemforRemoveOREdit, setmatchItemforRemoveOREdit] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
 
   // const handleModify = () => {
@@ -74,7 +74,7 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
         item.id === itemId
       )
       console.log("Match", matchItem[0]);
-      setmatchItemforRemove(matchItem[0]);
+      setmatchItemforRemoveOREdit(matchItem[0]);
     }
   }
 
@@ -170,11 +170,16 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
           <Typography sx={{ p: 2 }}>
             <RemoveItem
               items={items}
-              selectedItemforRemove={matchItemforRemove}
+              selectedItemforRemove={matchItemforRemoveOREdit}
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
             />
-            <EditItem/>
+            <EditItem 
+              items={items}
+              selectedItemforEdit={matchItemforRemoveOREdit}
+              setItemsHandler={setItemsHandler}
+              isModifiable={isModifiable}
+            />
           </Typography>
         </Popover>
 

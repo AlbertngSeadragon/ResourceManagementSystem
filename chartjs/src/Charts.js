@@ -107,20 +107,37 @@ function Charts() {
 
   const [isModifiable, setIsModifiable] = useState(false);
 
-  const [beforeModifiedItems, setBeforeModifiedItems] = useState(ExpenseGroups);
-  const [beforeModifiedGroups, setBeforeModifiedGroups] = useState(ExpenseItems);
+  //const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
+  //const [beforeModifiedGroups, setBeforeModifiedGroups] = useState(null);
 
   const handleModify = () => {
     setIsModifiable(!isModifiable);
-    setBeforeModifiedItems(items);
-    setBeforeModifiedGroups(groups);
+    localStorage.setItem('BeforeItems', JSON.stringify(items));
+    localStorage.setItem('BeforeGroups', JSON.stringify(groups));
+    console.log("HandelModify", items)
+    //setBeforeModifiedItems(items);
+    //setBeforeModifiedGroups(groups);
   };
 
   const handleRestore = () => {
     //setIsModifiable(false);
-    setItemsHandler(beforeModifiedItems);
-    setGroupsHandler(beforeModifiedGroups);
-    console.log("Beforeitem", beforeModifiedItems)
+    //console.log("Handrestoreeee",JSON.parse(localStorage.getItem('BeforeItems')));
+    let Beforeitems = JSON.parse(localStorage.getItem('BeforeItems'));
+    for (let i = 0; i < Beforeitems.length; i++){
+      Beforeitems[i].start_time = moment(moment(Beforeitems[i].start_time).format("YYYY-MM-DD"));
+      Beforeitems[i].end_time = moment(moment(Beforeitems[i].end_time).format("YYYY-MM-DD"));
+    }
+    //console.log("Handle Restore", Beforeitems);
+    setItemsHandler(Beforeitems);
+    //setItems(JSON.parse(localStorage.getItem('BeforeItems')));
+    setGroupsHandler(JSON.parse(localStorage.getItem('BeforeGroups')));
+    //remove
+    //localStorage.removeItem('BeforeItems');
+    //remove
+    //localStorage.removeItem('BeforeGroups');
+    //setItems(beforeModifiedItems);
+    //setGroups(beforeModifiedGroups);
+    //console.log("Beforeitem", beforeModifiedItems)
   };
 
   const setBalanceChartPlotsHandler = function (plots) {
@@ -197,7 +214,7 @@ function Charts() {
           {/* <Grid item xs={18}> */}
           {/* <button onClick={handleModify}>Modify</button> */}
           <FormControlLabel
-            control={<Switch checked={checked} onChange={handleChange} onClick={handleModify}/>}
+            control={<Switch checked={checked} onChange={handleChange} onClick={handleModify} />}
             label="What-if"
           />
           <Collapse in={checked}>
