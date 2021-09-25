@@ -53,15 +53,6 @@ const ExpenseItems = [
     expense: 100000,
   },
   {
-    id: 3,
-    group: 1,
-    title: "Project 2",
-    start_time: moment("2020-10-01"),
-    end_time: moment("2020-11-01"),
-    bgColor: "rgb(255, 99, 132)",
-    expense: 50000,
-  },
-  {
     id: 4,
     group: 2,
     title: "Project 2",
@@ -70,6 +61,16 @@ const ExpenseItems = [
     bgColor: "rgb(255, 99, 132)",
     expense: 300000,
   },
+  {
+    id: 3,
+    group: 1,
+    title: "Project 2",
+    start_time: moment("2020-10-01"),
+    end_time: moment("2020-11-01"),
+    bgColor: "rgb(255, 99, 132)",
+    expense: 50000,
+  },
+
   {
     id: 5,
     group: 2,
@@ -167,6 +168,13 @@ function Charts() {
       });
       items
         .filter((item) => item.title === project.projectName)
+        .sort((a, b) =>
+          moment(a.start_time, "YYYY-MM-DD").isBefore(
+            moment(b.start_time, "YYYY-MM-DD")
+          )
+            ? -1
+            : 1
+        )
         .forEach((item) => {
           remainingBalance = remainingBalance - item.expense;
           plots.push({
