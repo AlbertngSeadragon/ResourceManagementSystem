@@ -108,6 +108,14 @@ function Charts() {
 
   const [isModifiable, setIsModifiable] = useState(false);
 
+  function difference(setA, setB) {
+    let _difference = new Set(setA);
+    for (let elem of setB) {
+      _difference.delete(elem);
+    }
+    return _difference;
+  }
+
   //const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
   //const [beforeModifiedGroups, setBeforeModifiedGroups] = useState(null);
 
@@ -199,7 +207,24 @@ function Charts() {
   }, []);
 
   useEffect(() => {
+    let newSet = new Set(items.map((item) => item.title));
+    let oldSet = new Set(projects.map((project) => project.projectName));
+    let [diffSet] = [...difference(newSet, oldSet)];
+    console.log("diffSet", diffSet);
+    if (diffSet !== undefined) {
+      setProjects([
+        ...projects,
+        {
+          projectName: diffSet,
+          initialBalance: 500000,
+        },
+      ]);
+    }
+  }, [items]);
+
+  useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
+    console.log("setBalanceChartPlots", items);
   }, [groups, items, projects]);
 
   const [checked, setChecked] = useState(false);
@@ -220,7 +245,7 @@ function Charts() {
       <Draggable
         styled={{ position: "relative", zIndex: 999999999999999999999999 }}
       >
-        <div class="whatifcontent">
+        <div className="whatifcontent">
           {/* <Grid item xs={18}> */}
           {/* <button onClick={handleModify}>Modify</button> */}
           <FormControlLabel

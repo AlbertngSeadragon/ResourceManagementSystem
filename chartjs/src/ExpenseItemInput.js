@@ -30,9 +30,12 @@ export default function App({
   const onSubmit = (data) => {
     //data.start_time = moment(data.start_time).format('YYYY-MM-DD');
     Object.assign(data, { id: items.length + 1 });
+    data.expense = Number(data.expense);
+    data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     data.bgColor = data.bgColor.value;
+    console.log("onSubmit", data);
     setItemsHandler([...items, data]);
     // console.log("items inside the Expense", ...items);
     // console.log(ExpenseItems.push(data));
@@ -65,17 +68,17 @@ export default function App({
         backgroundColor: isDisabled
           ? null
           : isSelected
-            ? data.color
-            : isFocused
-              ? color.alpha(0.1).css()
-              : null,
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : null,
         color: isDisabled
           ? "#ccc"
           : isSelected
-            ? chroma.contrast(color, "white") > 2
-              ? "white"
-              : "black"
-            : data.color,
+          ? chroma.contrast(color, "white") > 2
+            ? "white"
+            : "black"
+          : data.color,
         cursor: isDisabled ? "not-allowed" : "default",
 
         ":active": {
@@ -88,7 +91,7 @@ export default function App({
     input: (styles) => ({ ...styles, ...dot() }),
     placeholder: (styles) => ({ ...styles, ...dot() }),
     singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-    menu: (styles) => ({ ...styles, zIndex: 999999999999 })
+    menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
   };
 
   //start_time<input {...register("start_time", { valueAsDate: true })} /><br />
@@ -122,10 +125,16 @@ export default function App({
         defaultValue=""
         rules={{ required: true }}
         render={({ field }) => (
-          <AntdInput type="number" placeholder="Row No. Expense Item" {...field} />
+          <AntdInput
+            type="number"
+            placeholder="Row No. Expense Item"
+            {...field}
+          />
         )}
       />
-      {errors.group && <span className="text-danger">This field is required</span>}
+      {errors.group && (
+        <span className="text-danger">This field is required</span>
+      )}
       {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
       <Controller
         name="title"
@@ -136,39 +145,47 @@ export default function App({
           <AntdInput placeholder="Project Item" {...field} />
         )}
       />
-      {errors.title && <span className="text-danger">This field is required</span>}
+      {errors.title && (
+        <span className="text-danger">This field is required</span>
+      )}
       <div className="container">
-      <Controller
-        name="bgColor"
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <Select
-            class="select-size"
-            {...field}
-            placeholder="Project Colour"
-            options={[
-              // { value: "rgb(54, 162, 235)", label: "Blue" },
-              // { value: "rgb(255, 159, 64)", label: "Red" },
-              // { value: "rgb(43, 178, 76)", label: "Green" },
-              { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
-              { value: "rgb(255, 159, 64)", label: "red", color: "red" },
-              { value: "rgb(43, 178, 76)", label: "green", color: "green" }
-            ]}
-            styles={colourStyles}
-          />
-        )}
-      />
+        <Controller
+          name="bgColor"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              class="select-size"
+              {...field}
+              placeholder="Project Colour"
+              options={[
+                // { value: "rgb(54, 162, 235)", label: "Blue" },
+                // { value: "rgb(255, 159, 64)", label: "Red" },
+                // { value: "rgb(43, 178, 76)", label: "Green" },
+                { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
+                { value: "rgb(255, 159, 64)", label: "red", color: "red" },
+                { value: "rgb(43, 178, 76)", label: "green", color: "green" },
+              ]}
+              styles={colourStyles}
+            />
+          )}
+        />
       </div>
-      {errors.bgColor && <span className="text-danger">This field is required</span>}
+      {errors.bgColor && (
+        <span className="text-danger">This field is required</span>
+      )}
       <Controller
-        name="balance"
+        name="expense"
         control={control}
         defaultValue=""
         rules={{ required: true }}
-        render={({ field }) => <AntdInput type="number" placeholder="Balance Deduction" {...field} />}
+        render={({ field }) => (
+          <AntdInput type="number" placeholder="Balance Deduction" {...field} />
+        )}
       />
-      {errors.balance && <span className="text-danger">This field is required</span>}
+      {errors.expense && (
+        <span className="text-danger">This field is required</span>
+      )}
       {/*title
       <input {...register("title")} /> */}
       <Controller
@@ -184,7 +201,9 @@ export default function App({
           />
         )}
       />
-      {errors.start_time && <span className="text-danger">This field is required</span>}
+      {errors.start_time && (
+        <span className="text-danger">This field is required</span>
+      )}
       <Controller
         name="end_time"
         control={control}
@@ -198,7 +217,9 @@ export default function App({
           />
         )}
       />
-      {errors.end_time && <span className="text-danger">This field is required</span>}
+      {errors.end_time && (
+        <span className="text-danger">This field is required</span>
+      )}
       {/* <Controller
         name="bgColor"
         defaultValue={'r: 200, g: 150, b: 35'}
@@ -208,7 +229,7 @@ export default function App({
       {/* bgColor
       <input {...register("bgColor")} /> */}
       {/* {errors.exampleRequired && <span>This field is required</span>} */}
-      <input type="submit" value="Add"/>
+      <input type="submit" value="Add" />
       {/* <Button type="submit" variant="outlined">Submit</Button> */}
     </form>
   );
