@@ -4,13 +4,17 @@ import "./Form.css";
 import { Input, Button } from "@material-ui/core";
 import { Input as AntdInput } from "antd";
 import TextField from "@mui/material/TextField";
+import moment from "moment";
+import DatePicker from "react-datepicker";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
   items,
   groups,
+  projects,
   setItemsHandler,
   setGroupsHandler,
+  setProjectsHandler,
 }) {
   const {
     control,
@@ -20,9 +24,12 @@ export default function App({
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    Object.assign(data, { id: groups.length + 1 });
-    setGroupsHandler([...groups, data]);
-    console.log("++", ...groups);
+    Object.assign(data, { id: projects.length + 1 });
+    data.initialBalance = Number(data.initialBalance);
+    setProjectsHandler([...projects, data]);
+    // setGroupsHandler([...groups, data]);
+    console.log("++", ...projects);
+    console.log("New Project======>", data)
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
   };
@@ -32,7 +39,7 @@ export default function App({
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <label>New Expense</label>
+      <label>New Project</label>
       {/* register your input into the hook by invoking the "register" function */}
       {/* <input {...register("example")} /> */}
       {/* errors will return when field validation fails  */}
@@ -43,7 +50,7 @@ export default function App({
         </select> */}
       {/* Title
       <input {...register("title")} /> */}
-      <Controller
+      {/* <Controller
         name="title"
         control={control}
         defaultValue=""
@@ -51,8 +58,48 @@ export default function App({
         render={({ field }) => (
           <AntdInput placeholder="Expense Item" {...field} />
         )}
+      /> */}
+      {/* {errors.title && (
+        <span className="text-danger">This field is required</span>
+      )} */}
+      <Controller
+        name="projectName"
+        control={control}
+        defaultValue=""
+        rules={{ required: true }}
+        render={({ field }) => (
+          <AntdInput placeholder="New Project Name" {...field} />
+        )}
       />
-      {errors.title && (
+      {errors.projectName && (
+        <span className="text-danger">This field is required</span>
+      )}
+      <Controller
+        name="initialBalance"
+        control={control}
+        defaultValue=""
+        rules={{ required: true }}
+        render={({ field }) => (
+          <AntdInput type="number" placeholder="New Initial Balance" {...field} />
+        )}
+      />
+      {errors.initialBalance && (
+        <span className="text-danger">This field is required</span>
+      )}
+      <Controller
+        name="start_time"
+        control={control}
+        defaultValue={null}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <DatePicker
+            onChange={(date) => field.onChange(date)}
+            selected={field.value}
+            placeholderText="Initial Date"
+          />
+        )}
+      />
+      {errors.start_time && (
         <span className="text-danger">This field is required</span>
       )}
       {/* {errors.title === "required" ? (

@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import Select from "react-select";
+import CreatableSelect from 'react-select/creatable';
 import { Input, Button } from "@material-ui/core";
 import { Input as AntdInput } from "antd";
 import { RgbaColorPicker } from "react-colorful";
@@ -12,6 +13,7 @@ import "./ExpenseItemInput.css";
 
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 import chroma from "chroma-js";
+import { dataTool } from "echarts";
 
 export default function App({
   items,
@@ -29,13 +31,22 @@ export default function App({
 
   const onSubmit = (data) => {
     //data.start_time = moment(data.start_time).format('YYYY-MM-DD');
+    if (checkedDuplicateExpneseItem(data) == false){
+      setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
+      data.group = Number(groups.length + 1)
+    }
+    else {
+      data.group = Number(data.group.value)
+    }
+    data.title = data.title.label;
+    //setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
     Object.assign(data, { id: items.length + 1 });
     data.expense = Number(data.expense);
-    data.group = Number(data.group);
+    //data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     data.bgColor = data.bgColor.value;
-    console.log("onSubmit", data);
+    console.log("onSubmitFromExpenseInput", data);
     setItemsHandler([...items, data]);
     // console.log("items inside the Expense", ...items);
     // console.log(ExpenseItems.push(data));
@@ -43,6 +54,48 @@ export default function App({
   // const onSubmit = (data) => {
   //     console.log(moment(selectedDate).format("DD/MM/yyyy"));
   //  };
+  function checkedDuplicateExpneseItem(data) {
+    for (let i = 0; i < groups.length; i++) {
+      if (data.group.label === groups[i].title){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+  }
+
+  const optionsGroups = groups.map(function (row) {
+
+    // This function defines the "mapping behaviour". name and title 
+    // data from each "row" from your columns array is mapped to a 
+    // corresponding item in the new "options" array
+
+    return { value: row.id, label: row.title }
+  })
+
+
+  const optionsItemsfilter = items.map(function (row) {
+
+    // This function defines the "mapping behaviour". name and title 
+    // data from each "row" from your columns array is mapped to a 
+    // corresponding item in the new "options" array
+
+    return { value: row.title, label: row.title }
+  })
+
+  const optionsItems = (values) => {
+    let concatArray = values.map(eachValue => {
+      return Object.values(eachValue).join('')
+    })
+    let filterValues = values.filter((value, index) => {
+      return concatArray.indexOf(concatArray[index]) === index
+  
+    })
+    return filterValues
+  }
+
 
   const dot = (color = "#ccc") => ({
     alignItems: "center",
@@ -68,17 +121,17 @@ export default function App({
         backgroundColor: isDisabled
           ? null
           : isSelected
-          ? data.color
-          : isFocused
-          ? color.alpha(0.1).css()
-          : null,
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
         color: isDisabled
           ? "#ccc"
           : isSelected
-          ? chroma.contrast(color, "white") > 2
-            ? "white"
-            : "black"
-          : data.color,
+            ? chroma.contrast(color, "white") > 2
+              ? "white"
+              : "black"
+            : data.color,
         cursor: isDisabled ? "not-allowed" : "default",
 
         ":active": {
@@ -110,7 +163,7 @@ export default function App({
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <label>New Project</label>
+      <label>New Expense</label>
       {/* register your input into the hook by invoking the "register" function */}
       {/**<input {...register("example")} />*/}
       {/* errors will return when field validation fails  */}
@@ -119,7 +172,7 @@ export default function App({
         <option value="Project2">Project2</option>
         <option value="Project3">Project3</option>
         </select>  id<input type="number" {...register("id", { valueAsNumber: true })} /><br /> */}
-      <Controller
+      {/* <Controller
         name="group"
         control={control}
         defaultValue=""
@@ -134,9 +187,26 @@ export default function App({
       />
       {errors.group && (
         <span className="text-danger">This field is required</span>
+      )} */}
+      <div className="container">
+        <Controller
+          name="group"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <CreatableSelect
+              class="select-size"
+              {...field}
+              placeholder="Expense Item"
+              options={optionsGroups}
+            />
+          )} />
+      </div>
+      {errors.group && (
+        <span className="text-danger">This field is required</span>
       )}
       {/* <input type="number" {...register("group", { valueAsNumber: true })} /> */}
-      <Controller
+      {/* <Controller
         name="title"
         control={control}
         defaultValue=""
@@ -144,7 +214,21 @@ export default function App({
         render={({ field }) => (
           <AntdInput placeholder="Project Item" {...field} />
         )}
-      />
+      /> */}
+      <div className="container">
+        <Controller
+          name="title"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <CreatableSelect
+              class="select-size"
+              {...field}
+              placeholder="Project Item"
+              options={optionsItems(optionsItemsfilter)}
+            />
+          )} />
+      </div>
       {errors.title && (
         <span className="text-danger">This field is required</span>
       )}
@@ -163,8 +247,11 @@ export default function App({
                 // { value: "rgb(255, 159, 64)", label: "Red" },
                 // { value: "rgb(43, 178, 76)", label: "Green" },
                 { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
-                { value: "rgb(255, 159, 64)", label: "red", color: "red" },
+                { value: "rgb(255, 0, 0)", label: "red", color: "red" },
                 { value: "rgb(43, 178, 76)", label: "green", color: "green" },
+                { value: "rgb(255,255,0)", label: "yellow", color: "yellow" },
+                { value: "rgb(43, 178, 76)", label: "pink", color: "pink" },
+                { value: "rgb(128,0,128)", label: "purple", color: "purple" },
               ]}
               styles={colourStyles}
             />

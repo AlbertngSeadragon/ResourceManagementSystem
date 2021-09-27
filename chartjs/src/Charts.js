@@ -165,6 +165,10 @@ function Charts() {
     setGroups(groups);
   };
 
+  const setProjectsHandler = function (projects) {
+    setProjects(projects);
+  };
+
   const balanceChartPlotsGenerator = function () {
     let plots = [];
     projects.forEach((project) => {
@@ -269,8 +273,10 @@ function Charts() {
             <Form
               groups={groups}
               items={items}
+              projects={projects}
               setItemsHandler={setItemsHandler}
               setGroupsHandler={setGroupsHandler}
+              setProjectsHandler={setProjectsHandler}
               setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
             ></Form>
             {/* </Grid> */}
