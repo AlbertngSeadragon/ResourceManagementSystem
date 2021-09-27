@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import "./RemoveItem.css"
 
-export default function RemoveItem({ items, selectedItemforRemove, setItemsHandler, isModifiable }) {
+export default function RemoveItem({ items, selectedItemforRemove, setItemsHandler, isModifiable, setAnchorEl}) {
 
     const itemRemovefromExpense = () => {
         if (isModifiable){
@@ -21,11 +22,12 @@ export default function RemoveItem({ items, selectedItemforRemove, setItemsHandl
                 }
             }
             setItemsHandler(useitems)
+            setAnchorEl(null); //Remove  the small box
             console.log("After Remove ======>",useitems);
         }
     }
     return (
-        <div>
+        <div className="RemoveButton">
             <button onMouseDown={itemRemovefromExpense}>Delete</button>
         </div>
     )

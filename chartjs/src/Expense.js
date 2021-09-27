@@ -171,6 +171,7 @@ function Expense({ items, groups, setItemsHandler, isModifiable }) {
               selectedItemforRemove={matchItemforRemoveOREdit}
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
+              setAnchorEl={setAnchorEl}
             />
             <EditItem
               items={items}
