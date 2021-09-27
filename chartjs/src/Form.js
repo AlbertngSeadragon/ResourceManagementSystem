@@ -26,6 +26,7 @@ export default function App({
   const onSubmit = (data) => {
     Object.assign(data, { id: projects.length + 1 });
     data.initialBalance = Number(data.initialBalance);
+    data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     setProjectsHandler([...projects, data]);
     // setGroupsHandler([...groups, data]);
     console.log("++", ...projects);

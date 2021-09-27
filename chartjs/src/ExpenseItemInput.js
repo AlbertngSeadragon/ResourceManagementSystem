@@ -144,7 +144,7 @@ export default function App({
     input: (styles) => ({ ...styles, ...dot() }),
     placeholder: (styles) => ({ ...styles, ...dot() }),
     singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-    menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
+    //menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
   };
 
   //start_time<input {...register("start_time", { valueAsDate: true })} /><br />

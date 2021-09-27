@@ -21,9 +21,9 @@ import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
 const Projects = [
-  { projectName: "Project 1", initialBalance: 550000 },
-  { projectName: "Project 2", initialBalance: 500000 },
-  { projectName: "Project 3", initialBalance: 400000 },
+  { projectName: "Project 1", initialBalance: 550000, start_time: moment("2020-11-01") },
+  { projectName: "Project 2", initialBalance: 500000, start_time: moment("2021-03-01"), },
+  { projectName: "Project 3", initialBalance: 400000, start_time: moment("2020-11-01"), },
 ];
 
 const ExpenseGroups = [
@@ -123,7 +123,8 @@ function Charts() {
     setIsModifiable(!isModifiable);
     localStorage.setItem("BeforeItems", JSON.stringify(items));
     localStorage.setItem("BeforeGroups", JSON.stringify(groups));
-    console.log("HandelModify", items);
+    localStorage.setItem("BeforeProjects", JSON.stringify(projects));
+    //console.log("HandelModify", JSON.stringify(projects));
     //setBeforeModifiedItems(items);
     //setBeforeModifiedGroups(groups);
   };
@@ -144,6 +145,14 @@ function Charts() {
     setItemsHandler(Beforeitems);
     //setItems(JSON.parse(localStorage.getItem('BeforeItems')));
     setGroupsHandler(JSON.parse(localStorage.getItem("BeforeGroups")));
+
+    let BeforeProjects = JSON.parse(localStorage.getItem("BeforeProjects"));
+    for (let i = 0; i < BeforeProjects.length; i++) {
+      BeforeProjects[i].start_time = moment(
+        moment(BeforeProjects[i].start_time).format("YYYY-MM-DD")
+      );
+    }
+    setProjectsHandler(BeforeProjects);
     //remove
     //localStorage.removeItem('BeforeItems');
     //remove
@@ -247,7 +256,7 @@ function Charts() {
       ></Balance>
       {/* </Grid> */}
       <Draggable
-        styled={{ position: "relative", zIndex: 999999999999999999999999 }}
+        styled={{ position: "relative"}}
       >
         <div className="whatifcontent">
           {/* <Grid item xs={18}> */}
