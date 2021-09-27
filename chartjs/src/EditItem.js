@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm, Controller } from "react-hook-form";
 import { Input as AntdInput } from "antd";
+import "./EditItem.css";
 
 function EditItem({ items, selectedItemforEdit, setItemsHandler, isModifiable }) {
     const {
@@ -24,7 +25,7 @@ function EditItem({ items, selectedItemforEdit, setItemsHandler, isModifiable })
     };
 
     return (
-        <div>
+        <div className="EditItem">
             <br></br>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <Controller

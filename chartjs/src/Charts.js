@@ -264,7 +264,7 @@ function Charts() {
           />
           <Collapse in={checked}>
             {<button onMouseDown={handleRestore}>Reset</button>}
-            <h2>isModifiable: {isModifiable.toString()}</h2>
+            {/* <h2>isModifiable: {isModifiable.toString()}</h2> */}
 
             {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}
             {/* <Card sx={{ maxWidth: 500 }}> */}
