@@ -18,6 +18,7 @@ import { dataTool } from "echarts";
 export default function App({
   items,
   groups,
+  projects,
   setItemsHandler,
   setGroupsHandler,
 }) {
@@ -76,25 +77,29 @@ export default function App({
   })
 
 
-  const optionsItemsfilter = items.map(function (row) {
+  // const optionsItemsfilter = items.map(function (row) {
 
-    // This function defines the "mapping behaviour". name and title 
-    // data from each "row" from your columns array is mapped to a 
-    // corresponding item in the new "options" array
+  //   // This function defines the "mapping behaviour". name and title 
+  //   // data from each "row" from your columns array is mapped to a 
+  //   // corresponding item in the new "options" array
 
-    return { value: row.title, label: row.title }
-  })
+  //   return { value: row.title, label: row.title }
+  // })
 
-  const optionsItems = (values) => {
-    let concatArray = values.map(eachValue => {
-      return Object.values(eachValue).join('')
-    })
-    let filterValues = values.filter((value, index) => {
-      return concatArray.indexOf(concatArray[index]) === index
+  // const optionsItems = (values) => {
+  //   let concatArray = values.map(eachValue => {
+  //     return Object.values(eachValue).join('')
+  //   })
+  //   let filterValues = values.filter((value, index) => {
+  //     return concatArray.indexOf(concatArray[index]) === index
   
-    })
-    return filterValues
-  }
+  //   })
+  //   return filterValues
+  // }
+
+  const optionsProjects =  projects.map(item => {
+    return { value: item.projectName, label: item.projectName }
+  })
 
 
   const dot = (color = "#ccc") => ({
@@ -221,11 +226,13 @@ export default function App({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <CreatableSelect
+            // <CreatableSelect
+            <Select
               class="select-size"
               {...field}
               placeholder="Project Item"
-              options={optionsItems(optionsItemsfilter)}
+              // options={optionsItems(optionsItemsfilter)}
+              options={optionsProjects}
             />
           )} />
       </div>
@@ -241,7 +248,7 @@ export default function App({
             <Select
               class="select-size"
               {...field}
-              placeholder="Project Colour"
+              placeholder="Expense Item Colour"
               options={[
                 // { value: "rgb(54, 162, 235)", label: "Blue" },
                 // { value: "rgb(255, 159, 64)", label: "Red" },
@@ -267,7 +274,7 @@ export default function App({
         defaultValue=""
         rules={{ required: true }}
         render={({ field }) => (
-          <AntdInput type="number" placeholder="Balance Deduction" {...field} />
+          <AntdInput type="number" placeholder="Expense Amount" {...field} />
         )}
       />
       {errors.expense && (

@@ -1,5 +1,6 @@
 .css-j204z7-MuiFormControlLabel-root {
-  margin-left: 100px !important;
+  /* margin-left: 100px !important; */
+  margin-left: 40px !important;
 }
 
 .css-julti5-MuiSwitch-root {
@@ -11,11 +12,11 @@
   width: fit-content !important;
 }
 
-.whatif {
+/* .whatif {
   margin-left: 600px;
-}
+} */
 
-.whatifcontent {
+/* .whatifcontent {
   cursor: move;
   color: black;
   max-width: fit-content;
@@ -24,10 +25,11 @@
   margin: auto;
   user-select: none;
   position: relative;
-}
+} */
 
 .react-draggable {
   position: relative !important;
+  margin-left: -50px;
   z-index: 9999999999999999999999999999999999999 !important;
 }
 
@@ -44,8 +46,9 @@ input[type="submit"] {
   width: 300px;
 }
 
-button {
-  margin-left: 120px;
+.resetButton {
+  /* margin-left: 80px; */
+  margin-left: 80px;
   background: #ec5990;
   color: white;
   text-transform: uppercase;

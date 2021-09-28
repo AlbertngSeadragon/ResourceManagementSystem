@@ -6,6 +6,8 @@ import { Input as AntdInput } from "antd";
 import TextField from "@mui/material/TextField";
 import moment from "moment";
 import DatePicker from "react-datepicker";
+import Select from "react-select";
+import chroma from "chroma-js";
 // import { ExpenseItems, ExpenseGroups } from "./Expense";
 
 export default function App({
@@ -26,13 +28,65 @@ export default function App({
   const onSubmit = (data) => {
     Object.assign(data, { id: projects.length + 1 });
     data.initialBalance = Number(data.initialBalance);
+    data.bgColor = data.bgColor.value;
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
+    data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     setProjectsHandler([...projects, data]);
     // setGroupsHandler([...groups, data]);
     console.log("++", ...projects);
     console.log("New Project======>", data)
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
+  };
+
+  const dot = (color = "#ccc") => ({
+    alignItems: "center",
+    display: "flex",
+
+    ":before": {
+      backgroundColor: color,
+      borderRadius: 10,
+      content: '" "',
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10,
+    },
+  });
+
+  const colourStyles = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? null
+          : isSelected
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
+        color: isDisabled
+          ? "#ccc"
+          : isSelected
+            ? chroma.contrast(color, "white") > 2
+              ? "white"
+              : "black"
+            : data.color,
+        cursor: isDisabled ? "not-allowed" : "default",
+
+        ":active": {
+          ...styles[":active"],
+          backgroundColor:
+            !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+        },
+      };
+    },
+    input: (styles) => ({ ...styles, ...dot() }),
+    placeholder: (styles) => ({ ...styles, ...dot() }),
+    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+    //menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
   };
 
   // console.log(watch("example")); // watch input value by passing the name of it
@@ -75,13 +129,42 @@ export default function App({
       {errors.projectName && (
         <span className="text-danger">This field is required</span>
       )}
+      <div className="container">
+        <Controller
+          name="bgColor"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              class="select-size"
+              {...field}
+              placeholder="Project Colour"
+              options={[
+                // { value: "rgb(54, 162, 235)", label: "Blue" },
+                // { value: "rgb(255, 159, 64)", label: "Red" },
+                // { value: "rgb(43, 178, 76)", label: "Green" },
+                { value: "rgb(54, 162, 235)", label: "blue", color: "blue" },
+                { value: "rgb(255, 0, 0)", label: "red", color: "red" },
+                { value: "rgb(43, 178, 76)", label: "green", color: "green" },
+                { value: "rgb(255,255,0)", label: "yellow", color: "yellow" },
+                { value: "rgb(43, 178, 76)", label: "pink", color: "pink" },
+                { value: "rgb(128,0,128)", label: "purple", color: "purple" },
+              ]}
+              styles={colourStyles}
+            />
+          )}
+        />
+      </div>
+      {errors.bgColor && (
+        <span className="text-danger">This field is required</span>
+      )}
       <Controller
         name="initialBalance"
         control={control}
         defaultValue=""
         rules={{ required: true }}
         render={({ field }) => (
-          <AntdInput type="number" placeholder="New Initial Balance" {...field} />
+          <AntdInput type="number" placeholder="Initial Balance" {...field} />
         )}
       />
       {errors.initialBalance && (
@@ -96,11 +179,27 @@ export default function App({
           <DatePicker
             onChange={(date) => field.onChange(date)}
             selected={field.value}
-            placeholderText="Initial Date"
+            placeholderText="Start Date"
           />
         )}
       />
       {errors.start_time && (
+        <span className="text-danger">This field is required</span>
+      )}
+      <Controller
+        name="end_time"
+        control={control}
+        defaultValue={null}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <DatePicker
+            onChange={(date) => field.onChange(date)}
+            selected={field.value}
+            placeholderText="End Date"
+          />
+        )}
+      />
+      {errors.end_time && (
         <span className="text-danger">This field is required</span>
       )}
       {/* {errors.title === "required" ? (

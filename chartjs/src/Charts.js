@@ -7,6 +7,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Divider from '@mui/material/Divider';
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
@@ -21,9 +22,9 @@ import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
 const Projects = [
-  { projectName: "Project 1", initialBalance: 550000, start_time: moment("2020-11-01") },
-  { projectName: "Project 2", initialBalance: 500000, start_time: moment("2021-03-01"), },
-  { projectName: "Project 3", initialBalance: 400000, start_time: moment("2020-11-01"), },
+  { id: 1, projectName: "Project 1", initialBalance: 550000, start_time: moment("2020-11-01"), end_time: moment("2021-04-01"), bgColor: "rgb(54, 162, 235)", },
+  { id: 2, projectName: "Project 2", initialBalance: 500000, start_time: moment("2021-03-01"), end_time: moment("2020-12-01"), bgColor: "rgb(255, 99, 132)", },
+  { id: 3, projectName: "Project 3", initialBalance: 400000, start_time: moment("2020-11-01"), end_time: moment("2021-03-01"), bgColor: "rgb(43, 178, 76)", },
 ];
 
 const ExpenseGroups = [
@@ -250,70 +251,81 @@ function Charts() {
     <div>
       {/* <Grid container spacing={2}>
         <Grid item xs={12}> */}
-      <Balance
-        balanceChartPlots={balanceChartPlots}
-        projects={projects}
-      ></Balance>
-      {/* </Grid> */}
-      <Draggable
-        styled={{ position: "relative"}}
-      >
-        <div className="whatifcontent">
-          {/* <Grid item xs={18}> */}
-          {/* <button onClick={handleModify}>Modify</button> */}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                onClick={handleModify}
+      <Grid container spacing={1}>
+        <Grid xs={9}>
+        <br/>
+          <Balance
+            balanceChartPlots={balanceChartPlots}
+            projects={projects}
+          ></Balance>
+          <Divider/>
+          <Expense
+            groups={groups}
+            items={items}
+            setItemsHandler={setItemsHandler}
+            setGroupsHandler={setGroupsHandler}
+            setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+            isModifiable={isModifiable}
+          ></Expense>
+        </Grid>
+        <Grid xs={3}>
+          <Draggable
+            styled={{ position: "relative" }}
+          >
+            <div className="whatifcontent">
+              {/* <Grid item xs={18}> */}
+              {/* <button onClick={handleModify}>Modify</button> */}
+              <br/>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    onClick={handleModify}
+                  />
+                }
+                label="What-if"
               />
-            }
-            label="What-if"
-          />
-          <Collapse in={checked}>
-            {<button onMouseDown={handleRestore}>Reset</button>}
-            {/* <h2>isModifiable: {isModifiable.toString()}</h2> */}
+              <Collapse in={checked}>
+                {<button className="resetButton" onMouseDown={handleRestore}>Reset</button>}
+                {/* <h2>isModifiable: {isModifiable.toString()}</h2> */}
 
-            {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}
-            {/* <Card sx={{ maxWidth: 500 }}> */}
+                {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}
+                {/* <Card sx={{ maxWidth: 500 }}> */}
 
-            {/* <Grid item xs={5}> */}
-            <Form
-              groups={groups}
-              items={items}
-              projects={projects}
-              setItemsHandler={setItemsHandler}
-              setGroupsHandler={setGroupsHandler}
-              setProjectsHandler={setProjectsHandler}
-              setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-            ></Form>
-            {/* </Grid> */}
-            {/* <Grid item xs={5}> */}
-            <ExpenseItemInput
-              groups={groups}
-              items={items}
-              setItemsHandler={setItemsHandler}
-              setGroupsHandler={setGroupsHandler}
-              setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-            ></ExpenseItemInput>
-            {/* </Grid> */}
+                {/* <Grid item xs={5}> */}
+                <Form
+                  groups={groups}
+                  items={items}
+                  projects={projects}
+                  setItemsHandler={setItemsHandler}
+                  setGroupsHandler={setGroupsHandler}
+                  setProjectsHandler={setProjectsHandler}
+                  setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                ></Form>
+                {/* </Grid> */}
+                {/* <Grid item xs={5}> */}
+                <ExpenseItemInput
+                  groups={groups}
+                  items={items}
+                  projects={projects}
+                  setItemsHandler={setItemsHandler}
+                  setGroupsHandler={setGroupsHandler}
+                  setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                ></ExpenseItemInput>
+                {/* </Grid> */}
 
-            {/* </Card> */}
-            {/* </Grid> */}
-          </Collapse>
-          {/* </Grid> */}
-        </div>
-      </Draggable>
+                {/* </Card> */}
+                {/* </Grid> */}
+              </Collapse>
+              {/* </Grid> */}
+            </div>
+          </Draggable>
+        </Grid>
+      </Grid>
+      {/* </Grid> */}
+
       {/* <Grid item xs={12}> */}
-      <Expense
-        groups={groups}
-        items={items}
-        setItemsHandler={setItemsHandler}
-        setGroupsHandler={setGroupsHandler}
-        setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-        isModifiable={isModifiable}
-      ></Expense>
       {/* </Grid>
       </Grid> */}
     </div>

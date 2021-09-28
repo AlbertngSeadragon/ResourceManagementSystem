@@ -33,7 +33,7 @@ function EditItem({ items, selectedItemforEdit, setItemsHandler, isModifiable })
                     control={control}
                     defaultValue=""
                     rules={{ required: true }}
-                    render={({ field }) => <AntdInput type="number" placeholder="New Balance Deduction" {...field} />}
+                    render={({ field }) => <AntdInput type="number" placeholder="New Expense Amount" {...field} />}
                 />
                 {errors.balance && <span className="text-danger">This field is required</span>}
                 <input type="submit" value="Update" />
