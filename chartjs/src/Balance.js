@@ -79,7 +79,18 @@ function Balance({ balanceChartPlots, projects }) {
         title: {
           text: "Balance Chart",
         },
-        tooltip: {},
+        tooltip: {
+          trigger: "axis",
+          axisPointer: { type: "cross", label: { precision: "0" } },
+          formatter: "",
+        },
+        legend: {
+          type: "plain",
+          orient: "horizontal",
+          top: 10,
+          data: projects.map((project) => project.projectName),
+          // data: ["Project 1", "Project 2", "Project 3"],
+        },
         xAxis: {
           type: "time",
         },
@@ -162,6 +173,7 @@ function Balance({ balanceChartPlots, projects }) {
 
         series: projects.map((project, index) => {
           return {
+            name: project.projectName,
             type: "line",
             step: "end",
             encode: { x: 1, y: 2 },
