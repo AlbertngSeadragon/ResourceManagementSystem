@@ -82,7 +82,7 @@ function Balance({ balanceChartPlots, projects }) {
         tooltip: {
           trigger: "axis",
           axisPointer: { type: "cross", label: { precision: "0" } },
-          formatter: "",
+          // formatter: "{c}",
         },
         legend: {
           type: "plain",
@@ -93,10 +93,17 @@ function Balance({ balanceChartPlots, projects }) {
         },
         xAxis: {
           type: "time",
+          splitLine: { show: true },
         },
         yAxis: {
           type: "value",
+          axisLabel: {
+            formatter: function (value, index) {
+              return "$" + value;
+            },
+          },
         },
+
         dataset: [
           {
             dimensions: ["projectName", "date", "balance"],
@@ -171,16 +178,22 @@ function Balance({ balanceChartPlots, projects }) {
           // },
         ],
 
-        series: projects.map((project, index) => {
-          return {
-            name: project.projectName,
-            type: "line",
-            step: "end",
-            encode: { x: 1, y: 2 },
-            datasetIndex: index + 1,
-          };
-        }),
-
+        series: [
+          ...projects.map((project, index) => {
+            return {
+              name: project.projectName,
+              type: "line",
+              step: "end",
+              encode: { x: 1, y: 2 },
+              datasetIndex: index + 1,
+            };
+          }),
+          // {
+          //   markLine: {
+          //     data: [{ name: "xxxx", xAxis: "2021-09-01" }],
+          //   },
+          // },
+        ],
         // series: [
         //   {
         //     type: "line",
