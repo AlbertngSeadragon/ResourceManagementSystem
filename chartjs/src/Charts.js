@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
@@ -22,9 +22,30 @@ import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
 const Projects = [
-  { id: 1, projectName: "Project 1", initialBalance: 550000, start_time: moment("2020-11-01"), end_time: moment("2021-04-01"), bgColor: "rgb(54, 162, 235)", },
-  { id: 2, projectName: "Project 2", initialBalance: 500000, start_time: moment("2021-03-01"), end_time: moment("2020-12-01"), bgColor: "rgb(255, 99, 132)", },
-  { id: 3, projectName: "Project 3", initialBalance: 400000, start_time: moment("2020-11-01"), end_time: moment("2021-03-01"), bgColor: "rgb(43, 178, 76)", },
+  {
+    id: 1,
+    projectName: "Project 1",
+    initialBalance: 550000,
+    start_time: moment("2020-11-01"),
+    end_time: moment("2021-04-01"),
+    bgColor: "rgb(54, 162, 235)",
+  },
+  {
+    id: 2,
+    projectName: "Project 2",
+    initialBalance: 500000,
+    start_time: moment("2021-03-01"),
+    end_time: moment("2020-12-01"),
+    bgColor: "rgb(255, 99, 132)",
+  },
+  {
+    id: 3,
+    projectName: "Project 3",
+    initialBalance: 400000,
+    start_time: moment("2020-11-01"),
+    end_time: moment("2021-03-01"),
+    bgColor: "rgb(43, 178, 76)",
+  },
 ];
 
 const ExpenseGroups = [
@@ -168,7 +189,9 @@ function Charts() {
   };
 
   const setItemsHandler = function (items) {
+    console.log("Triggered setItems");
     setItems(items);
+    console.log("items", items);
   };
 
   const setGroupsHandler = function (groups) {
@@ -224,7 +247,7 @@ function Charts() {
     let newSet = new Set(items.map((item) => item.title));
     let oldSet = new Set(projects.map((project) => project.projectName));
     let [diffSet] = [...difference(newSet, oldSet)];
-    console.log("diffSet", diffSet);
+    // console.log("diffSet", diffSet);
     if (diffSet !== undefined) {
       setProjects([
         ...projects,
@@ -234,6 +257,8 @@ function Charts() {
         },
       ]);
     }
+    // setBalanceChartPlots(balanceChartPlotsGenerator());
+    // console.log("setBalanceChartPlots", items);
   }, [items]);
 
   useEffect(() => {
@@ -253,12 +278,12 @@ function Charts() {
         <Grid item xs={12}> */}
       <Grid container spacing={1}>
         <Grid xs={9}>
-        <br/>
+          <br />
           <Balance
             balanceChartPlots={balanceChartPlots}
             projects={projects}
           ></Balance>
-          <Divider/>
+          <Divider />
           <Expense
             groups={groups}
             items={items}
@@ -269,13 +294,11 @@ function Charts() {
           ></Expense>
         </Grid>
         <Grid xs={3}>
-          <Draggable
-            styled={{ position: "relative" }}
-          >
+          <Draggable styled={{ position: "relative" }}>
             <div className="whatifcontent">
               {/* <Grid item xs={18}> */}
               {/* <button onClick={handleModify}>Modify</button> */}
-              <br/>
+              <br />
               <FormControlLabel
                 control={
                   <Switch
@@ -287,7 +310,11 @@ function Charts() {
                 label="What-if"
               />
               <Collapse in={checked}>
-                {<button className="resetButton" onMouseDown={handleRestore}>Reset</button>}
+                {
+                  <button className="resetButton" onMouseDown={handleRestore}>
+                    Reset
+                  </button>
+                }
                 {/* <h2>isModifiable: {isModifiable.toString()}</h2> */}
 
                 {/* <Grid item xs={12} style={{ marginLeft: "100px" }}> */}
