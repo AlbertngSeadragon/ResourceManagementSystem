@@ -26,7 +26,7 @@ const Projects = [
     id: 1,
     projectName: "Project 1",
     initialBalance: 550000,
-    start_time: moment("2020-11-01"),
+    start_time: moment("2020-09-01"),
     end_time: moment("2021-04-01"),
     bgColor: "rgb(54, 162, 235)",
   },
@@ -34,15 +34,15 @@ const Projects = [
     id: 2,
     projectName: "Project 2",
     initialBalance: 500000,
-    start_time: moment("2021-03-01"),
-    end_time: moment("2020-12-01"),
+    start_time: moment("2020-09-01"),
+    end_time: moment("2021-12-01"),
     bgColor: "rgb(255, 99, 132)",
   },
   {
     id: 3,
     projectName: "Project 3",
     initialBalance: 400000,
-    start_time: moment("2020-11-01"),
+    start_time: moment("2020-09-01"),
     end_time: moment("2021-03-01"),
     bgColor: "rgb(43, 178, 76)",
   },
@@ -209,7 +209,7 @@ function Charts() {
       plots.push({
         projectName: project.projectName,
         balance: remainingBalance,
-        date: moment("2020-09-01").format("YYYY-MM-DD"),
+        date: project.start_time.format("YYYY-MM-DD"),
       });
       items
         .filter((item) => item.title === project.projectName)
@@ -231,7 +231,7 @@ function Charts() {
       plots.push({
         projectName: project.projectName,
         balance: remainingBalance,
-        date: moment().format("YYYY-MM-DD"),
+        date: project.end_time.format("YYYY-MM-DD"),
       });
     });
     // console.log("run 1", plots);

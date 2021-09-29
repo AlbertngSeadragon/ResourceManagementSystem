@@ -183,16 +183,15 @@ function Balance({ balanceChartPlots, projects }) {
             return {
               name: project.projectName,
               type: "line",
+
               step: "end",
               encode: { x: 1, y: 2 },
               datasetIndex: index + 1,
+              // markLine: {
+              //   data: [{ name: "Today", xAxis: "2021-09-01" }],
+              // },
             };
           }),
-          // {
-          //   markLine: {
-          //     data: [{ name: "xxxx", xAxis: "2021-09-01" }],
-          //   },
-          // },
         ],
         // series: [
         //   {
