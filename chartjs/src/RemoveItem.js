@@ -27,8 +27,8 @@ export default function RemoveItem({ items, selectedItemforRemove, setItemsHandl
         }
     }
     return (
-        <div className="RemoveButton">
-            <button onMouseDown={itemRemovefromExpense}>Delete</button>
+        <div>
+            <button className="RemoveButton" onMouseDown={itemRemovefromExpense}>Delete</button>
         </div>
     )
 }
