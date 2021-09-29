@@ -1,3 +1,6 @@
 .RemoveButton {
-    margin-left: -120px;
+    /* margin-left: -120px;
+    width: fit-content; */
+    margin-left: 0px;
+    width: 300px;
 }
