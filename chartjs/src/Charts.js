@@ -49,10 +49,13 @@ const Projects = [
 ];
 
 const ExpenseGroups = [
-  { id: 1, title: "Research Student" },
-  { id: 2, title: "Research Assistant" },
-  { id: 3, title: "General Expense" },
-  { id: 4, title: "Equipment Expense" },
+  { id: 1, title: "General Expense" },
+  { id: 2, title: "Equipment Expense" },
+  { id: 3, title: "Conference" },
+  { id: 4, title: "RStudent - MPhill" },
+  { id: 5, title: "RStudent - PHD" },
+  { id: 6, title: "Staff - RA" },
+  { id: 7, title: "Staff - Admin" },
 ];
 
 const ExpenseItems = [

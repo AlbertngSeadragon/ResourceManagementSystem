@@ -14,6 +14,7 @@ function EditItem({
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -27,6 +28,7 @@ function EditItem({
       console.log("From the edititem", items);
       setItemsHandler([...items]);
       //   console.log("items", items);
+      reset();
     }
   };
 
