@@ -23,6 +23,7 @@ export default function App({
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -37,6 +38,7 @@ export default function App({
     console.log("New Project======>", data)
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
+    reset();
   };
 
   const dot = (color = "#ccc") => ({
