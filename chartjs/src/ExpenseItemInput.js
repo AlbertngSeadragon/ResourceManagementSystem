@@ -27,37 +27,69 @@ export default function App({
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const [showEndDate, setShowEndDate] = useState(true);
+
+  const [projectColor, setProjectColor] = useState(null);
+
+
   const onSubmit = (data) => {
     //data.start_time = moment(data.start_time).format('YYYY-MM-DD');
-    if (checkedDuplicateExpneseItem(data) == false){
-      setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
-      data.group = Number(groups.length + 1)
-    }
-    else {
-      data.group = Number(data.group.value)
-    }
+    // if (checkedDuplicateExpneseItem(data) == false) {
+    //   setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
+    //   data.group = Number(groups.length + 1)
+    //   console.log("No duplicate", data.group)
+    // }
+    // else {
+    //   data.group = Number(data.group.value)
+    //   console.log("Yes duplicate", data.group)
+    // }
+    data.group = Number(data.group.value)
     data.title = data.title.label;
     //setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
     Object.assign(data, { id: items.length + 1 });
-    data.expense = Number(data.expense);
+    if(data.group == 4){ // MPhill 2 year
+      data.expense = Number(data.expense)*12*2
+    }
+    else if (data.group == 5){ //PHD 4 year
+      data.expense = Number(data.expense)*12*4;
+    }
+    else{
+      data.group = Number(data.group);
+    }
     //data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
-    data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
-    data.bgColor = data.bgColor.value;
+    if (showEndDate == false){
+      if(data.group == 4){ //Mphill
+        data.end_time = moment(moment(data.start_time).add(2, 'years').format("YYYY-MM-DD"));
+      }
+      else if (data.group == 5){ //PHD
+        data.end_time = moment(moment(data.start_time).add(4, 'years').format("YYYY-MM-DD"));
+      }
+      else{// For one off item
+        data.end_time = moment(moment(data.start_time).add(1, 'days').format("YYYY-MM-DD")); 
+      }
+    }
+    else{
+      data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
+    }
+    //data.bgColor = data.bgColor.value;
+    data.bgColor = projectColor
     console.log("onSubmitFromExpenseInput", data);
     setItemsHandler([...items, data]);
     // console.log("items inside the Expense", ...items);
     // console.log(ExpenseItems.push(data));
+    reset();
   };
   // const onSubmit = (data) => {
   //     console.log(moment(selectedDate).format("DD/MM/yyyy"));
   //  };
   function checkedDuplicateExpneseItem(data) {
     for (let i = 0; i < groups.length; i++) {
-      if (data.group.label === groups[i].title){
+      if (data.group.id == groups[i].id) {
         return true;
       }
       else {
@@ -77,6 +109,7 @@ export default function App({
   })
 
 
+
   // const optionsItemsfilter = items.map(function (row) {
 
   //   // This function defines the "mapping behaviour". name and title 
@@ -92,65 +125,65 @@ export default function App({
   //   })
   //   let filterValues = values.filter((value, index) => {
   //     return concatArray.indexOf(concatArray[index]) === index
-  
+
   //   })
   //   return filterValues
   // }
 
-  const optionsProjects =  projects.map(item => {
-    return { value: item.projectName, label: item.projectName }
+  const optionsProjects = projects.map(item => {
+    return { value: item.id, label: item.projectName, color:item.bgColor }
   })
 
 
-  const dot = (color = "#ccc") => ({
-    alignItems: "center",
-    display: "flex",
+  // const dot = (color = "#ccc") => ({
+  //   alignItems: "center",
+  //   display: "flex",
 
-    ":before": {
-      backgroundColor: color,
-      borderRadius: 10,
-      content: '" "',
-      display: "block",
-      marginRight: 8,
-      height: 10,
-      width: 10,
-    },
-  });
+  //   ":before": {
+  //     backgroundColor: color,
+  //     borderRadius: 10,
+  //     content: '" "',
+  //     display: "block",
+  //     marginRight: 8,
+  //     height: 10,
+  //     width: 10,
+  //   },
+  // });
 
-  const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "white" }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      const color = chroma(data.color);
-      return {
-        ...styles,
-        backgroundColor: isDisabled
-          ? null
-          : isSelected
-            ? data.color
-            : isFocused
-              ? color.alpha(0.1).css()
-              : null,
-        color: isDisabled
-          ? "#ccc"
-          : isSelected
-            ? chroma.contrast(color, "white") > 2
-              ? "white"
-              : "black"
-            : data.color,
-        cursor: isDisabled ? "not-allowed" : "default",
+  // const colourStyles = {
+  //   control: (styles) => ({ ...styles, backgroundColor: "white" }),
+  //   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  //     const color = chroma(data.color);
+  //     return {
+  //       ...styles,
+  //       backgroundColor: isDisabled
+  //         ? null
+  //         : isSelected
+  //           ? data.color
+  //           : isFocused
+  //             ? color.alpha(0.1).css()
+  //             : null,
+  //       color: isDisabled
+  //         ? "#ccc"
+  //         : isSelected
+  //           ? chroma.contrast(color, "white") > 2
+  //             ? "white"
+  //             : "black"
+  //           : data.color,
+  //       cursor: isDisabled ? "not-allowed" : "default",
 
-        ":active": {
-          ...styles[":active"],
-          backgroundColor:
-            !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
-        },
-      };
-    },
-    input: (styles) => ({ ...styles, ...dot() }),
-    placeholder: (styles) => ({ ...styles, ...dot() }),
-    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-    //menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
-  };
+  //       ":active": {
+  //         ...styles[":active"],
+  //         backgroundColor:
+  //           !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+  //       },
+  //     };
+  //   },
+  //   input: (styles) => ({ ...styles, ...dot() }),
+  //   placeholder: (styles) => ({ ...styles, ...dot() }),
+  //   singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+  //   //menu: (styles) => ({ ...styles, zIndex: 999999999999 }),
+  // };
 
   //start_time<input {...register("start_time", { valueAsDate: true })} /><br />
   //end_time<input {...register("end_time", { valueAsDate: true })} /><br />
@@ -198,10 +231,20 @@ export default function App({
           name="group"
           control={control}
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({field: {onChange, ref, value}}) => (
             <CreatableSelect
               class="select-size"
-              {...field}
+              //{...field}
+              onChange={(inputRef) => {
+                if (inputRef.value === 1 || inputRef.value === 2 || inputRef.value === 3 || inputRef.value === 4 || inputRef.value === 5) {
+                  setShowEndDate(false);
+                }
+                else {
+                  setShowEndDate(true);
+                }
+                onChange(inputRef)
+              }}
+              inputRef={ref}
               placeholder="Expense Item"
               options={optionsGroups}
             />
@@ -225,11 +268,16 @@ export default function App({
           name="title"
           control={control}
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({ field: {onChange, ref} }) => (
             // <CreatableSelect
             <Select
               class="select-size"
-              {...field}
+              //{...field}
+              onChange={(inputRef) => {
+                setProjectColor(inputRef.color)
+                onChange(inputRef)
+              }}
+              inputRef={ref}
               placeholder="Project Item"
               // options={optionsItems(optionsItemsfilter)}
               options={optionsProjects}
@@ -237,9 +285,9 @@ export default function App({
           )} />
       </div>
       {errors.title && (
-        <span className="text-danger">This field is required</span>
+        <span className="text-danger">This field 11 is required</span>
       )}
-      <div className="container">
+      {/* <div className="container">
         <Controller
           name="bgColor"
           control={control}
@@ -267,7 +315,7 @@ export default function App({
       </div>
       {errors.bgColor && (
         <span className="text-danger">This field is required</span>
-      )}
+      )} */}
       <Controller
         name="expense"
         control={control}
@@ -298,7 +346,7 @@ export default function App({
       {errors.start_time && (
         <span className="text-danger">This field is required</span>
       )}
-      <Controller
+      {showEndDate ? <Controller
         name="end_time"
         control={control}
         defaultValue={null}
@@ -310,7 +358,7 @@ export default function App({
             placeholderText="End Date"
           />
         )}
-      />
+      /> : null}
       {errors.end_time && (
         <span className="text-danger">This field is required</span>
       )}
