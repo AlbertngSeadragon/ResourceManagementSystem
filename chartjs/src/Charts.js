@@ -67,6 +67,7 @@ const ExpenseItems = [
     end_time: moment("2020-12-01"),
     bgColor: "rgb(54, 162, 235)",
     expense: 150000,
+    description: "Test1"
   },
   {
     id: 2,
@@ -76,24 +77,27 @@ const ExpenseItems = [
     end_time: moment("2021-04-01"),
     bgColor: "rgb(54, 162, 235)",
     expense: 100000,
+    description: "Test2"
   },
   {
-    id: 4,
+    id: 3,
     group: 2,
     title: "Project 2",
     start_time: moment("2021-03-01"),
     end_time: moment("2021-04-01"),
     bgColor: "rgb(255, 99, 132)",
     expense: 300000,
+    description: "Test3"
   },
   {
-    id: 3,
+    id: 4,
     group: 1,
     title: "Project 2",
     start_time: moment("2020-10-01"),
     end_time: moment("2020-11-01"),
     bgColor: "rgb(255, 99, 132)",
     expense: 50000,
+    description: "Test4"
   },
 
   {
@@ -104,6 +108,7 @@ const ExpenseItems = [
     end_time: moment("2020-12-01"),
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
+    description: "Test5"
   },
   {
     id: 6,
@@ -113,6 +118,7 @@ const ExpenseItems = [
     end_time: moment("2020-12-02"),
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
+    description: "Test6"
   },
   {
     id: 7,
@@ -122,6 +128,7 @@ const ExpenseItems = [
     end_time: moment("2021-03-01"),
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
+    description: "Test7"
   },
 ];
 

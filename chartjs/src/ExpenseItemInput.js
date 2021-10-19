@@ -50,6 +50,7 @@ export default function App({
     data.group = Number(data.group.value)
     data.title = data.title.label;
     //setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
+    data.description = data.description;
     Object.assign(data, { id: items.length + 1 });
     if(data.group == 4){ // MPhill 2 year
       data.expense = Number(data.expense)*12*2
@@ -58,7 +59,7 @@ export default function App({
       data.expense = Number(data.expense)*12*4;
     }
     else{
-      data.group = Number(data.group);
+      data.expense = Number(data.expense);
     }
     //data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
@@ -316,6 +317,18 @@ export default function App({
       {errors.bgColor && (
         <span className="text-danger">This field is required</span>
       )} */}
+      <Controller
+        name="description"
+        control={control}
+        defaultValue=""
+        rules={{ required: true }}
+        render={({ field }) => (
+          <AntdInput type="text" placeholder="Description" {...field} />
+        )}
+      />
+      {errors.description && (
+        <span className="text-danger">This field is required</span>
+      )}
       <Controller
         name="expense"
         control={control}
