@@ -55,7 +55,8 @@ const ExpenseGroups = [
   { id: 4, title: "RStudent - MPhill" },
   { id: 5, title: "RStudent - PHD" },
   { id: 6, title: "Staff - RA" },
-  { id: 7, title: "Staff - Admin" },
+  { id: 7, title: "Staff - PostDoc" },
+  { id: 8, title: "Staff - Admin" },
 ];
 
 const ExpenseItems = [
