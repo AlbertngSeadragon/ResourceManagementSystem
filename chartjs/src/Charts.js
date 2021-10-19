@@ -297,6 +297,7 @@ function Charts() {
           <Expense
             groups={groups}
             items={items}
+            projects={projects}
             setItemsHandler={setItemsHandler}
             setGroupsHandler={setGroupsHandler}
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
