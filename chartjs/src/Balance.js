@@ -78,6 +78,9 @@ function Balance({ balanceChartPlots, projects }) {
       newChart.setOption({
         title: {
           text: "Balance Chart",
+          textStyle: {
+            color: "#000",
+          },
         },
         tooltip: {
           trigger: "axis",
@@ -89,11 +92,18 @@ function Balance({ balanceChartPlots, projects }) {
           orient: "horizontal",
           top: 10,
           data: projects.map((project) => project.projectName),
+          // itemStyle: {
+          //   color: "#000",
+          // },
           // data: ["Project 1", "Project 2", "Project 3"],
         },
         xAxis: {
           type: "time",
           splitLine: { show: true },
+          axisLabel: {
+            color: "#000",
+            fontStyle: "normal",
+          },
         },
         yAxis: {
           type: "value",
@@ -101,6 +111,7 @@ function Balance({ balanceChartPlots, projects }) {
             formatter: function (value, index) {
               return "$" + value;
             },
+            color: "#000",
           },
         },
 
