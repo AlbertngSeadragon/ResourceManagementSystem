@@ -187,6 +187,7 @@ function Balance({ balanceChartPlots, projects }) {
               step: "end",
               encode: { x: 1, y: 2 },
               datasetIndex: index + 1,
+              color: project.bgColor,
               // markLine: {
               //   data: [{ name: "Today", xAxis: "2021-09-01" }],
               // },
