@@ -97,6 +97,13 @@ function Balance({ balanceChartPlots, projects }) {
           // },
           // data: ["Project 1", "Project 2", "Project 3"],
         },
+        dataZoom: {
+          type: "inside",
+          // Set filterMode to "none" so that the lines connecting the nodes will
+          // not disappear during zooming
+          // Reference: https://github.com/apache/echarts/issues/3637
+          filterMode: "none",
+        },
         xAxis: {
           type: "time",
           splitLine: { show: true },
