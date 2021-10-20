@@ -84,7 +84,7 @@ function Balance({ balanceChartPlots, projects }) {
         },
         tooltip: {
           trigger: "axis",
-          axisPointer: { type: "cross", label: { precision: "0" } },
+          axisPointer: { label: { precision: "0" } },
           // formatter: "{c}",
         },
         legend: {
