@@ -236,7 +236,7 @@ export default function App({
             <CreatableSelect
               class="select-size"
               //{...field}
-              isClearable
+              //isClearable
               onChange={(inputRef) => {
                 if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
                   inputRef = {
@@ -281,7 +281,7 @@ export default function App({
             <Select
               class="select-size"
               //{...field}
-              isClearable
+              //isClearable
               onChange={(inputRef) => {
                 if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
                   inputRef = {
@@ -355,6 +355,7 @@ export default function App({
       {errors.expense && (
         <span className="text-danger">This field is required</span>
       )}
+      *Mphill And PHD per month
       {/*title
       <input {...register("title")} /> */}
       <Controller

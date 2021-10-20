@@ -166,8 +166,8 @@ function Expense({ items, projects, groups, setItemsHandler, isModifiable }) {
           }}
         >
           <Typography sx={{ p: 2 }}>
-          This Show Current Detail of the Item.<br/>
-          Please change the value if you want to change.
+          Current details of the item.<br/>
+          Please change the value if you want.
             <RemoveItem
               items={items}
               selectedItemforRemove={matchItemforRemoveOREdit}

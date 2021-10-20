@@ -140,7 +140,7 @@ export default function App({
             <Select
               class="select-size"
               {...field}
-              isClearable
+              //isClearable
               placeholder="Project Colour"
               options={[
                 // { value: "rgb(54, 162, 235)", label: "Blue" },
