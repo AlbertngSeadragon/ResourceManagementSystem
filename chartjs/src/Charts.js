@@ -184,6 +184,9 @@ function Charts() {
       BeforeProjects[i].start_time = moment(
         moment(BeforeProjects[i].start_time).format("YYYY-MM-DD")
       );
+      BeforeProjects[i].end_time = moment(
+        moment(BeforeProjects[i].end_time).format("YYYY-MM-DD")
+      );
     }
     setProjectsHandler(BeforeProjects);
     //remove

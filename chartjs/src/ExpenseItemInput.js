@@ -52,29 +52,29 @@ export default function App({
     //setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
     data.description = data.description;
     Object.assign(data, { id: items.length + 1 });
-    if(data.group == 4){ // MPhill 2 year
-      data.expense = Number(data.expense)*12*2
+    if (data.group == 4) { // MPhill 2 year
+      data.expense = Number(data.expense) * 12 * 2
     }
-    else if (data.group == 5){ //PHD 4 year
-      data.expense = Number(data.expense)*12*4;
+    else if (data.group == 5) { //PHD 4 year
+      data.expense = Number(data.expense) * 12 * 4;
     }
-    else{
+    else {
       data.expense = Number(data.expense);
     }
     //data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
-    if (showEndDate == false){
-      if(data.group == 4){ //Mphill
+    if (showEndDate == false) {
+      if (data.group == 4) { //Mphill
         data.end_time = moment(moment(data.start_time).add(2, 'years').format("YYYY-MM-DD"));
       }
-      else if (data.group == 5){ //PHD
+      else if (data.group == 5) { //PHD
         data.end_time = moment(moment(data.start_time).add(4, 'years').format("YYYY-MM-DD"));
       }
-      else{// For one off item
-        data.end_time = moment(moment(data.start_time).add(1, 'days').format("YYYY-MM-DD")); 
+      else {// For one off item
+        data.end_time = moment(moment(data.start_time).add(1, 'days').format("YYYY-MM-DD"));
       }
     }
-    else{
+    else {
       data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     }
     //data.bgColor = data.bgColor.value;
@@ -132,7 +132,7 @@ export default function App({
   // }
 
   const optionsProjects = projects.map(item => {
-    return { value: item.id, label: item.projectName, color:item.bgColor }
+    return { value: item.id, label: item.projectName, color: item.bgColor }
   })
 
 
@@ -232,11 +232,18 @@ export default function App({
           name="group"
           control={control}
           rules={{ required: true }}
-          render={({field: {onChange, ref, value}}) => (
+          render={({ field: { onChange, ref, value } }) => (
             <CreatableSelect
               class="select-size"
               //{...field}
+              isClearable
               onChange={(inputRef) => {
+                if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
+                  inputRef = {
+                    target: inputRef,
+                    value: '',
+                  };
+                }
                 if (inputRef.value === 1 || inputRef.value === 2 || inputRef.value === 3 || inputRef.value === 4 || inputRef.value === 5) {
                   setShowEndDate(false);
                 }
@@ -269,12 +276,19 @@ export default function App({
           name="title"
           control={control}
           rules={{ required: true }}
-          render={({ field: {onChange, ref} }) => (
+          render={({ field: { onChange, ref } }) => (
             // <CreatableSelect
             <Select
               class="select-size"
               //{...field}
+              isClearable
               onChange={(inputRef) => {
+                if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
+                  inputRef = {
+                    target: inputRef,
+                    value: '',
+                  };
+                }
                 setProjectColor(inputRef.color)
                 onChange(inputRef)
               }}
