@@ -43,6 +43,9 @@ function Expense({
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const group = groups[newGroupOrder];
+    const [oldMovedItem] = items.filter((item) => item.id === itemId);
+    let itemAction;
+    let modifyDescription;
     setItemsHandler(
       items.map((item) =>
         item.id === itemId
@@ -55,7 +58,36 @@ function Expense({
           : item
       )
     );
-    setModifiedItemsHandler([...modifiedItems, "Moved"]);
+    if (
+      oldMovedItem.start_time != moment(dragTime) &&
+      oldMovedItem.group == groups[newGroupOrder].id
+    ) {
+      itemAction = "Moved";
+      modifyDescription = `Item start date is modified to ${moment(
+        dragTime
+      ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+        "Do MMMM YYYY"
+      )}`;
+    } else if (oldMovedItem.group != groups[newGroupOrder].id) {
+      itemAction = "Group changed";
+      modifyDescription = `Item group is modified to ${
+        groups[newGroupOrder].id
+      } from ${oldMovedItem.group}, Item start date is modified to ${moment(
+        dragTime
+      ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+        "Do MMMM YYYY"
+      )}`;
+      console.log(oldMovedItem);
+    }
+    setModifiedItemsHandler([
+      ...modifiedItems,
+      {
+        action: itemAction,
+        id: itemId,
+        start_time: moment(dragTime).toString(),
+        description: modifyDescription,
+      },
+    ]);
     console.log("Moved", itemId, dragTime, newGroupOrder);
   };
 
