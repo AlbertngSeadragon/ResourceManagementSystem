@@ -13,7 +13,7 @@ function Balance({ balanceChartPlots, projects }) {
   const [chart, setChart] = useState(null);
 
   useEffect(() => {
-    console.log(balanceChartPlots, projects);
+    // console.log(balanceChartPlots, projects);
     // projects.forEach((project, index) => {
     //   localPlots.push({
     //     name: project.projectName,
@@ -61,13 +61,13 @@ function Balance({ balanceChartPlots, projects }) {
     // console.log("tmp", tmp);
 
     setPlots(balanceChartPlots);
-    console.log("Plots", plots);
+    // console.log("Plots", plots);
   }, [balanceChartPlots, projects]);
 
   useEffect(() => {
-    console.log("Plots useEffect called", plots);
+    // console.log("Plots useEffect called", plots);
     if (plots.length !== 0 && projects.length !== 0) {
-      console.log("Plots useEffect", plots);
+      // console.log("Plots useEffect", plots);
       let newChart;
       if (chart === null) {
         newChart = echarts.init(myChart.current);

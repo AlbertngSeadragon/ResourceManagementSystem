@@ -15,7 +15,15 @@ import Typography from "@mui/material/Typography";
 import RemoveItem from "./RemoveItem";
 import EditItem from "./EditItem";
 
-function Expense({ items, projects, groups, setItemsHandler, isModifiable }) {
+function Expense({
+  items,
+  projects,
+  groups,
+  setItemsHandler,
+  isModifiable,
+  setModifiedItemsHandler,
+  modifiedItems,
+}) {
   // const [isModifiable, setIsModifiable] = useState(false);
 
   // const [beforeModifiedItems, setBeforeModifiedItems] = useState(null);
@@ -47,6 +55,7 @@ function Expense({ items, projects, groups, setItemsHandler, isModifiable }) {
           : item
       )
     );
+    setModifiedItemsHandler([...modifiedItems, "Moved"]);
     console.log("Moved", itemId, dragTime, newGroupOrder);
   };
 
@@ -166,8 +175,9 @@ function Expense({ items, projects, groups, setItemsHandler, isModifiable }) {
           }}
         >
           <Typography sx={{ p: 2 }}>
-          Current details of the item.<br/>
-          Please change the value if you want.
+            Current details of the item.
+            <br />
+            Please change the value if you want.
             <RemoveItem
               items={items}
               selectedItemforRemove={matchItemforRemoveOREdit}

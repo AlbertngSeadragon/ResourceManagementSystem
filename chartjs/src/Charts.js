@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import Balance from "./Balance";
 import Expense from "./Expense";
 import Form from "./Form";
+import ModifiedList from "./ModifiedList";
 import ExpenseItemInput from "./ExpenseItemInput";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 
 import moment from "moment";
 
@@ -138,6 +142,8 @@ function Charts() {
   const [items, setItems] = useState(ExpenseItems);
   const [projects, setProjects] = useState(Projects);
   const [balanceChartPlots, setBalanceChartPlots] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [modifiedItems, setModifiedItems] = useState([]);
 
   const [isModifiable, setIsModifiable] = useState(false);
 
@@ -202,8 +208,12 @@ function Charts() {
     setItems(plots);
   };
 
+  const setModifiedItemsHandler = function (modifiedItems) {
+    setModifiedItems(modifiedItems);
+  };
+
   const setItemsHandler = function (items) {
-    console.log("Triggered setItems");
+    // console.log("Triggered setItems");
     setItems(items);
     console.log("items", items);
   };
@@ -253,6 +263,10 @@ function Charts() {
     return plots;
   };
 
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
   }, []);
@@ -277,21 +291,15 @@ function Charts() {
 
   useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
-    console.log("setBalanceChartPlots", items);
+    // console.log("setBalanceChartPlots", items);
   }, [groups, items, projects]);
-
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
 
   return (
     <div style={{ backgroundColor: isModifiable ? "#fffde0" : "#FFF" }}>
       {/* <Grid container spacing={2}>
         <Grid item xs={12}> */}
       <Grid container spacing={1}>
-        <Grid xs={9}>
+        <Grid xs={7}>
           <br />
           <Balance
             balanceChartPlots={balanceChartPlots}
@@ -306,7 +314,12 @@ function Charts() {
             setGroupsHandler={setGroupsHandler}
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
             isModifiable={isModifiable}
+            setModifiedItemsHandler={setModifiedItemsHandler}
+            modifiedItems={modifiedItems}
           ></Expense>
+        </Grid>
+        <Grid xs={2}>
+          <ModifiedList modifiedItems={modifiedItems}></ModifiedList>
         </Grid>
         <Grid xs={3}>
           <Draggable styled={{ position: "relative" }}>
