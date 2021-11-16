@@ -147,7 +147,7 @@ function Expense({
             backgroundColor,
             color: item.color,
             borderColor,
-            borderStyle: "dashed",
+            borderStyle: isModifiable ? "dashed" : "solid",
             borderWidth: 1,
             borderRadius: 1,
             borderLeftWidth: itemContext.selected ? 3 : 1,

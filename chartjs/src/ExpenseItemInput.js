@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, set, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -34,6 +34,10 @@ export default function App({
   const [showEndDate, setShowEndDate] = useState(true);
 
   const [projectColor, setProjectColor] = useState(null);
+
+  const [projectStartforDatePicker, setProjectStartforDatePicker] = useState(null);
+
+  const [projectEndforDatePicker, setProjectEndforDatePicker] = useState(null);
 
 
   const onSubmit = (data) => {
@@ -132,7 +136,13 @@ export default function App({
   // }
 
   const optionsProjects = projects.map(item => {
-    return { value: item.id, label: item.projectName, color: item.bgColor }
+    return { 
+      value: item.id, 
+      label: item.projectName, 
+      color: item.bgColor, 
+      start_time: item.start_time,
+      end_time: item.end_time,
+    }
   })
 
 
@@ -290,6 +300,8 @@ export default function App({
                   };
                 }
                 setProjectColor(inputRef.color)
+                setProjectStartforDatePicker(inputRef.start_time)
+                setProjectEndforDatePicker(inputRef.end_time)
                 onChange(inputRef)
               }}
               inputRef={ref}
@@ -368,6 +380,9 @@ export default function App({
             onChange={(date) => field.onChange(date)}
             selected={field.value}
             placeholderText="Start Date"
+            filterDate = {(date) => {
+              return projectStartforDatePicker < date && date < projectEndforDatePicker;
+            }}
           />
         )}
       />
@@ -384,6 +399,9 @@ export default function App({
             onChange={(date) => field.onChange(date)}
             selected={field.value}
             placeholderText="End Date"
+            filterDate = {(date) => {
+              return projectStartforDatePicker < date && date < projectEndforDatePicker;
+            }}
           />
         )}
       /> : null}
