@@ -254,7 +254,8 @@ function Charts() {
         });
       plots.push({
         projectName: project.projectName,
-        balance: remainingBalance,
+        //balance: remainingBalance,
+        balance: 0,
         date: project.end_time.format("YYYY-MM-DD"),
       });
     });

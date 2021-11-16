@@ -150,7 +150,7 @@ export default function App({
                 { value: "rgb(255, 0, 0)", label: "red", color: "red" },
                 { value: "rgb(43, 178, 76)", label: "green", color: "green" },
                 { value: "rgb(255,255,0)", label: "yellow", color: "yellow" },
-                { value: "rgb(43, 178, 76)", label: "pink", color: "pink" },
+                { value: "rgb(255,192,203)", label: "pink", color: "pink" },
                 { value: "rgb(128,0,128)", label: "purple", color: "purple" },
               ]}
               styles={colourStyles}

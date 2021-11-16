@@ -206,6 +206,13 @@ function Balance({ balanceChartPlots, projects }) {
               encode: { x: 1, y: 2 },
               datasetIndex: index + 1,
               color: project.bgColor,
+              markPoint: {
+                data: [{
+                  type : "min",
+                  symbol: "diamond",
+                  symbolSize: 20
+                }]
+              },
               // markLine: {
               //   data: [{ name: "Today", xAxis: "2021-09-01" }],
               // },
