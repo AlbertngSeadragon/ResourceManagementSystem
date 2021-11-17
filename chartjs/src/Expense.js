@@ -148,10 +148,10 @@ function Expense({
             color: item.color,
             borderColor,
             borderStyle: (isModifiable && item.isWhatIF == null) ? "dashed" : "solid",
-            borderWidth: 1,
-            borderRadius: 1,
-            borderLeftWidth: itemContext.selected ? 3 : 1,
-            borderRightWidth: itemContext.selected ? 3 : 1,
+            borderWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderRadius: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderLeftWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderRightWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
           },
           // onMouseDown: () => {
           //   console.log("on item click", item);
@@ -167,6 +167,14 @@ function Expense({
             paddingLeft: 3,
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
+            backgroundColor,
+            color: item.color,
+            borderColor,
+            borderStyle: (isModifiable && item.isWhatIF == null) ? "dashed" : "solid",
+            borderWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderRadius: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderLeftWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderRightWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
           }}
         >
           {itemContext.title}
