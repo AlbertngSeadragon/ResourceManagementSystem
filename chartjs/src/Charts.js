@@ -73,6 +73,7 @@ const ExpenseItems = [
     bgColor: "rgb(54, 162, 235)",
     expense: 150000,
     description: "Test1",
+    isWhatIF: false,
   },
   {
     id: 2,
@@ -83,6 +84,7 @@ const ExpenseItems = [
     bgColor: "rgb(54, 162, 235)",
     expense: 100000,
     description: "Test2",
+    isWhatIF: false,
   },
   {
     id: 3,
@@ -93,6 +95,7 @@ const ExpenseItems = [
     bgColor: "rgb(255, 99, 132)",
     expense: 300000,
     description: "Test3",
+    isWhatIF: false,
   },
   {
     id: 4,
@@ -103,6 +106,7 @@ const ExpenseItems = [
     bgColor: "rgb(255, 99, 132)",
     expense: 50000,
     description: "Test4",
+    isWhatIF: false,
   },
 
   {
@@ -114,6 +118,7 @@ const ExpenseItems = [
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
     description: "Test5",
+    isWhatIF: false,
   },
   {
     id: 6,
@@ -124,6 +129,7 @@ const ExpenseItems = [
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
     description: "Test6",
+    isWhatIF: false,
   },
   {
     id: 7,
@@ -134,6 +140,7 @@ const ExpenseItems = [
     bgColor: "rgb(43, 178, 76)",
     expense: 50000,
     description: "Test7",
+    isWhatIF: false,
   },
 ];
 
