@@ -441,6 +441,8 @@ function Charts() {
                   tempItems={tempItems}
                   tempItemsId={tempItemsId}
                   setTempItemsIdHandler={setTempItemsIdHandler}
+                  setModifiedItemsHandler={setModifiedItemsHandler}
+                  modifiedItems={modifiedItems}
                 ></ExpenseItemInput>
                 {/* </Grid> */}
 

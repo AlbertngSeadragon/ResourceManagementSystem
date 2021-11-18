@@ -30,6 +30,8 @@ export default function App({
   tempItems,
   tempItemsId,
   setTempItemsIdHandler,
+  modifiedItems,
+  setModifiedItemsHandler,
 }) {
   const {
     control,
@@ -100,6 +102,21 @@ export default function App({
     data.bgColor = projectColor;
     console.log("onSubmitFromExpenseInput", data);
 
+    setModifiedItemsHandler([
+      ...modifiedItems,
+      {
+        action: "Add",
+        group: data.group,
+        id: data.id,
+        start_time: data.start_time,
+        description: `${data.title} ${groups[data.group - 1].title} Item: ${
+          data.description
+        } with expense $${data.expense} is added to ${moment(
+          data.start_time
+        ).format("Do MMMM YYYY")}.`,
+      },
+    ]);
+
     // Create a copy of project to temp project
     let projectCopy;
     let tempProjectExist = false;
@@ -129,6 +146,7 @@ export default function App({
       projectCopy.projectName = data.title + " (temp)";
       projectCopy.originalProjectName = data.title;
       // console.log("projectCopy: ", projectCopy);
+
       setTempProjectsHandler([...tempProjects, projectCopy]);
       setTempProjectsIdHandler(tempProjectsId + 1);
     }
