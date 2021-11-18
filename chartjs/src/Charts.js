@@ -369,8 +369,10 @@ function Charts() {
           <Divider />
           <Expense
             groups={groups}
-            items={items}
-            projects={projects}
+            //items={items}
+            //projects={projects}
+            items={tempItems}
+            projects={tempProjects}
             setItemsHandler={setItemsHandler}
             setGroupsHandler={setGroupsHandler}
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
