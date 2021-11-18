@@ -85,8 +85,13 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
             color: "#000",
           },
         },
+        // tooltip: {
+        //   trigger: "axis",
+        //   axisPointer: { label: { precision: "0" } },
+        //   // formatter: "{c}",
+        // },
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           axisPointer: { label: { precision: "0" } },
           // formatter: "{c}",
         },
