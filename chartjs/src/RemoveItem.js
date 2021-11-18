@@ -20,6 +20,16 @@ export default function RemoveItem({
           useitems = useitems.filter(
             (item) => item.id !== selectedItemforRemove.id
           );
+          setModifiedItemsHandler([
+            ...modifiedItems,
+            {
+              action: "Remove",
+              group: items[i].group,
+              id: items[i].id,
+              start_time: items[i].start_time,
+              description: `Item ${items[i].description} is removed.`,
+            },
+          ]);
           let j = i;
           //console.log("after", useitems[i].id, selectedItem.id)
           while (j < useitems.length) {

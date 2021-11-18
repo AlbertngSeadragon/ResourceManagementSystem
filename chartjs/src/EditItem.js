@@ -47,7 +47,7 @@ function EditItem({
               group: items[i].group,
               id: items[i].id,
               start_time: items[i].start_time,
-              description: `Item description has changed to ${items[i].description}, with expense $${items[i].expense}.`,
+              description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
             },
           ]);
         }
