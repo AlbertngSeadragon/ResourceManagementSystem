@@ -73,7 +73,7 @@ function Expense({
       modifyDescription = `Item group is modified to ${
         groups[newGroupOrder].title
       } from ${
-        groups[oldMovedItem.group].title
+        groups[oldMovedItem.group - 1].title
       }, Item start date is modified to ${moment(dragTime).format(
         "Do MMMM YYYY"
       )} from ${moment(oldMovedItem.start_time).format("Do MMMM YYYY")}`;
