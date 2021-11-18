@@ -71,18 +71,19 @@ function Expense({
     } else if (oldMovedItem.group != groups[newGroupOrder].id) {
       itemAction = "Group changed";
       modifyDescription = `Item group is modified to ${
-        groups[newGroupOrder].id
-      } from ${oldMovedItem.group}, Item start date is modified to ${moment(
-        dragTime
-      ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+        groups[newGroupOrder].title
+      } from ${
+        groups[oldMovedItem.group].title
+      }, Item start date is modified to ${moment(dragTime).format(
         "Do MMMM YYYY"
-      )}`;
+      )} from ${moment(oldMovedItem.start_time).format("Do MMMM YYYY")}`;
       console.log(oldMovedItem);
     }
     setModifiedItemsHandler([
       ...modifiedItems,
       {
         action: itemAction,
+        group: groups[newGroupOrder].id,
         id: itemId,
         start_time: moment(dragTime).toString(),
         description: modifyDescription,
@@ -147,11 +148,24 @@ function Expense({
             backgroundColor,
             color: item.color,
             borderColor,
-            borderStyle: (isModifiable && item.isWhatIF == null) ? "dashed" : "solid",
-            borderWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderRadius: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderLeftWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderRightWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderStyle:
+              isModifiable && item.isWhatIF == null ? "dashed" : "solid",
+            borderWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderRadius:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderLeftWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderRightWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
           },
           // onMouseDown: () => {
           //   console.log("on item click", item);
@@ -170,11 +184,24 @@ function Expense({
             backgroundColor,
             color: item.color,
             borderColor,
-            borderStyle: (isModifiable && item.isWhatIF == null) ? "dashed" : "solid",
-            borderWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderRadius: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderLeftWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
-            borderRightWidth: itemContext.selected & (isModifiable && item.isWhatIF == null) ? 3 : 1,
+            borderStyle:
+              isModifiable && item.isWhatIF == null ? "dashed" : "solid",
+            borderWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderRadius:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderLeftWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
+            borderRightWidth:
+              itemContext.selected & (isModifiable && item.isWhatIF == null)
+                ? 3
+                : 1,
           }}
         >
           {itemContext.title}
