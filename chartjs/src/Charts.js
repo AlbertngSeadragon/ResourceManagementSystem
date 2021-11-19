@@ -27,6 +27,14 @@ import Group from "rc-image/lib/PreviewGroup";
 
 const Projects = [
   {
+    id: 0,
+    projectName: "Today",
+    initialBalance: 600000,
+    start_time: moment(),
+    end_time: moment(),
+    bgColor: "rgb(0, 0, 0)",
+  },
+  {
     id: 1,
     projectName: "Project 1",
     initialBalance: 550000,
