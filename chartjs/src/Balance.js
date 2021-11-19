@@ -99,6 +99,7 @@ function Balance({ balanceChartPlots, projects }) {
         },
         dataZoom: {
           type: "inside",
+          minSpan: 2, //Zoom to two day only
           // Set filterMode to "none" so that the lines connecting the nodes will
           // not disappear during zooming
           // Reference: https://github.com/apache/echarts/issues/3637
