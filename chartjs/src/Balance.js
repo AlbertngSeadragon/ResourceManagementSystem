@@ -6,7 +6,7 @@ import "./Balance.css";
 import axios from "axios";
 import * as echarts from "echarts";
 
-function Balance({ balanceChartPlots, projects, tempProjects }) {
+function Balance({ balanceChartPlots, projects }) {
   const myChart = useRef(null);
   const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(43, 178, 76)"];
   const [plots, setPlots] = useState([]);
@@ -62,7 +62,7 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
 
     setPlots(balanceChartPlots);
     // console.log("Plots", plots);
-  }, [balanceChartPlots, projects, tempProjects]);
+  }, [balanceChartPlots, projects]);
 
   useEffect(() => {
     // console.log("Plots useEffect called", plots);
@@ -74,9 +74,6 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
       } else {
         newChart = chart;
       }
-      let appendedProject = [...projects, ...tempProjects];
-      // console.log("projects", projects);
-      // console.log("appendedProject", appendedProject);
 
       newChart.setOption({
         title: {
@@ -85,13 +82,8 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
             color: "#000",
           },
         },
-        // tooltip: {
-        //   trigger: "axis",
-        //   axisPointer: { label: { precision: "0" } },
-        //   // formatter: "{c}",
-        // },
         tooltip: {
-          trigger: "item",
+          trigger: "axis",
           axisPointer: { label: { precision: "0" } },
           // formatter: "{c}",
         },
@@ -99,7 +91,7 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
           type: "plain",
           orient: "horizontal",
           top: 10,
-          data: appendedProject.map((project) => project.projectName),
+          data: projects.map((project) => project.projectName),
           // itemStyle: {
           //   color: "#000",
           // },
@@ -136,7 +128,7 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
             source: plots,
           },
 
-          ...appendedProject.map((project) => {
+          ...projects.map((project) => {
             return {
               transform: [
                 {
@@ -211,43 +203,15 @@ function Balance({ balanceChartPlots, projects, tempProjects }) {
               type: "line",
 
               step: "end",
-              lineStyle: { type: "solid" },
               encode: { x: 1, y: 2 },
               datasetIndex: index + 1,
               color: project.bgColor,
               markPoint: {
-                data: [
-                  {
-                    type: "min",
-                    symbol: "diamond",
-                    symbolSize: 20,
-                  },
-                ],
-              },
-              // markLine: {
-              //   data: [{ name: "Today", xAxis: "2021-09-01" }],
-              // },
-            };
-          }),
-          ...tempProjects.map((project, index) => {
-            let datasetIndex = projects.length + index + 1;
-            return {
-              name: project.projectName,
-              type: "line",
-
-              step: "end",
-              lineStyle: { type: "dashed" },
-              encode: { x: 1, y: 2 },
-              datasetIndex: datasetIndex,
-              color: project.bgColor,
-              markPoint: {
-                data: [
-                  {
-                    type: "min",
-                    symbol: "diamond",
-                    symbolSize: 20,
-                  },
-                ],
+                data: [{
+                  type : "min",
+                  symbol: "diamond",
+                  symbolSize: 20
+                }]
               },
               // markLine: {
               //   data: [{ name: "Today", xAxis: "2021-09-01" }],

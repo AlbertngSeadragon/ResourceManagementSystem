@@ -7,13 +7,13 @@ import CardHeader from "@mui/material/CardHeader";
 function ModifiedItem({ modifiedItem }) {
   return (
     <Card sx={{ marginTop: "5px", marginBottom: "5px" }} variant="outlined">
-      {/* <CardContent>Item id: {modifiedItem.id}</CardContent>
+      <CardContent>Item id: {modifiedItem.id}</CardContent>
       <CardContent>Group id: {modifiedItem.group}</CardContent>
       <CardContent>Action: {modifiedItem.action}</CardContent>
       <CardContent>
         Start Date: {moment(modifiedItem.start_time).format("Do MMMM YYYY")}
-      </CardContent> */}
-      <CardContent>{modifiedItem.description}</CardContent>
+      </CardContent>
+      <CardContent>Description: {modifiedItem.description}</CardContent>
     </Card>
   );
 }

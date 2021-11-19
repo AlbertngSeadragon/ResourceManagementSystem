@@ -151,10 +151,6 @@ function Charts() {
   const [balanceChartPlots, setBalanceChartPlots] = useState([]);
   const [checked, setChecked] = useState(false);
   const [modifiedItems, setModifiedItems] = useState([]);
-  const [tempProjects, setTempProjects] = useState([]);
-  const [tempProjectsId, setTempProjectsId] = useState(9000);
-  const [tempItemsId, setTempItemsId] = useState(9000);
-  const [tempItems, setTempItems] = useState([]);
 
   const [isModifiable, setIsModifiable] = useState(false);
 
@@ -237,22 +233,6 @@ function Charts() {
     setProjects(projects);
   };
 
-  const setTempProjectsHandler = function (tempProjects) {
-    setTempProjects(tempProjects);
-  };
-
-  const setTempProjectsIdHandler = function (tempProjectsId) {
-    setTempProjectsId(tempProjectsId);
-  };
-
-  const setTempItemsHandler = function (tempItems) {
-    setTempItems(tempItems);
-  };
-
-  const setTempItemsIdHandler = function (tempItemsId) {
-    setTempItemsId(tempItemsId);
-  };
-
   const balanceChartPlotsGenerator = function () {
     let plots = [];
     projects.forEach((project) => {
@@ -277,38 +257,6 @@ function Charts() {
             projectName: project.projectName,
             balance: remainingBalance,
             date: item.start_time.format("YYYY-MM-DD"),
-          });
-        });
-      plots.push({
-        projectName: project.projectName,
-        //balance: remainingBalance,
-        balance: 0,
-        date: project.end_time.format("YYYY-MM-DD"),
-      });
-    });
-
-    tempProjects.forEach((project) => {
-      let remainingBalance = project.initialBalance;
-      plots.push({
-        projectName: project.projectName,
-        balance: remainingBalance,
-        date: project.start_time.format("YYYY-MM-DD"),
-      });
-      tempItems
-        .filter((item) => item.title === project.projectName)
-        .sort((a, b) =>
-          moment(a.start_time, "YYYY-MM-DD").isBefore(
-            moment(b.start_time, "YYYY-MM-DD")
-          )
-            ? -1
-            : 1
-        )
-        .forEach((item) => {
-          remainingBalance = remainingBalance - item.expense;
-          plots.push({
-            projectName: project.projectName,
-            balance: remainingBalance,
-            date: moment(item.start_time).format("YYYY-MM-DD"),
           });
         });
       plots.push({
@@ -351,8 +299,8 @@ function Charts() {
 
   useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
-    console.log("setBalanceChartPlots", items);
-  }, [groups, items, projects, tempProjects, tempItems]);
+    // console.log("setBalanceChartPlots", items);
+  }, [groups, items, projects]);
 
   return (
     <div style={{ backgroundColor: isModifiable ? "#fffde0" : "#FFF" }}>
@@ -364,15 +312,12 @@ function Charts() {
           <Balance
             balanceChartPlots={balanceChartPlots}
             projects={projects}
-            tempProjects={tempProjects}
           ></Balance>
           <Divider />
           <Expense
             groups={groups}
-            //items={items}
-            //projects={projects}
-            items={tempItems}
-            projects={tempProjects}
+            items={items}
+            projects={projects}
             setItemsHandler={setItemsHandler}
             setGroupsHandler={setGroupsHandler}
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
@@ -420,10 +365,6 @@ function Charts() {
                   setGroupsHandler={setGroupsHandler}
                   setProjectsHandler={setProjectsHandler}
                   setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-                  setTempProjectsHandler={setTempProjectsHandler}
-                  tempProjects={tempProjects}
-                  setTempProjectsIdHandler={setTempProjectsIdHandler}
-                  tempProjectsId={tempProjectsId}
                 ></Form>
                 {/* </Grid> */}
                 {/* <Grid item xs={5}> */}
@@ -434,17 +375,6 @@ function Charts() {
                   setItemsHandler={setItemsHandler}
                   setGroupsHandler={setGroupsHandler}
                   setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-                  setProjectsHandler={setProjectsHandler}
-                  setTempProjectsHandler={setTempProjectsHandler}
-                  tempProjects={tempProjects}
-                  setTempProjectsIdHandler={setTempProjectsIdHandler}
-                  tempProjectsId={tempProjectsId}
-                  setTempItemsHandler={setTempItemsHandler}
-                  tempItems={tempItems}
-                  tempItemsId={tempItemsId}
-                  setTempItemsIdHandler={setTempItemsIdHandler}
-                  setModifiedItemsHandler={setModifiedItemsHandler}
-                  modifiedItems={modifiedItems}
                 ></ExpenseItemInput>
                 {/* </Grid> */}
 
