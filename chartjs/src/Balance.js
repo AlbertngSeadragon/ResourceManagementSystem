@@ -91,7 +91,7 @@ function Balance({ balanceChartPlots, projects }) {
           type: "plain",
           orient: "horizontal",
           top: 10,
-          data: projects.map((project) => project.projectName),
+          data: projects.filter((project) => project.projectName != "Today").map((project) => project.projectName),
           // itemStyle: {
           //   color: "#000",
           // },
@@ -208,7 +208,7 @@ function Balance({ balanceChartPlots, projects }) {
               datasetIndex: index + 1,
               color: project.bgColor,
               markPoint: {
-                data: [{
+                data: project.projectName == "Today" ? null : [{
                   type : "min",
                   symbol: "diamond",
                   symbolSize: 20
