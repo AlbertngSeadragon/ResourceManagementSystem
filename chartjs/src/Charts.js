@@ -265,6 +265,8 @@ function Charts() {
             projectName: project.projectName,
             balance: remainingBalance,
             date: item.start_time.format("YYYY-MM-DD"),
+            expense: item.expense,
+            description: item.description,
           });
         });
       plots.push({

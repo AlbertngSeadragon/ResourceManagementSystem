@@ -83,8 +83,27 @@ function Balance({ balanceChartPlots, projects }) {
           },
         },
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
+          triggerOn: "mousemove",
           axisPointer: { label: { precision: "0" } },
+          // formatter: (params) => {
+          //   return projects.filter((project) => project.projectName != "Today").map((project) => {
+          //     return `
+          //     Breakdown <br />
+          //     Remain Balance: ${project.balance}<br />
+          //     Expense: ${project.expense} <br />
+          //     Description: <br />
+          //     `;
+          //   })
+          // },
+          formatter: (params) => {
+              return `
+              <b>Breakdown</b> <br />
+              Remain Balance: ${params.data.balance}<br />
+              Expense: ${params.data.expense} <br />
+              Description: ${params.data.description} <br />
+              `;
+          },
           // formatter: "{c}",
         },
         legend: {
