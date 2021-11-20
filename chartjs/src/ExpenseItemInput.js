@@ -82,7 +82,8 @@ export default function App({
       data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     }
     //data.bgColor = data.bgColor.value;
-    data.bgColor = projectColor
+    data.bgColor = projectColor;
+    data.isWhatIF = true;
     console.log("onSubmitFromExpenseInput", data);
     setItemsHandler([...items, data]);
     // console.log("items inside the Expense", ...items);

@@ -41,6 +41,7 @@ function EditItem({
           items[i].description = data.description;
           items[i].bgColor = projectColor;
           items[i].title = data.title.label;
+          items[i].isWhatIF = true;
         }
       }
       console.log("From the edititem", items);
