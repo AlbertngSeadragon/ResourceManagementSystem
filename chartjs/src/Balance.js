@@ -100,6 +100,7 @@ function Balance({ balanceChartPlots, projects }) {
               return `
               <b>Breakdown</b> <br />
               Remain Balance: ${params.data.balance}<br />
+              Expense Item: ${params.data.expenseItem[0].title}<br />
               Expense: ${params.data.expense} <br />
               Description: ${params.data.description} <br />
               `;

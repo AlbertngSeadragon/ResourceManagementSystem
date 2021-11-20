@@ -267,6 +267,7 @@ function Charts() {
             date: item.start_time.format("YYYY-MM-DD"),
             expense: item.expense,
             description: item.description,
+            expenseItem: groups.filter((groups) => groups.id == item.group)
           });
         });
       plots.push({
