@@ -96,6 +96,7 @@ function Balance({ balanceChartPlots, projects }) {
           //     `;
           //   })
           // },
+          //https://stackoverflow.com/questions/60278375/how-to-add-formatter-tooltip-in-echart-for-multiple-values-for-pie-diagram
           formatter: (params) => {
               return `
               <b>Breakdown</b> <br />
