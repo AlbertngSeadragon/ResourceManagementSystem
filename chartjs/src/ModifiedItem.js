@@ -6,7 +6,27 @@ import CardHeader from "@mui/material/CardHeader";
 
 function ModifiedItem({ modifiedItem }) {
   return (
-    <Card sx={{ marginTop: "5px", marginBottom: "5px" }} variant="outlined">
+    <Card
+      sx={{
+        marginTop: "5px",
+        marginBottom: "5px",
+        backgroundColor:
+          modifiedItem.action === "Add project"
+            ? "orange"
+            : modifiedItem.action === "Edit"
+            ? "yellow"
+            : modifiedItem.action === "Group changed"
+            ? "gray"
+            : modifiedItem.action === "Moved"
+            ? "violet"
+            : modifiedItem.action === "Add item"
+            ? "cyan"
+            : modifiedItem.action === "Remove"
+            ? "red"
+            : "white",
+      }}
+      variant="outlined"
+    >
       {/* <CardContent>Item id: {modifiedItem.id}</CardContent>
       <CardContent>Group id: {modifiedItem.group}</CardContent>
       <CardContent>Action: {modifiedItem.action}</CardContent>
