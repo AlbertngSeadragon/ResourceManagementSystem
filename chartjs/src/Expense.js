@@ -46,49 +46,61 @@ function Expense({
     const [oldMovedItem] = items.filter((item) => item.id === itemId);
     let itemAction;
     let modifyDescription;
-    setItemsHandler(
-      items.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              start_time: moment(dragTime),
-              end_time: moment(dragTime + (item.end_time - item.start_time)),
-              group: group.id,
-            }
-          : item
-      )
-    );
+    let [projectLocal] = projects.filter((project) => {
+      return oldMovedItem.title === project.projectName;
+    });
     if (
-      oldMovedItem.start_time != moment(dragTime) &&
-      oldMovedItem.group == groups[newGroupOrder].id
+      !moment(dragTime).isBefore(projectLocal.start_time) &&
+      !moment(
+        dragTime + (oldMovedItem.end_time - oldMovedItem.start_time)
+      ).isAfter(projectLocal.end_time)
     ) {
-      itemAction = "Moved";
-      modifyDescription = `Item start date is modified to ${moment(
-        dragTime
-      ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
-        "Do MMMM YYYY"
-      )}`;
-    } else if (oldMovedItem.group != groups[newGroupOrder].id) {
-      itemAction = "Group changed";
-      modifyDescription = `Item group is modified to ${
-        groups[newGroupOrder].id
-      } from ${oldMovedItem.group}, Item start date is modified to ${moment(
-        dragTime
-      ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
-        "Do MMMM YYYY"
-      )}`;
-      console.log(oldMovedItem);
+      setItemsHandler(
+        items.map((item) =>
+          item.id === itemId
+            ? {
+                ...item,
+                start_time: moment(dragTime),
+                end_time: moment(dragTime + (item.end_time - item.start_time)),
+                group: group.id,
+              }
+            : item
+        )
+      );
+      if (
+        oldMovedItem.start_time != moment(dragTime) &&
+        oldMovedItem.group == groups[newGroupOrder].id
+      ) {
+        itemAction = "Moved";
+        modifyDescription = `Item start date is modified to ${moment(
+          dragTime
+        ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+          "Do MMMM YYYY"
+        )}`;
+      } else if (oldMovedItem.group != groups[newGroupOrder].id) {
+        itemAction = "Group changed";
+        modifyDescription = `Item group is modified to ${
+          groups[newGroupOrder].id
+        } from ${oldMovedItem.group}, Item start date is modified to ${moment(
+          dragTime
+        ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+          "Do MMMM YYYY"
+        )}`;
+        console.log(oldMovedItem);
+      }
+      setModifiedItemsHandler([
+        ...modifiedItems,
+        {
+          action: itemAction,
+          id: itemId,
+          start_time: moment(dragTime).toString(),
+          description: modifyDescription,
+        },
+      ]);
+      console.log("Moved", itemId, dragTime, newGroupOrder);
+    } else {
+      alert("Date Error");
     }
-    setModifiedItemsHandler([
-      ...modifiedItems,
-      {
-        action: itemAction,
-        id: itemId,
-        start_time: moment(dragTime).toString(),
-        description: modifyDescription,
-      },
-    ]);
-    console.log("Moved", itemId, dragTime, newGroupOrder);
   };
 
   const handleItemResize = (itemId, time, edge) => {
@@ -147,12 +159,34 @@ function Expense({
             backgroundColor,
             color: item.color,
             borderColor,
-            opacity: (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 0.5 : 1,
-            borderStyle: (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? "dashed" : "solid",
-            borderWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderRadius: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderLeftWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderRightWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
+            opacity:
+              isModifiable && (item.isWhatIF == null || item.isWhatIF == true)
+                ? 0.5
+                : 1,
+            borderStyle:
+              isModifiable && (item.isWhatIF == null || item.isWhatIF == true)
+                ? "dashed"
+                : "solid",
+            borderWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderRadius:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderLeftWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderRightWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
           },
           // onMouseDown: () => {
           //   console.log("on item click", item);
@@ -171,12 +205,34 @@ function Expense({
             backgroundColor,
             color: item.color,
             borderColor,
-            opacity: (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 0.5 : 1,
-            borderStyle: (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? "dashed" : "solid",
-            borderWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderRadius: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderLeftWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
-            borderRightWidth: itemContext.selected & (isModifiable && (item.isWhatIF == null || item.isWhatIF == true)) ? 3 : 1,
+            opacity:
+              isModifiable && (item.isWhatIF == null || item.isWhatIF == true)
+                ? 0.5
+                : 1,
+            borderStyle:
+              isModifiable && (item.isWhatIF == null || item.isWhatIF == true)
+                ? "dashed"
+                : "solid",
+            borderWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderRadius:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderLeftWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
+            borderRightWidth:
+              itemContext.selected &
+              (isModifiable && (item.isWhatIF == null || item.isWhatIF == true))
+                ? 3
+                : 1,
           }}
         >
           {itemContext.title}

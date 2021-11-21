@@ -159,8 +159,11 @@ function Charts() {
   const [balanceChartPlots, setBalanceChartPlots] = useState([]);
   const [checked, setChecked] = useState(false);
   const [modifiedItems, setModifiedItems] = useState([]);
+  // const [requireCopy, setRequireCopy] = useState(false);
 
   const [isModifiable, setIsModifiable] = useState(false);
+  const [originalItems, setOriginalItems] = useState([]);
+  const [originalProjects, setOriginalProjects] = useState([]);
 
   function difference(setA, setB) {
     let _difference = new Set(setA);
@@ -175,6 +178,37 @@ function Charts() {
 
   const handleModify = () => {
     setIsModifiable(!isModifiable);
+    // TODO: Async issue, here should be if (isModifiable) {...}, fix it later
+    if (!isModifiable) {
+      let maxId = Math.max(...projects.map((project) => project.id));
+      let originalProjectLocal = projects
+        .filter((project) => {
+          return project.projectName != "Today";
+        })
+        .map((project, index) => {
+          return {
+            ...project,
+            projectName: project.projectName + " (original)",
+            id: maxId + index + 1,
+          };
+        });
+      setProjects([...projects, ...originalProjectLocal]);
+      setOriginalProjects(originalProjectLocal);
+      setOriginalItems(
+        items.map((item) => {
+          return { ...item, title: item.title + " (original)" };
+        })
+      );
+    } else {
+      setProjects(
+        projects.filter((project) => {
+          return !project.projectName.includes(" (original)");
+        })
+      );
+      setOriginalItems([]);
+      setOriginalProjects([]);
+    }
+
     localStorage.setItem("BeforeItems", JSON.stringify(items));
     localStorage.setItem("BeforeGroups", JSON.stringify(groups));
     localStorage.setItem("BeforeProjects", JSON.stringify(projects));
@@ -243,40 +277,113 @@ function Charts() {
 
   const balanceChartPlotsGenerator = function () {
     let plots = [];
-    projects.forEach((project) => {
-      let remainingBalance = project.initialBalance;
-      plots.push({
-        projectName: project.projectName,
-        balance: remainingBalance,
-        date: project.start_time.format("YYYY-MM-DD"),
-      });
-      items
-        .filter((item) => item.title === project.projectName)
-        .sort((a, b) =>
-          moment(a.start_time, "YYYY-MM-DD").isBefore(
-            moment(b.start_time, "YYYY-MM-DD")
-          )
-            ? -1
-            : 1
-        )
-        .forEach((item) => {
-          remainingBalance = remainingBalance - item.expense;
-          plots.push({
-            projectName: project.projectName,
-            balance: remainingBalance,
-            date: item.start_time.format("YYYY-MM-DD"),
-            expense: item.expense,
-            description: item.description,
-            expenseItem: groups.filter((groups) => groups.id == item.group)
-          });
+    if (isModifiable) {
+      let appendedItems = [...items, ...originalItems];
+      projects.forEach((project) => {
+        let remainingBalance = project.initialBalance;
+        plots.push({
+          projectName: project.projectName,
+          balance: remainingBalance,
+          date: project.start_time.format("YYYY-MM-DD"),
         });
-      plots.push({
-        projectName: project.projectName,
-        //balance: remainingBalance,
-        balance: 0,
-        date: project.end_time.format("YYYY-MM-DD"),
+        appendedItems
+          .filter((item) => item.title === project.projectName)
+          .sort((a, b) =>
+            moment(a.start_time, "YYYY-MM-DD").isBefore(
+              moment(b.start_time, "YYYY-MM-DD")
+            )
+              ? -1
+              : 1
+          )
+          .forEach((item) => {
+            remainingBalance = remainingBalance - item.expense;
+            plots.push({
+              projectName: project.projectName,
+              balance: remainingBalance,
+              date: item.start_time.format("YYYY-MM-DD"),
+              expense: item.expense,
+              description: item.description,
+              expenseItem: groups.filter((groups) => groups.id == item.group),
+            });
+          });
+        plots.push({
+          projectName: project.projectName,
+          //balance: remainingBalance,
+          balance: 0,
+          date: project.end_time.format("YYYY-MM-DD"),
+        });
       });
-    });
+      // projects.forEach((project) => {
+      //   let remainingBalance = project.initialBalance;
+      //   // plots.push({
+      //   //   projectName: project.projectName + " (original)",
+      //   //   balance: remainingBalance,
+      //   //   date: project.start_time.format("YYYY-MM-DD"),
+      //   // });
+      //   items
+      //     .filter((item) => item.title === project.projectName)
+      //     .sort((a, b) =>
+      //       moment(a.start_time, "YYYY-MM-DD").isBefore(
+      //         moment(b.start_time, "YYYY-MM-DD")
+      //       )
+      //         ? -1
+      //         : 1
+      //     )
+      //     .forEach((item) => {
+      //       remainingBalance = remainingBalance - item.expense;
+      //       plots.push({
+      //         projectName: project.projectName + " (original)",
+      //         balance: remainingBalance,
+      //         date: item.start_time.format("YYYY-MM-DD"),
+      //         expense: item.expense,
+      //         description: item.description,
+      //         expenseItem: groups.filter((groups) => groups.id == item.group),
+      //       });
+      //     });
+      //   // plots.push({
+      //   //   projectName: project.projectName + " (original)",
+      //   //   //balance: remainingBalance,
+      //   //   balance: 0,
+      //   //   date: project.end_time.format("YYYY-MM-DD"),
+      //   // });
+      // });
+    } else {
+      projects.forEach((project) => {
+        let remainingBalance = project.initialBalance;
+        plots.push({
+          projectName: project.projectName,
+          balance: remainingBalance,
+          date: project.start_time.format("YYYY-MM-DD"),
+        });
+        items
+          .filter((item) => item.title === project.projectName)
+          .sort((a, b) =>
+            moment(a.start_time, "YYYY-MM-DD").isBefore(
+              moment(b.start_time, "YYYY-MM-DD")
+            )
+              ? -1
+              : 1
+          )
+          .forEach((item) => {
+            remainingBalance = remainingBalance - item.expense;
+            plots.push({
+              projectName: project.projectName,
+              balance: remainingBalance,
+              date: item.start_time.format("YYYY-MM-DD"),
+              expense: item.expense,
+              description: item.description,
+              expenseItem: groups.filter((groups) => groups.id == item.group),
+            });
+          });
+        plots.push({
+          projectName: project.projectName,
+          //balance: remainingBalance,
+          balance: 0,
+          date: project.end_time.format("YYYY-MM-DD"),
+        });
+      });
+    }
+
     // console.log("run 1", plots);
     // setBalanceChartPlots(plots);
     return plots;
@@ -311,7 +418,7 @@ function Charts() {
   useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
     // console.log("setBalanceChartPlots", items);
-  }, [groups, items, projects]);
+  }, [groups, items, projects, isModifiable]);
 
   return (
     <div style={{ backgroundColor: isModifiable ? "#fffde0" : "#FFF" }}>
@@ -323,6 +430,7 @@ function Charts() {
           <Balance
             balanceChartPlots={balanceChartPlots}
             projects={projects}
+            isModifiable={isModifiable}
           ></Balance>
           <Divider />
           <Expense

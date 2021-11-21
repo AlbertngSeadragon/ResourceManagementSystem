@@ -6,9 +6,8 @@ import "./Balance.css";
 import axios from "axios";
 import * as echarts from "echarts";
 
-function Balance({ balanceChartPlots, projects }) {
+function Balance({ balanceChartPlots, projects, isModifiable }) {
   const myChart = useRef(null);
-  const color = ["rgb(54, 162, 235)", "rgb(255, 159, 64)", "rgb(43, 178, 76)"];
   const [plots, setPlots] = useState([]);
   const [chart, setChart] = useState(null);
 
@@ -75,6 +74,8 @@ function Balance({ balanceChartPlots, projects }) {
         newChart = chart;
       }
 
+      console.log(plots);
+
       newChart.setOption({
         title: {
           text: "Balance Chart",
@@ -98,12 +99,26 @@ function Balance({ balanceChartPlots, projects }) {
           // },
           //https://stackoverflow.com/questions/60278375/how-to-add-formatter-tooltip-in-echart-for-multiple-values-for-pie-diagram
           formatter: (params) => {
-              return `
+            return `
               <b>Breakdown</b> <br />
               Remain Balance: ${params.data.balance}<br />
-              ${params.data.expenseItem != null ? "Expense Item: " + params.data.expenseItem[0].title + "<br />" : ''}
-              ${params.data.expense != null ? "Expense: " + params.data.expense + "<br />" : ''}
-              ${params.data.description != null ? "Description: " + params.data.description + "<br />" : ''}
+              ${
+                params.data.expenseItem != null
+                  ? "Expense Item: " +
+                    params.data.expenseItem[0].title +
+                    "<br />"
+                  : ""
+              }
+              ${
+                params.data.expense != null
+                  ? "Expense: " + params.data.expense + "<br />"
+                  : ""
+              }
+              ${
+                params.data.description != null
+                  ? "Description: " + params.data.description + "<br />"
+                  : ""
+              }
               `;
           },
           // formatter: "{c}",
@@ -112,7 +127,9 @@ function Balance({ balanceChartPlots, projects }) {
           type: "plain",
           orient: "horizontal",
           top: 10,
-          data: projects.filter((project) => project.projectName != "Today").map((project) => project.projectName),
+          data: projects
+            .filter((project) => project.projectName != "Today")
+            .map((project) => project.projectName),
           // itemStyle: {
           //   color: "#000",
           // },
@@ -223,23 +240,65 @@ function Balance({ balanceChartPlots, projects }) {
             return {
               name: project.projectName,
               type: "line",
-
+              lineStyle: {
+                type:
+                  project.projectName === "Today"
+                    ? "solid"
+                    : !project.projectName.includes(" (original)") &&
+                      !isModifiable
+                    ? "solid"
+                    : !project.projectName.includes(" (original)") &&
+                      isModifiable
+                    ? "dashed"
+                    : "solid",
+              },
               step: "end",
               encode: { x: 1, y: 2 },
               datasetIndex: index + 1,
               color: project.bgColor,
               markPoint: {
-                data: project.projectName == "Today" ? null : [{
-                  type : "min",
-                  symbol: "diamond",
-                  symbolSize: 20
-                }]
+                data:
+                  project.projectName == "Today"
+                    ? null
+                    : [
+                        {
+                          type: "min",
+                          symbol: "diamond",
+                          symbolSize: 20,
+                        },
+                      ],
               },
               // markLine: {
               //   data: [{ name: "Today", xAxis: "2021-09-01" }],
               // },
             };
           }),
+          // ...projects.map((project, index) => {
+          //   return {
+          //     name: project.projectName,
+          //     type: "line",
+          //     lineStyle: { type: "solid" },
+          //     step: "end",
+          //     encode: { x: 1, y: 2 },
+          //     datasetIndex: index + 1,
+          //     color: project.bgColor,
+          //     markPoint: {
+          //       data:
+          //         project.projectName == "Today"
+          //           ? null
+          //           : [
+          //               {
+          //                 type: "min",
+          //                 symbol: "diamond",
+          //                 symbolSize: 20,
+          //               },
+          //             ],
+          //     },
+          //     // markLine: {
+          //     //   data: [{ name: "Today", xAxis: "2021-09-01" }],
+          //     // },
+          //   };
+          // }),
         ],
         // series: [
         //   {
