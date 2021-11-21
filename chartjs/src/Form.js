@@ -17,6 +17,8 @@ export default function App({
   setItemsHandler,
   setGroupsHandler,
   setProjectsHandler,
+  setModifiedItemsHandler,
+  modifiedItems,
 }) {
   const {
     control,
@@ -32,10 +34,26 @@ export default function App({
     data.bgColor = data.bgColor.value;
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
+    setModifiedItemsHandler([
+      ...modifiedItems,
+      {
+        action: "Add project",
+        initialBalance: data.initialBalance,
+        start_time: data.start_time,
+        end_time: data.end_time,
+        description: `Project is added. Project Name: ${
+          data.projectName
+        } Initial Balance: $${data.initialBalance}, Start date: ${moment(
+          data.start_time
+        ).format("YYYY-MM-DD")}, End date: ${moment(data.end_time).format(
+          "YYYY-MM-DD"
+        )}`,
+      },
+    ]);
     setProjectsHandler([...projects, data]);
     // setGroupsHandler([...groups, data]);
     console.log("++", ...projects);
-    console.log("New Project======>", data)
+    console.log("New Project======>", data);
     // ExpenseGroups.push(data);
     // console.log("++++++++++++++++++++++", ExpenseGroups);
     reset();
@@ -65,17 +83,17 @@ export default function App({
         backgroundColor: isDisabled
           ? null
           : isSelected
-            ? data.color
-            : isFocused
-              ? color.alpha(0.1).css()
-              : null,
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : null,
         color: isDisabled
           ? "#ccc"
           : isSelected
-            ? chroma.contrast(color, "white") > 2
-              ? "white"
-              : "black"
-            : data.color,
+          ? chroma.contrast(color, "white") > 2
+            ? "white"
+            : "black"
+          : data.color,
         cursor: isDisabled ? "not-allowed" : "default",
 
         ":active": {

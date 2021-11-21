@@ -484,6 +484,8 @@ function Charts() {
                   setGroupsHandler={setGroupsHandler}
                   setProjectsHandler={setProjectsHandler}
                   setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                  setModifiedItemsHandler={setModifiedItemsHandler}
+                  modifiedItems={modifiedItems}
                 ></Form>
                 {/* </Grid> */}
                 {/* <Grid item xs={5}> */}
@@ -494,6 +496,8 @@ function Charts() {
                   setItemsHandler={setItemsHandler}
                   setGroupsHandler={setGroupsHandler}
                   setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+                  setModifiedItemsHandler={setModifiedItemsHandler}
+                  modifiedItems={modifiedItems}
                 ></ExpenseItemInput>
                 {/* </Grid> */}
 

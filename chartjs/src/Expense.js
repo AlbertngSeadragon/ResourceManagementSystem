@@ -50,7 +50,7 @@ function Expense({
       return oldMovedItem.title === project.projectName;
     });
     if (
-      !moment(dragTime).isBefore(projectLocal.start_time) &&
+      !moment(dragTime).isBefore(moment(projectLocal.start_time)) &&
       !moment(
         dragTime + (oldMovedItem.end_time - oldMovedItem.start_time)
       ).isAfter(projectLocal.end_time)
@@ -67,6 +67,7 @@ function Expense({
             : item
         )
       );
+
       if (
         oldMovedItem.start_time != moment(dragTime) &&
         oldMovedItem.group == groups[newGroupOrder].id
@@ -80,12 +81,12 @@ function Expense({
       } else if (oldMovedItem.group != groups[newGroupOrder].id) {
         itemAction = "Group changed";
         modifyDescription = `Item group is modified to ${
-          groups[newGroupOrder].id
-        } from ${oldMovedItem.group}, Item start date is modified to ${moment(
-          dragTime
-        ).format("Do MMMM YYYY")} from ${moment(oldMovedItem.start_time).format(
+          groups[newGroupOrder].title
+        } from ${
+          groups[oldMovedItem.group - 1].title
+        }, Item start date is modified to ${moment(dragTime).format(
           "Do MMMM YYYY"
-        )}`;
+        )} from ${moment(oldMovedItem.start_time).format("Do MMMM YYYY")}`;
         console.log(oldMovedItem);
       }
       setModifiedItemsHandler([
@@ -282,6 +283,8 @@ function Expense({
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
               setAnchorEl={setAnchorEl}
+              setModifiedItemsHandler={setModifiedItemsHandler}
+              modifiedItems={modifiedItems}
             />
             <EditItem
               items={items}
@@ -289,6 +292,8 @@ function Expense({
               selectedItemforEdit={matchItemforRemoveOREdit}
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
+              setModifiedItemsHandler={setModifiedItemsHandler}
+              modifiedItems={modifiedItems}
             />
           </Typography>
         </Popover>

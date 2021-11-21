@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import Select from "react-select";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import { Input, Button } from "@material-ui/core";
 import { Input as AntdInput } from "antd";
 import { RgbaColorPicker } from "react-colorful";
@@ -21,6 +21,8 @@ export default function App({
   projects,
   setItemsHandler,
   setGroupsHandler,
+  setModifiedItemsHandler,
+  modifiedItems,
 }) {
   const {
     control,
@@ -35,10 +37,10 @@ export default function App({
 
   const [projectColor, setProjectColor] = useState(null);
 
-  const [projectStartforDatePicker, setProjectStartforDatePicker] = useState(null);
+  const [projectStartforDatePicker, setProjectStartforDatePicker] =
+    useState(null);
 
   const [projectEndforDatePicker, setProjectEndforDatePicker] = useState(null);
-
 
   const onSubmit = (data) => {
     //data.start_time = moment(data.start_time).format('YYYY-MM-DD');
@@ -51,39 +53,59 @@ export default function App({
     //   data.group = Number(data.group.value)
     //   console.log("Yes duplicate", data.group)
     // }
-    data.group = Number(data.group.value)
+    data.group = Number(data.group.value);
     data.title = data.title.label;
     //setGroupsHandler([...groups, { id: groups.length + 1, title: data.group.label }]);
     data.description = data.description;
     Object.assign(data, { id: items.length + 1 });
-    if (data.group == 4) { // MPhill 2 year
-      data.expense = Number(data.expense) * 12 * 2
-    }
-    else if (data.group == 5) { //PHD 4 year
+    if (data.group == 4) {
+      // MPhill 2 year
+      data.expense = Number(data.expense) * 12 * 2;
+    } else if (data.group == 5) {
+      //PHD 4 year
       data.expense = Number(data.expense) * 12 * 4;
-    }
-    else {
+    } else {
       data.expense = Number(data.expense);
     }
     //data.group = Number(data.group);
     data.start_time = moment(moment(data.start_time).format("YYYY-MM-DD"));
     if (showEndDate == false) {
-      if (data.group == 4) { //Mphill
-        data.end_time = moment(moment(data.start_time).add(2, 'years').format("YYYY-MM-DD"));
+      if (data.group == 4) {
+        //Mphill
+        data.end_time = moment(
+          moment(data.start_time).add(2, "years").format("YYYY-MM-DD")
+        );
+      } else if (data.group == 5) {
+        //PHD
+        data.end_time = moment(
+          moment(data.start_time).add(4, "years").format("YYYY-MM-DD")
+        );
+      } else {
+        // For one off item
+        data.end_time = moment(
+          moment(data.start_time).add(1, "days").format("YYYY-MM-DD")
+        );
       }
-      else if (data.group == 5) { //PHD
-        data.end_time = moment(moment(data.start_time).add(4, 'years').format("YYYY-MM-DD"));
-      }
-      else {// For one off item
-        data.end_time = moment(moment(data.start_time).add(1, 'days').format("YYYY-MM-DD"));
-      }
-    }
-    else {
+    } else {
       data.end_time = moment(moment(data.end_time).format("YYYY-MM-DD"));
     }
     //data.bgColor = data.bgColor.value;
     data.bgColor = projectColor;
     data.isWhatIF = true;
+    setModifiedItemsHandler([
+      ...modifiedItems,
+      {
+        action: "Add item",
+        group: data.group,
+        id: data.id,
+        start_time: data.start_time,
+        description: `${data.title} ${groups[data.group - 1].title} Item: ${
+          data.description
+        } with expense $${data.expense} is added to ${moment(
+          data.start_time
+        ).format("Do MMMM YYYY")}.`,
+      },
+    ]);
     console.log("onSubmitFromExpenseInput", data);
     setItemsHandler([...items, data]);
     // console.log("items inside the Expense", ...items);
@@ -97,29 +119,24 @@ export default function App({
     for (let i = 0; i < groups.length; i++) {
       if (data.group.id == groups[i].id) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     }
-
   }
 
   const optionsGroups = groups.map(function (row) {
-
-    // This function defines the "mapping behaviour". name and title 
-    // data from each "row" from your columns array is mapped to a 
+    // This function defines the "mapping behaviour". name and title
+    // data from each "row" from your columns array is mapped to a
     // corresponding item in the new "options" array
 
-    return { value: row.id, label: row.title }
-  })
-
-
+    return { value: row.id, label: row.title };
+  });
 
   // const optionsItemsfilter = items.map(function (row) {
 
-  //   // This function defines the "mapping behaviour". name and title 
-  //   // data from each "row" from your columns array is mapped to a 
+  //   // This function defines the "mapping behaviour". name and title
+  //   // data from each "row" from your columns array is mapped to a
   //   // corresponding item in the new "options" array
 
   //   return { value: row.title, label: row.title }
@@ -136,16 +153,15 @@ export default function App({
   //   return filterValues
   // }
 
-  const optionsProjects = projects.map(item => {
-    return { 
-      value: item.id, 
-      label: item.projectName, 
-      color: item.bgColor, 
+  const optionsProjects = projects.map((item) => {
+    return {
+      value: item.id,
+      label: item.projectName,
+      color: item.bgColor,
       start_time: item.start_time,
       end_time: item.end_time,
-    }
-  })
-
+    };
+  });
 
   // const dot = (color = "#ccc") => ({
   //   alignItems: "center",
@@ -249,25 +265,32 @@ export default function App({
               //{...field}
               //isClearable
               onChange={(inputRef) => {
-                if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
+                if (!inputRef) {
+                  //https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
                   inputRef = {
                     target: inputRef,
-                    value: '',
+                    value: "",
                   };
                 }
-                if (inputRef.value === 1 || inputRef.value === 2 || inputRef.value === 3 || inputRef.value === 4 || inputRef.value === 5) {
+                if (
+                  inputRef.value === 1 ||
+                  inputRef.value === 2 ||
+                  inputRef.value === 3 ||
+                  inputRef.value === 4 ||
+                  inputRef.value === 5
+                ) {
                   setShowEndDate(false);
-                }
-                else {
+                } else {
                   setShowEndDate(true);
                 }
-                onChange(inputRef)
+                onChange(inputRef);
               }}
               inputRef={ref}
               placeholder="Expense Item"
               options={optionsGroups}
             />
-          )} />
+          )}
+        />
       </div>
       {errors.group && (
         <span className="text-danger">This field is required</span>
@@ -294,23 +317,25 @@ export default function App({
               //{...field}
               //isClearable
               onChange={(inputRef) => {
-                if (!inputRef) {//https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
+                if (!inputRef) {
+                  //https://stackoverflow.com/questions/63196611/event-is-null-when-using-isclearable-on-react-select
                   inputRef = {
                     target: inputRef,
-                    value: '',
+                    value: "",
                   };
                 }
-                setProjectColor(inputRef.color)
-                setProjectStartforDatePicker(inputRef.start_time)
-                setProjectEndforDatePicker(inputRef.end_time)
-                onChange(inputRef)
+                setProjectColor(inputRef.color);
+                setProjectStartforDatePicker(inputRef.start_time);
+                setProjectEndforDatePicker(inputRef.end_time);
+                onChange(inputRef);
               }}
               inputRef={ref}
               placeholder="Project Item"
               // options={optionsItems(optionsItemsfilter)}
               options={optionsProjects}
             />
-          )} />
+          )}
+        />
       </div>
       {errors.title && (
         <span className="text-danger">This field 11 is required</span>
@@ -381,8 +406,11 @@ export default function App({
             onChange={(date) => field.onChange(date)}
             selected={field.value}
             placeholderText="Start Date"
-            filterDate = {(date) => {
-              return projectStartforDatePicker < date && date < projectEndforDatePicker;
+            filterDate={(date) => {
+              return (
+                projectStartforDatePicker < date &&
+                date < projectEndforDatePicker
+              );
             }}
           />
         )}
@@ -390,22 +418,27 @@ export default function App({
       {errors.start_time && (
         <span className="text-danger">This field is required</span>
       )}
-      {showEndDate ? <Controller
-        name="end_time"
-        control={control}
-        defaultValue={null}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <DatePicker
-            onChange={(date) => field.onChange(date)}
-            selected={field.value}
-            placeholderText="End Date"
-            filterDate = {(date) => {
-              return projectStartforDatePicker < date && date < projectEndforDatePicker;
-            }}
-          />
-        )}
-      /> : null}
+      {showEndDate ? (
+        <Controller
+          name="end_time"
+          control={control}
+          defaultValue={null}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <DatePicker
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+              placeholderText="End Date"
+              filterDate={(date) => {
+                return (
+                  projectStartforDatePicker < date &&
+                  date < projectEndforDatePicker
+                );
+              }}
+            />
+          )}
+        />
+      ) : null}
       {errors.end_time && (
         <span className="text-danger">This field is required</span>
       )}
