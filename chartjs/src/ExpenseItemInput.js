@@ -153,7 +153,7 @@ export default function App({
   //   return filterValues
   // }
 
-  const optionsProjects = projects.map((item) => {
+  const optionsProjects = projects.filter((project) => project.projectName != "Today" && !project.projectName.includes(" (original)")).map((item) => {
     return {
       value: item.id,
       label: item.projectName,
