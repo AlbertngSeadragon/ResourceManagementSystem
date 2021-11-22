@@ -391,6 +391,11 @@ function Charts() {
 
   const handleChange = () => {
     setChecked((prev) => !prev);
+    //Set all whatif to real when close the what-if mode
+    for(let i = 0; i < items.length ; i++){
+      items[i].isWhatIF = false;
+    }
+    setItems(items);
   };
 
   useEffect(() => {
