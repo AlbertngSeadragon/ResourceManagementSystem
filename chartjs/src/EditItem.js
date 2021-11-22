@@ -29,6 +29,7 @@ function EditItem({
       title: selectedItemforEdit.title,
       description: selectedItemforEdit.description,
       balance: selectedItemforEdit.expense,
+      bgColor: selectedItemforEdit.bgColor,
     },
   });
 
@@ -54,10 +55,11 @@ function EditItem({
 
       for (let i = 0; i < items.length; i++) {
         if (selectedItemforEdit.id === items[i].id) {
-          items[i].expense = parseInt(data.balance, 10);
-          items[i].description = data.description;
-          items[i].bgColor = projectColor;
-          items[i].title = data.title.label;
+          items[i].expense = parseInt(data.balance, 10)!= null ? parseInt(data.balance, 10) : selectedItemforEdit.expense;
+          items[i].description = data.description != null ? data.description : selectedItemforEdit.description;
+          items[i].bgColor = projectColor != null ? projectColor : selectedItemforEdit.bgColor;
+          items[i].title = data.title.label != null ? data.title.label : selectedItemforEdit.title;
+          items[i].isWhatIF = true;
           setModifiedItemsHandler([
             ...modifiedItems,
             {
