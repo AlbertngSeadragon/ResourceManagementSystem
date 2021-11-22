@@ -10,20 +10,21 @@ function ModifiedItem({ modifiedItem }) {
       sx={{
         marginTop: "5px",
         marginBottom: "5px",
-        backgroundColor:
-          modifiedItem.action === "Add project"
-            ? "orange"
-            : modifiedItem.action === "Edit"
-            ? "yellow"
-            : modifiedItem.action === "Group changed"
-            ? "gray"
-            : modifiedItem.action === "Moved"
-            ? "violet"
-            : modifiedItem.action === "Add item"
-            ? "cyan"
-            : modifiedItem.action === "Remove"
-            ? "red"
-            : "white",
+        // backgroundColor:
+        //   modifiedItem.action === "Add project"
+        //     ? "orange"
+        //     : modifiedItem.action === "Edit"
+        //     ? "yellow"
+        //     : modifiedItem.action === "Group changed"
+        //     ? "gray"
+        //     : modifiedItem.action === "Moved"
+        //     ? "violet"
+        //     : modifiedItem.action === "Add item"
+        //     ? "cyan"
+        //     : modifiedItem.action === "Remove"
+        //     ? "red"
+        //     : "white",
+        backgroundColor: modifiedItem.bgColor,
       }}
       variant="outlined"
     >

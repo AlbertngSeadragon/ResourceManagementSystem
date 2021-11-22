@@ -41,6 +41,7 @@ export default function App({
         initialBalance: data.initialBalance,
         start_time: data.start_time,
         end_time: data.end_time,
+        bgColor: data.bgColor,
         description: `Project is added. Project Name: ${
           data.projectName
         } Initial Balance: $${data.initialBalance}, Start date: ${moment(

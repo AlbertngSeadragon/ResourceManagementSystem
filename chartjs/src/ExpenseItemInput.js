@@ -99,6 +99,7 @@ export default function App({
         group: data.group,
         id: data.id,
         start_time: data.start_time,
+        bgColor: data.bgColor,
         description: `${data.title} ${groups[data.group - 1].title} Item: ${
           data.description
         } with expense $${data.expense} is added to ${moment(
@@ -153,15 +154,21 @@ export default function App({
   //   return filterValues
   // }
 
-  const optionsProjects = projects.filter((project) => project.projectName != "Today" && !project.projectName.includes(" (original)")).map((item) => {
-    return {
-      value: item.id,
-      label: item.projectName,
-      color: item.bgColor,
-      start_time: item.start_time,
-      end_time: item.end_time,
-    };
-  });
+  const optionsProjects = projects
+    .filter(
+      (project) =>
+        project.projectName != "Today" &&
+        !project.projectName.includes(" (original)")
+    )
+    .map((item) => {
+      return {
+        value: item.id,
+        label: item.projectName,
+        color: item.bgColor,
+        start_time: item.start_time,
+        end_time: item.end_time,
+      };
+    });
 
   // const dot = (color = "#ccc") => ({
   //   alignItems: "center",

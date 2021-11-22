@@ -55,10 +55,20 @@ function EditItem({
 
       for (let i = 0; i < items.length; i++) {
         if (selectedItemforEdit.id === items[i].id) {
-          items[i].expense = parseInt(data.balance, 10)!= null ? parseInt(data.balance, 10) : selectedItemforEdit.expense;
-          items[i].description = data.description != null ? data.description : selectedItemforEdit.description;
-          items[i].bgColor = projectColor != null ? projectColor : selectedItemforEdit.bgColor;
-          items[i].title = data.title.label != null ? data.title.label : selectedItemforEdit.title;
+          items[i].expense =
+            parseInt(data.balance, 10) != null
+              ? parseInt(data.balance, 10)
+              : selectedItemforEdit.expense;
+          items[i].description =
+            data.description != null
+              ? data.description
+              : selectedItemforEdit.description;
+          items[i].bgColor =
+            projectColor != null ? projectColor : selectedItemforEdit.bgColor;
+          items[i].title =
+            data.title.label != null
+              ? data.title.label
+              : selectedItemforEdit.title;
           items[i].isWhatIF = true;
           setModifiedItemsHandler([
             ...modifiedItems,
@@ -66,6 +76,7 @@ function EditItem({
               action: "Edit",
               group: items[i].group,
               id: items[i].id,
+              bgColor: items[i].bgColor,
               start_time: items[i].start_time,
               description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
             },

@@ -26,6 +26,7 @@ export default function RemoveItem({
               action: "Remove",
               group: items[i].group,
               id: items[i].id,
+              bgColor: items[i].bgColor,
               start_time: items[i].start_time,
               description: `Item ${items[i].description} is removed.`,
             },

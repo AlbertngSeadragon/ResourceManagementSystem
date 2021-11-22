@@ -94,6 +94,7 @@ function Expense({
         {
           action: itemAction,
           id: itemId,
+          bgColor: oldMovedItem.bgColor,
           start_time: moment(dragTime).toString(),
           description: modifyDescription,
         },
