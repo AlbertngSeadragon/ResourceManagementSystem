@@ -63,6 +63,7 @@ function Expense({
                 start_time: moment(dragTime),
                 end_time: moment(dragTime + (item.end_time - item.start_time)),
                 group: group.id,
+                isWhatIF: true,
               }
             : item
         )
@@ -113,6 +114,7 @@ function Expense({
               ...item,
               start_time: edge === "left" ? time : item.start_time,
               end_time: edge === "left" ? item.end_time : time,
+              isWhatIF: true,
             }
           : item
       )
