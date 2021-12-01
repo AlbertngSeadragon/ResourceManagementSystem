@@ -89,10 +89,25 @@ function EditItem({
       //reset();
     }
   };
-  const optionsProjects = projects.map((item) => {
-    return { value: item.id, label: item.projectName, color: item.bgColor };
-  });
+  // const optionsProjects = projects.map((item) => {
+  //   return { value: item.id, label: item.projectName, color: item.bgColor };
+  // });
 
+  const optionsProjects = projects
+    .filter(
+      (project) =>
+        project.projectName != "Today" &&
+        !project.projectName.includes(" (original)")
+    )
+    .map((item) => {
+      return {
+        value: item.id,
+        label: item.projectName,
+        color: item.bgColor,
+        start_time: item.start_time,
+        end_time: item.end_time,
+      };
+    });
   function selectProjectsID(selectedItemforEdit, projects) {
     for (let i = 0; i < projects.length; i++) {
       if (selectedItemforEdit.title === projects[i].projectName) {
