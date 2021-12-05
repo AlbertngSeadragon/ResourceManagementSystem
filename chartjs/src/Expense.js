@@ -257,14 +257,15 @@ function Expense({
       <Timeline
         groups={groups}
         items={items}
-        defaultTimeStart={moment("2021-03-01").add(-3, "month")}
-        defaultTimeEnd={moment("2021-08-01").add(3, "month")}
+        defaultTimeStart={moment("2015-09-01").add(-3, "month")}
+        defaultTimeEnd={moment("2026-09-01").add(3, "month")}
         onItemMove={handleItemMove}
         onItemResize={handleItemResize}
         canMove={isModifiable}
         stackItems
         itemRenderer={itemRenderer}
         onItemDoubleClick={ItemDoubleClick}
+        maxZoom={10 * 365.24 * 86400 * 1000}
       >
         <Popover
           id={id}
