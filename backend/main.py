@@ -24,6 +24,13 @@ def getotherprojectsdata():
         return mysqldb.returnotherprojects(id)
     return 'Cant Retrieve other projects'
 
+@app.route("/getexpensegroups", methods=['GET', 'POST'])
+@cross_origin()
+def getexpensegroups():
+    if request.method == 'GET':
+        return mysqldb.returnExpenseGroups()
+    return 'Cant Retrieve other projects'
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

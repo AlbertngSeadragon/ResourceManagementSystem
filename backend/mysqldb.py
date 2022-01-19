@@ -62,4 +62,26 @@ def returnotherprojects(id):
     except:
         print("Database Error")
 
+def returnExpenseGroups():
+    try:
+        mycursor = mydb.cursor()
+
+        mycursor.execute(f"select id, title from projects_balance_expense.ExpenseGroups;")
+
+        promisefuturedata = Jsonifly.remote(mycursor.fetchall())
+
+        jsondata = ray.get(promisefuturedata)
+
+        jsondata = {'ExpenseGroups': jsondata}
+
+        jsondata = json.dumps(jsondata)
+
+        print(jsondata)
+
+        return jsondata
+    except:
+        print("Database Error3")
+
 #returnprojects(10002)
+
+returnExpenseGroups()

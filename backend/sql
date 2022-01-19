@@ -22,3 +22,131 @@ create table other_projects(
 );
 
 ALTER TABLE projects AUTO_INCREMENT=90000;
+
+const ExpenseGroups = [
+  { id: 1, title: "General Expense" },
+  { id: 2, title: "Equipment Expense" },
+  { id: 3, title: "Conference" },
+  { id: 4, title: "RStudent - MPhill" },
+  { id: 5, title: "RStudent - PHD" },
+  { id: 6, title: "Staff - RA" },
+  { id: 7, title: "Staff - PostDoc" },
+  { id: 8, title: "Staff - Admin" },
+];
+
+const ExpenseItems = [
+  {
+    id: 1,
+    group: 3,
+    title: "Graph Database Storage Design",
+    start_time: moment("2015-09-01"),
+    end_time: moment("2015-09-01"),
+    bgColor: "rgb(54, 162, 235)",
+    expense: 150000,
+    description: "ACM/IEEE Design Automation Conference",
+    isWhatIF: false,
+  },
+  {
+    id: 2,
+    group: 5,
+    title: "Graph Database Storage Design",
+    start_time: moment("2016-12-01"),
+    end_time: moment("2020-12-01"),
+    bgColor: "rgb(54, 162, 235)",
+    expense: 480000,
+    description: "Research Student: Albert",
+    isWhatIF: false,
+  },
+  {
+    id: 3,
+    group: 2,
+    title: "Graph Database Storage Design",
+    start_time: moment("2018-03-01"),
+    end_time: moment("2018-03-01"),
+    bgColor: "rgb(54, 162, 235)",
+    expense: 300000,
+    description: "Server purchasement",
+    isWhatIF: false,
+  },
+  {
+    id: 4,
+    group: 4,
+    title: "Optimizations for Distributed Data Analytics in Cloud Environment",
+    start_time: moment("2020-09-01"),
+    end_time: moment("2022-09-01"),
+    bgColor: "rgb(255, 99, 132)",
+    expense: 240000,
+    description: "Research Student: Timmy",
+    isWhatIF: false,
+  },
+]
+
+const Projects = [
+  {
+    id: 0,
+    projectName: "Today",
+    initialBalance: 3000000,
+    start_time: moment(),
+    end_time: moment(),
+    bgColor: "rgb(0, 0, 0)",
+  },
+  {
+    id: 1,
+    projectName: "Graph Database Storage Design",
+    initialBalance: 2000000,
+    start_time: moment("2013-09-01"),
+    end_time: moment("2020-09-01"),
+    bgColor: "rgb(54, 162, 235)",
+  },
+  {
+    id: 2,
+    projectName:
+      "Optimizations for Distributed Data Analytics in Cloud Environment",
+    initialBalance: 3000000,
+    start_time: moment("2019-09-01"),
+    end_time: moment("2026-09-01"),
+    bgColor: "rgb(255, 99, 132)",
+  },
+];
+
+CREATE DATABASE projects_balance_expense;
+USE projects_balance_expense;
+
+create table Projects(
+    id int NOT NULL AUTO_INCREMENT,
+    projectName varchar(255),
+    initialBalance decimal(15,2) NOT NULL,
+    start_time varchar(255),
+    end_time varchar(255),
+    bgColor varchar(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+);
+ALTER TABLE Projects AUTO_INCREMENT=0;
+
+create table ExpenseGroups(
+	id int NOT NULL AUTO_INCREMENT,
+	title varchar(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+);
+
+ALTER TABLE ExpenseGroups AUTO_INCREMENT=1;
+
+create table ExpenseItems(
+	id int NOT NULL AUTO_INCREMENT,
+	group_ int NOT NULL,
+    title varchar(255),
+    start_time varchar(255),
+    end_time varchar(255),
+    bgColor varchar(255),
+    expense decimal(15,2) NOT NULL,
+    description_ varchar(255),
+    isWhatIF BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+);
+ALTER TABLE ExpenseItems AUTO_INCREMENT=1;
