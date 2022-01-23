@@ -7,8 +7,9 @@ export default function RemoveItem({
   setItemsHandler,
   isModifiable,
   setAnchorEl,
-  setModifiedItemsHandler,
-  modifiedItems,
+  handleClose,
+  // setModifiedItemsHandler,
+  // modifiedItems,
 }) {
   const itemRemovefromExpense = () => {
     if (isModifiable) {
@@ -20,17 +21,17 @@ export default function RemoveItem({
           useitems = useitems.filter(
             (item) => item.id !== selectedItemforRemove.id
           );
-          setModifiedItemsHandler([
-            ...modifiedItems,
-            {
-              action: "Remove",
-              group: items[i].group,
-              id: items[i].id,
-              bgColor: items[i].bgColor,
-              start_time: items[i].start_time,
-              description: `Item ${items[i].description} is removed.`,
-            },
-          ]);
+          // setModifiedItemsHandler([
+          //   ...modifiedItems,
+          //   {
+          //     action: "Remove",
+          //     group: items[i].group,
+          //     id: items[i].id,
+          //     bgColor: items[i].bgColor,
+          //     start_time: items[i].start_time,
+          //     description: `Item ${items[i].description} is removed.`,
+          //   },
+          // ]);
           let j = i;
           //console.log("after", useitems[i].id, selectedItem.id)
           while (j < useitems.length) {
@@ -42,7 +43,8 @@ export default function RemoveItem({
         }
       }
       setItemsHandler(useitems);
-      setAnchorEl(null); //Remove  the small box
+      handleClose();
+      // setAnchorEl(null); //Remove  the small box
       console.log("After Remove ======>", useitems);
     }
   };

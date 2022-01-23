@@ -287,8 +287,8 @@ function Expense({
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
               setAnchorEl={setAnchorEl}
-              setModifiedItemsHandler={setModifiedItemsHandler}
-              modifiedItems={modifiedItems}
+              // setModifiedItemsHandler={setModifiedItemsHandler}
+              // modifiedItems={modifiedItems}
             />
             <EditItem
               items={items}
@@ -296,8 +296,8 @@ function Expense({
               selectedItemforEdit={matchItemforRemoveOREdit}
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
-              setModifiedItemsHandler={setModifiedItemsHandler}
-              modifiedItems={modifiedItems}
+              // setModifiedItemsHandler={setModifiedItemsHandler}
+              // modifiedItems={modifiedItems}
             />
           </Typography>
         </Popover>
