@@ -150,3 +150,7 @@ create table ExpenseItems(
 	PRIMARY KEY (id)
 );
 ALTER TABLE ExpenseItems AUTO_INCREMENT=1;
+
+(2,"Graph Database Storage Design","moment("2018-03-01")","moment("2018-03-01")","rgb(54, 162, 235)",300000,"Server purchasement",0),
+(4,"Optimizations for Distributed Data Analytics in Cloud Environment", "moment("2020-09-01")","moment("2022-09-01")","rgb(255, 99, 132)",240000,"Research Student: Timmy",0),
+(2,"Optimizations for Distributed Data Analytics in Cloud Environment","moment("2022-09-01")","moment("2022-09-01")","rgb(255, 99, 132)",500000,,"EC2 fee",0)

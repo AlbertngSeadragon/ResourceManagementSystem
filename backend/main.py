@@ -29,7 +29,21 @@ def getotherprojectsdata():
 def getexpensegroups():
     if request.method == 'GET':
         return mysqldb.returnExpenseGroups()
-    return 'Cant Retrieve other projects'
+    return 'Cant Retrieve expnese groups'
+
+@app.route("/getprojects", methods=['GET', 'POST'])
+@cross_origin()
+def getprojects():
+    if request.method == 'GET':
+        return mysqldb.returnProjects()
+    return 'Cant Retrieve projects'
+
+@app.route("/getexpenseitems", methods=['GET', 'POST'])
+@cross_origin()
+def getexpenseitems():
+    if request.method == 'GET':
+        return mysqldb.returnExpenseitems()
+    return 'Cant Retrieve expense items'
 
 if __name__ == '__main__':
     app.debug = True
