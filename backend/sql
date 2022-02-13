@@ -115,7 +115,7 @@ USE projects_balance_expense;
 create table Projects(
     id int NOT NULL AUTO_INCREMENT,
     projectName varchar(255),
-    initialBalance decimal(15,2) NOT NULL,
+    initialBalance int NOT NULL,
     start_time varchar(255),
     end_time varchar(255),
     bgColor varchar(255),
@@ -142,7 +142,7 @@ create table ExpenseItems(
     start_time varchar(255),
     end_time varchar(255),
     bgColor varchar(255),
-    expense decimal(15,2) NOT NULL,
+    expense int NOT NULL,
     description_ varchar(255),
     isWhatIF BOOLEAN,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
