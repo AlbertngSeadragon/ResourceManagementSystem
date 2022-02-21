@@ -5,7 +5,7 @@ import os
 import json
 from dotenv import load_dotenv
 load_dotenv()
-ray.init()
+ray.init(dashboard_host="0.0.0.0")
 
 mydb = mysql.connector.connect(
   host=os.getenv('host'),
