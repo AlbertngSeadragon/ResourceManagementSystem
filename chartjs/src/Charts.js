@@ -422,7 +422,17 @@ function Charts() {
           ></Expense>
         </Grid>
         <Grid xs={2}>
-          <ModifiedList modifiedItems={modifiedItems}></ModifiedList>
+          <ModifiedList
+            isModifiable={isModifiable}
+            modifiedItems={modifiedItems}
+            items={items}
+            projects={projects}
+            groups={groups}
+            setItemsHandler={setItemsHandler}
+            setGroupsHandler={setGroupsHandler}
+            setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+            setModifiedItemsHandler={setModifiedItemsHandler}
+          ></ModifiedList>
         </Grid>
         <Grid xs={3}>
           <Draggable styled={{ position: "relative" }}>

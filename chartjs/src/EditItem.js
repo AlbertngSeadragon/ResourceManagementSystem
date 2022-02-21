@@ -12,8 +12,9 @@ function EditItem({
   selectedItemforEdit,
   setItemsHandler,
   isModifiable,
-  setModifiedItemsHandler,
-  modifiedItems,
+  handleClose,
+  // setModifiedItemsHandler,
+  // modifiedItems,
 }) {
   const [projectColor, setProjectColor] = useState(null);
 
@@ -70,19 +71,20 @@ function EditItem({
               ? data.title.label
               : selectedItemforEdit.title;
           items[i].isWhatIF = true;
-          setModifiedItemsHandler([
-            ...modifiedItems,
-            {
-              action: "Edit",
-              group: items[i].group,
-              id: items[i].id,
-              bgColor: items[i].bgColor,
-              start_time: items[i].start_time,
-              description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
-            },
-          ]);
+          // setModifiedItemsHandler([
+          //   ...modifiedItems,
+          //   {
+          //     action: "Edit",
+          //     group: items[i].group,
+          //     id: items[i].id,
+          //     bgColor: items[i].bgColor,
+          //     start_time: items[i].start_time,
+          //     description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
+          //   },
+          // ]);
         }
       }
+      handleClose();
       console.log("From the edititem", items);
       setItemsHandler([...items]);
       //   console.log("items", items);
