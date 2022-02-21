@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "9bef7baf-3e84-4577-a1c9-77e10fcf3f6f",
+		"name": "FYP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getprojects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getotherprojects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/getprojects?id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getprojects"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getexpensegroups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/getexpensegroups?id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getexpensegroups"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getexpenseitems",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/getexpenseitems",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getexpenseitems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProjectdata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Projects\": [\n        {\n            \"bgColor\": \"rgb(0, 0, 0)\",\n            \"end_time\": \"moment()\",\n            \"id\": 1,\n            \"initialBalance\": 3000000,\n            \"projectName\": \"Today\",\n            \"start_time\": \"moment()\"\n        },\n        {\n            \"bgColor\": \"rgb(54, 162, 235)\",\n            \"end_time\": \"moment(\\\"2020-09-01\\\")\",\n            \"id\": 2,\n            \"initialBalance\": 2000000,\n            \"projectName\": \"Graph Database Storage Design\",\n            \"start_time\": \"moment(\\\"2013-09-01\\\")\"\n        },\n        {\n            \"bgColor\": \"rgb(255, 99, 132)\",\n            \"end_time\": \"moment(\\\"2027-09-01\\\")\",\n            \"id\": 3,\n            \"initialBalance\": 3000000,\n            \"projectName\": \"Optimizations for Distributed Data Analytics in Cloud Environment\",\n            \"start_time\": \"moment(\\\"2019-09-01\\\")\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/updateProjectdata",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"updateProjectdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateExpenseGroups",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Projects\": [\n        {\n            \"bgColor\": \"rgb(0, 0, 0)\",\n            \"end_time\": \"moment()\",\n            \"id\": 1,\n            \"initialBalance\": 3000000,\n            \"projectName\": \"Today\",\n            \"start_time\": \"moment()\"\n        },\n        {\n            \"bgColor\": \"rgb(54, 162, 235)\",\n            \"end_time\": \"moment(\\\"2020-09-01\\\")\",\n            \"id\": 2,\n            \"initialBalance\": 2000000,\n            \"projectName\": \"Graph Database Storage Design\",\n            \"start_time\": \"moment(\\\"2013-09-01\\\")\"\n        },\n        {\n            \"bgColor\": \"rgb(255, 99, 132)\",\n            \"end_time\": \"moment(\\\"2027-09-01\\\")\",\n            \"id\": 3,\n            \"initialBalance\": 3000000,\n            \"projectName\": \"Optimizations for Distributed Data Analytics in Cloud Environment\",\n            \"start_time\": \"moment(\\\"2019-09-01\\\")\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/updateExpenseGroups",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"updateExpenseGroups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateupdateExpenseItems",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ExpenseItems\": [\n        {\n            \"bgColor\": \"rgb(54, 162, 235)\",\n            \"description\": \"ACM/IEEE Design Automation Conference\",\n            \"end_time\": \"moment(\\\"2015-09-01\\\")\",\n            \"expense\": 150000,\n            \"group\": 3,\n            \"id\": 1,\n            \"isWhatIF\": 0,\n            \"start_time\": \"moment(\\\"2015-09-01\\\")\",\n            \"title\": \"Graph Database Storage Design\"\n        },\n        {\n            \"bgColor\": \"rgb(54, 162, 235)\",\n            \"description\": \"Research Student: Albert\",\n            \"end_time\": \"moment(\\\"2020-12-01\\\")\",\n            \"expense\": 48000,\n            \"group\": 5,\n            \"id\": 2,\n            \"isWhatIF\": 0,\n            \"start_time\": \"moment(\\\"2016-12-01\\\")\",\n            \"title\": \"Graph Database Storage Design\"\n        },\n        {\n            \"bgColor\": \"rgb(54, 162, 235)\",\n            \"description\": \"Server purchasement\",\n            \"end_time\": \"moment(\\\"2018-03-01\\\")\",\n            \"expense\": 300000,\n            \"group\": 2,\n            \"id\": 3,\n            \"isWhatIF\": 0,\n            \"start_time\": \"moment(\\\"2018-03-01\\\")\",\n            \"title\": \"Graph Database Storage Design\"\n        },\n        {\n            \"bgColor\": \"rgb(255, 99, 132)\",\n            \"description\": \"Research Student: Timmy\",\n            \"end_time\": \"moment(\\\"2022-09-01\\\")\",\n            \"expense\": 240000,\n            \"group\": 4,\n            \"id\": 4,\n            \"isWhatIF\": 0,\n            \"start_time\": \"moment(\\\"2020-09-01\\\")\",\n            \"title\": \"Optimizations for Distributed Data Analytics in Cloud Environment\"\n        },\n        {\n            \"bgColor\": \"rgb(255, 99, 132)\",\n            \"description\": \"EC2 fee\",\n            \"end_time\": \"moment(\\\"2022-09-01\\\")\",\n            \"expense\": 500000,\n            \"group\": 2,\n            \"id\": 5,\n            \"isWhatIF\": 0,\n            \"start_time\": \"moment(\\\"2022-09-01\\\")\",\n            \"title\": \"Optimizations for Distributed Data Analytics in Cloud Environment\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/updateExpenseItems",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"updateExpenseItems"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

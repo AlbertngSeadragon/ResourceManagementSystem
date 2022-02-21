@@ -1,0 +1,4 @@
+@host = https://9ynao8frph.execute-api.us-east-1.amazonaws.com/dev
+
+### 
+GET {{host}}/getexpenseitems

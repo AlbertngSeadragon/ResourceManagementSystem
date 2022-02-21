@@ -1,0 +1,18 @@
+{
+  "cloudServerLocation": "https://9ynao8frph.execute-api.us-east-1.amazonaws.com/dev",
+  "mockServerLocation": "",
+  "api": {
+    "expense": {
+      "getExpense": "/expense",
+      "updateExpense": "/expense"
+    },
+    "project": {
+      "getProject": "/project",
+      "updateProject": "/project"
+    },
+    "group": {
+      "getGroup": "/group",
+      "updateGroup": "/group"
+    }
+  }
+}
