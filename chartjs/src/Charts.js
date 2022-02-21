@@ -16,6 +16,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
+import SubmitBtn from "./SubmitBtn";
 
 import moment from "moment";
 
@@ -24,6 +25,19 @@ import "./Charts.css";
 import Draggable from "react-draggable";
 import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
+
+import {
+  getProjects,
+  updateProjects,
+} from "./services/functions/projectsQuery";
+import {
+  getExpenseItems,
+  updateExpenseItems,
+} from "./services/functions/expenseItemsQuery";
+import {
+  getExpenseGroups,
+  updateExpenseGroups,
+} from "./services/functions/expenseGroupsQuery";
 
 const Projects = [
   {
@@ -369,7 +383,10 @@ function Charts() {
     setItems(items);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
+    await getExpenseItems().then((res) => console.log(res));
+    await getExpenseGroups().then((res) => console.log(res));
+    await getProjects().then((res) => console.log(res));
     setBalanceChartPlots(balanceChartPlotsGenerator());
   }, []);
 
@@ -485,6 +502,11 @@ function Charts() {
                   setModifiedItemsHandler={setModifiedItemsHandler}
                   modifiedItems={modifiedItems}
                 ></ExpenseItemInput>
+                <SubmitBtn
+                  groups={groups}
+                  items={items}
+                  projects={projects}
+                ></SubmitBtn>
                 {/* </Grid> */}
 
                 {/* </Card> */}
@@ -495,6 +517,7 @@ function Charts() {
           </Draggable>
         </Grid>
       </Grid>
+
       {/* </Grid> */}
 
       {/* <Grid item xs={12}> */}

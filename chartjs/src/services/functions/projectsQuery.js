@@ -4,6 +4,7 @@ const { cloudServerLocation, api } = require("../config.json");
 let url = cloudServerLocation + api.project.getProject;
 
 async function getProjects() {
+  console.log(url);
   axios.get(url).then((res) => {
     return res.body.Projects;
   });

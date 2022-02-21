@@ -10,7 +10,7 @@ let urlTable = {
   updateProject: cloudServerLocation + api.expense.updateProject,
 };
 
-Mock.mock(urlTable.getExpense, "GET", {
+module.exports = [Mock.mock(urlTable.getExpense, "GET", {
   ExpenseItems: [
     {
       bgColor: "rgb(54, 162, 235)",
@@ -207,7 +207,7 @@ Mock.mock(urlTable.getGroup, "GET", {
   ],
 });
 
-Mock.mock(urlTable.updateGroup, "POST", {
+Mock.mock(urlTable.updateGroup, "GET", {
   ExpenseGroups: [
     { id: 1, title: "General Expense" },
     { id: 2, title: "Equipment Expense" },
@@ -218,4 +218,4 @@ Mock.mock(urlTable.updateGroup, "POST", {
     { id: 7, title: "Staff - PostDoc" },
     { id: 8, title: "Staff - Admin" },
   ],
-});
+})]
