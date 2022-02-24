@@ -67,7 +67,7 @@ def returnExpenseGroups():
     try:
         mycursor = mydb.cursor()
 
-        mycursor.execute(f"select id, title from test_projects_balance_expense.ExpenseGroups;")
+        mycursor.execute(f"select id, title from test_projects_balance_expense.ExpenseGroups")
         
 
         promisefuturedata = Jsonifly.remote(mycursor.fetchall())
