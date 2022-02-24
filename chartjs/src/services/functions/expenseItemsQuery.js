@@ -3,16 +3,30 @@ const { cloudServerLocation, api } = require("../config.json");
 
 let url = cloudServerLocation + api.expense.getExpense;
 
-async function getExpenseItems() {
-  axios.get(url).then((res) => {
-    return res.body.ExpenseItems;
+const getExpenseItems = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((res) => {
+        reject("Rejected");
+      });
   });
-}
+};
 
-async function updateExpenseItems(expenseItems) {
-  axios.post(url).then((res) => {
-    return res.body.ExpenseItems;
+const updateExpenseItems = (expenseItems) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((res) => {
+        reject("Rejected");
+      });
   });
-}
+};
 
 export { getExpenseItems, updateExpenseItems };

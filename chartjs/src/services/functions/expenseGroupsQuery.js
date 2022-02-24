@@ -3,16 +3,28 @@ const { cloudServerLocation, api } = require("../config.json");
 
 let url = cloudServerLocation + api.group.getGroup;
 
-async function getExpenseGroups() {
-  axios.get(url).then((res) => {
-    return res.body.ExpenseGroups;
+const getExpenseGroups = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      axios.get(url).then((res) => {
+        resolve(res.data);
+      });
+    } catch {
+      reject("Rejected");
+    }
   });
-}
+};
 
-async function updateExpenseGroups(groups) {
-  axios.post(url).then((res) => {
-    return res.body.ExpenseGroups;
+const updateExpenseGroups = (groups) => {
+  return new Promise((resolve, reject) => {
+    try {
+      axios.get(url).then((res) => {
+        resolve(res.data);
+      });
+    } catch {
+      reject("Rejected");
+    }
   });
-}
+};
 
 export { getExpenseGroups, updateExpenseGroups };

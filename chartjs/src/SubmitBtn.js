@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  getProjects,
-  updateProjects,
-} from "./services/functions/projectsQuery";
-import {
-  getExpenseItems,
-  updateExpenseItems,
-} from "./services/functions/expenseItemsQuery";
-import {
-  getExpenseGroups,
-  updateExpenseGroups,
-} from "./services/functions/expenseGroupsQuery";
+import { updateProjects } from "./services/functions/projectsQuery";
+import { updateExpenseItems } from "./services/functions/expenseItemsQuery";
+import { updateExpenseGroups } from "./services/functions/expenseGroupsQuery";
 
 function submitBtn({ groups, items, projects }) {
   const handleSubmit = async () => {

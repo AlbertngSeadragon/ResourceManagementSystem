@@ -1,18 +1,18 @@
 {
-  "cloudServerLocation": "https://9ynao8frph.execute-api.us-east-1.amazonaws.com/dev",
-  "mockServerLocation": "",
+  "cloudServerLocation": "https://621760c071e7672e537c72ae.mockapi.io/",
+  "mockServerLocation": "https://9ynao8frph.execute-api.us-east-1.amazonaws.com/dev",
   "api": {
     "expense": {
-      "getExpense": "/expense",
-      "updateExpense": "/expense"
+      "getExpense": "/getexpenseitems",
+      "updateExpense": "/updateExpenseItems"
     },
     "project": {
-      "getProject": "/project",
-      "updateProject": "/project"
+      "getProject": "/getprojects",
+      "updateProject": "/updateProjectdata"
     },
     "group": {
-      "getGroup": "/group",
-      "updateGroup": "/group"
+      "getGroup": "/getexpensegroups",
+      "updateGroup": "/updateExpenseGroups"
     }
   }
 }

@@ -3,17 +3,28 @@ const { cloudServerLocation, api } = require("../config.json");
 
 let url = cloudServerLocation + api.project.getProject;
 
-async function getProjects() {
-  console.log(url);
-  axios.get(url).then((res) => {
-    return res.body.Projects;
+const getProjects = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      axios.get(url).then((res) => {
+        resolve(res.data);
+      });
+    } catch {
+      reject("Rejected");
+    }
   });
-}
+};
 
-async function updateProjects(projects) {
-  axios.post(url).then((res) => {
-    return res.body.Projects;
+const updateProjects = (projects) => {
+  return new Promise((resolve, reject) => {
+    try {
+      axios.get(url).then((res) => {
+        resolve(res.data);
+      });
+    } catch {
+      reject("Rejected");
+    }
   });
-}
+};
 
 export { getProjects, updateProjects };

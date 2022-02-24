@@ -26,18 +26,9 @@ import Draggable from "react-draggable";
 import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
-import {
-  getProjects,
-  updateProjects,
-} from "./services/functions/projectsQuery";
-import {
-  getExpenseItems,
-  updateExpenseItems,
-} from "./services/functions/expenseItemsQuery";
-import {
-  getExpenseGroups,
-  updateExpenseGroups,
-} from "./services/functions/expenseGroupsQuery";
+import { getProjects } from "./services/functions/projectsQuery";
+import { getExpenseItems } from "./services/functions/expenseItemsQuery";
+import { getExpenseGroups } from "./services/functions/expenseGroupsQuery";
 
 const Projects = [
   {
@@ -138,9 +129,9 @@ const ExpenseItems = [
 ];
 
 function Charts() {
-  const [groups, setGroups] = useState(ExpenseGroups);
-  const [items, setItems] = useState(ExpenseItems);
-  const [projects, setProjects] = useState(Projects);
+  const [groups, setGroups] = useState([]);
+  const [items, setItems] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [balanceChartPlots, setBalanceChartPlots] = useState([]);
   const [checked, setChecked] = useState(false);
   const [modifiedItems, setModifiedItems] = useState([]);
@@ -383,11 +374,36 @@ function Charts() {
     setItems(items);
   };
 
-  useEffect(async () => {
-    await getExpenseItems().then((res) => console.log(res));
-    await getExpenseGroups().then((res) => console.log(res));
-    await getProjects().then((res) => console.log(res));
+  const loadData = async () => {
+    await getExpenseItems()
+      .then((res) => {
+        setItems(res);
+        console.log(res);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+    await getExpenseGroups()
+      .then((res) => {
+        setGroups(res);
+        console.log(res);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+    await getProjects()
+      .then((res) => {
+        setProjects(res);
+        console.log(res);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
+  useEffect(() => {
     setBalanceChartPlots(balanceChartPlotsGenerator());
+    console.log("triggered");
   }, []);
 
   useEffect(() => {
@@ -417,6 +433,7 @@ function Charts() {
     <div style={{ backgroundColor: isModifiable ? "#fffde0" : "#FFF" }}>
       {/* <Grid container spacing={2}>
         <Grid item xs={12}> */}
+      <button onClick={loadData}>Load data</button>
       <Grid container spacing={1}>
         <Grid xs={7}>
           <br />
