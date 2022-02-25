@@ -67,9 +67,8 @@ def returnExpenseGroups():
     try:
         mycursor = mydb.cursor()
 
-        mycursor.execute(f"select id, title from test_projects_balance_expense.ExpenseGroups;")
+        mycursor.execute(f"select id, title from test_projects_balance_expense.ExpenseGroups")
         
-
         promisefuturedata = Jsonifly.remote(mycursor.fetchall())
 
         jsondata = ray.get(promisefuturedata)
@@ -87,7 +86,8 @@ def returnExpenseGroups():
         ##print(append_json)
 
         finaldata = {'ExpenseGroups': append_json}
-
+        mydb.commit()
+        mycursor.close()
         print(finaldata)
 
         return finaldata
@@ -162,7 +162,8 @@ def returnProjects():
         ##print(append_json)
 
         finaldata = {'Projects': append_json}
-
+        mydb.commit()
+        mycursor.close()
         print(finaldata)
         return finaldata
     except:
@@ -201,7 +202,8 @@ def returnExpenseitems():
         ##print(append_json)
 
         finaldata = {'ExpenseItems': append_json}
-
+        mydb.commit()
+        mycursor.close()
         print(finaldata)
         return finaldata
     except:

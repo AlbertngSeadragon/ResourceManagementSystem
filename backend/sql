@@ -154,3 +154,17 @@ ALTER TABLE ExpenseItems AUTO_INCREMENT=1;
 (2,"Graph Database Storage Design","moment("2018-03-01")","moment("2018-03-01")","rgb(54, 162, 235)",300000,"Server purchasement",0),
 (4,"Optimizations for Distributed Data Analytics in Cloud Environment", "moment("2020-09-01")","moment("2022-09-01")","rgb(255, 99, 132)",240000,"Research Student: Timmy",0),
 (2,"Optimizations for Distributed Data Analytics in Cloud Environment","moment("2022-09-01")","moment("2022-09-01")","rgb(255, 99, 132)",500000,,"EC2 fee",0)
+
+INSERT INTO Projects (projectName, initialBalance, start_time, end_time, bgColor)
+VALUES ('Graph Database Storage Design', 2000000, 'moment("2013-09-01")', 'moment("2020-09-01")', 'rgb(54, 162, 235)'),
+('Optimizations for Distributed Data Analytics in Cloud Environment', 3000000, 'moment("2019-09-01")', 'moment("2026-09-01")', 'rgb(255, 99, 132)')
+
+INSERT INTO ExpenseItems (group_, title, start_time, end_time, bgColor, expense, description_, isWhatIF)
+VALUES (5, "Graph Database Storage Design", 'moment("2016-12-01")', 'moment("2020-12-01")', "rgb(54, 162, 235)", 48000, "Research Student: Albert", 0),
+(2,"Graph Database Storage Design",'moment("2018-03-01")','moment("2018-03-01")',"rgb(54, 162, 235)",300000,"Server purchasement",0),
+(4,"Optimizations for Distributed Data Analytics in Cloud Environment", 'moment("2020-09-01")','moment("2022-09-01")',"rgb(255, 99, 132)",240000,"Research Student: Timmy",0),
+(2,"Optimizations for Distributed Data Analytics in Cloud Environment",'moment("2022-09-01")','moment("2022-09-01")',"rgb(255, 99, 132)",500000,"EC2 fee",0)
+
+INSERT INTO ExpenseGroups (title)
+VALUES ('General Expense'), ('Equipment Expense'), ('Conference'), ('RStudent - MPhill'), ('RStudent - PHD'), 
+('Staff - RA'), ('Staff - PostDoc'), ('Staff - Admin')
