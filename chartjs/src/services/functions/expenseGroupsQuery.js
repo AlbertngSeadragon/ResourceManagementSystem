@@ -5,25 +5,27 @@ let url = cloudServerLocation + api.group.getGroup;
 
 const getExpenseGroups = () => {
   return new Promise((resolve, reject) => {
-    try {
-      axios.get(url).then((res) => {
-        resolve(res.data);
+    axios
+      .get(url)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((res) => {
+        reject("Rejected");
       });
-    } catch {
-      reject("Rejected");
-    }
   });
 };
 
 const updateExpenseGroups = (groups) => {
   return new Promise((resolve, reject) => {
-    try {
-      axios.get(url).then((res) => {
-        resolve(res.data);
+    axios
+      .get(url)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((res) => {
+        reject("Rejected");
       });
-    } catch {
-      reject("Rejected");
-    }
   });
 };
 

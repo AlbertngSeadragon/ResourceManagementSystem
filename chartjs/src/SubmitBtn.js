@@ -11,7 +11,7 @@ function submitBtn({ groups, items, projects }) {
   };
 
   return (
-    <button onClick={handleSubmit()} style={{ width: "300px" }}>
+    <button onClick={handleSubmit} style={{ width: "300px" }}>
       Submit
     </button>
   );

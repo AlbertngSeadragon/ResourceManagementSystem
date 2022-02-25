@@ -8,7 +8,7 @@ const getExpenseItems = () => {
     axios
       .get(url)
       .then((res) => {
-        resolve(res.data);
+        resolve(res);
       })
       .catch((res) => {
         reject("Rejected");
@@ -21,7 +21,7 @@ const updateExpenseItems = (expenseItems) => {
     axios
       .get(url)
       .then((res) => {
-        resolve(res.data);
+        resolve(res);
       })
       .catch((res) => {
         reject("Rejected");

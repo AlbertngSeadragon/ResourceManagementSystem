@@ -69,8 +69,10 @@ function Balance({ balanceChartPlots, projects, isModifiable }) {
       // console.log("Plots useEffect", plots);
       let newChart;
       if (chart === null) {
+        console.log("chart is null");
         newChart = echarts.init(myChart.current);
       } else {
+        console.log("chart exist");
         newChart = chart;
       }
 

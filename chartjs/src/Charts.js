@@ -26,8 +26,8 @@ import Draggable from "react-draggable";
 import zIndex from "@material-ui/core/styles/zIndex";
 import Group from "rc-image/lib/PreviewGroup";
 
-import { getProjects } from "./services/functions/projectsQuery";
 import { getExpenseItems } from "./services/functions/expenseItemsQuery";
+import { getProjects } from "./services/functions/projectsQuery";
 import { getExpenseGroups } from "./services/functions/expenseGroupsQuery";
 
 const Projects = [
@@ -238,9 +238,7 @@ function Charts() {
   };
 
   const setItemsHandler = function (items) {
-    // console.log("Triggered setItems");
     setItems(items);
-    console.log("items", items);
   };
 
   const setGroupsHandler = function (groups) {
@@ -374,58 +372,80 @@ function Charts() {
     setItems(items);
   };
 
-  const loadData = async () => {
+  useEffect(async () => {
     await getExpenseItems()
       .then((res) => {
-        setItems(res);
-        console.log(res);
+        let items = res.data.ExpenseItems.map((item) => ({
+          ...item,
+          end_time:
+            item.end_time === "moment()"
+              ? moment()
+              : moment(item.end_time.match(/\d{4}-\d{2}-\d{2}/)),
+          start_time:
+            item.start_time === "moment()"
+              ? moment()
+              : moment(item.start_time.match(/\d{4}-\d{2}-\d{2}/)),
+        }));
+        setItems(items);
+        console.log(items);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        console.log(err);
       });
     await getExpenseGroups()
       .then((res) => {
-        setGroups(res);
-        console.log(res);
+        setGroups(res.data.ExpenseGroups);
+        console.log(res.data.ExpenseGroups);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        console.log(err);
       });
     await getProjects()
       .then((res) => {
-        setProjects(res);
-        console.log(res);
+        let projects = res.data.Projects.map((project) => ({
+          ...project,
+          end_time:
+            project.end_time === "moment()"
+              ? moment()
+              : moment(project.end_time.match(/\d{4}-\d{2}-\d{2}/)),
+          start_time:
+            project.start_time === "moment()"
+              ? moment()
+              : moment(project.start_time.match(/\d{4}-\d{2}-\d{2}/)),
+        }));
+        setProjects(projects);
+        // console.log(projects);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        console.log(err);
       });
-  };
-
-  useEffect(() => {
-    setBalanceChartPlots(balanceChartPlotsGenerator());
-    console.log("triggered");
+    // setBalanceChartPlots(balanceChartPlotsGenerator());
+    // console.log("triggered");
   }, []);
 
-  useEffect(() => {
-    let newSet = new Set(items.map((item) => item.title));
-    let oldSet = new Set(projects.map((project) => project.projectName));
-    let [diffSet] = [...difference(newSet, oldSet)];
-    // console.log("diffSet", diffSet);
-    if (diffSet !== undefined) {
-      setProjects([
-        ...projects,
-        {
-          projectName: diffSet,
-          initialBalance: 500000,
-        },
-      ]);
-    }
-    // setBalanceChartPlots(balanceChartPlotsGenerator());
-    // console.log("setBalanceChartPlots", items);
-  }, [items]);
+  // useEffect(() => {
+  //   let newSet = new Set(items.map((item) => item.title));
+  //   let oldSet = new Set(projects.map((project) => project.projectName));
+  //   let [diffSet] = [...difference(newSet, oldSet)];
+  //   // console.log("diffSet", diffSet);
+  //   if (diffSet !== undefined) {
+  //     setProjects([
+  //       ...projects,
+  //       {
+  //         projectName: diffSet,
+  //         initialBalance: 500000,
+  //       },
+  //     ]);
+  //   }
+  //   // setBalanceChartPlots(balanceChartPlotsGenerator());
+  //   // console.log("setBalanceChartPlots", items);
+  // }, [items]);
 
   useEffect(() => {
-    setBalanceChartPlots(balanceChartPlotsGenerator());
+    if (groups.length && items.length && projects.length) {
+      console.log("trigger", groups.length, items.length, projects.length);
+      setBalanceChartPlots(balanceChartPlotsGenerator());
+    }
     // console.log("setBalanceChartPlots", items);
   }, [groups, items, projects, isModifiable]);
 
@@ -433,7 +453,7 @@ function Charts() {
     <div style={{ backgroundColor: isModifiable ? "#fffde0" : "#FFF" }}>
       {/* <Grid container spacing={2}>
         <Grid item xs={12}> */}
-      <button onClick={loadData}>Load data</button>
+      {/* <button onClick={loadData}>Load data</button> */}
       <Grid container spacing={1}>
         <Grid xs={7}>
           <br />
