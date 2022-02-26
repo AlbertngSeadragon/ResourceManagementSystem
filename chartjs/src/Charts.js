@@ -539,11 +539,7 @@ function Charts() {
                   setModifiedItemsHandler={setModifiedItemsHandler}
                   modifiedItems={modifiedItems}
                 ></ExpenseItemInput>
-                <SubmitBtn
-                  groups={groups}
-                  items={items}
-                  projects={projects}
-                ></SubmitBtn>
+
                 {/* </Grid> */}
 
                 {/* </Card> */}
@@ -552,6 +548,13 @@ function Charts() {
               {/* </Grid> */}
             </div>
           </Draggable>
+          {isModifiable ? null : (
+            <SubmitBtn
+              groups={groups}
+              items={items}
+              projects={projects}
+            ></SubmitBtn>
+          )}
         </Grid>
       </Grid>
 

@@ -1,12 +1,17 @@
 import axios from "axios";
-const { cloudServerLocation, api } = require("../config.json");
+const {
+  cloudServerLocation,
+  updateServerLocation,
+  api,
+} = require("../config.json");
 
-let url = cloudServerLocation + api.expense.getExpense;
+let getUrl = cloudServerLocation + api.expense.getExpense;
+let updateUrl = updateServerLocation + api.expense.updateExpense;
 
 const getExpenseItems = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(url)
+      .get(getUrl)
       .then((res) => {
         resolve(res);
       })
@@ -19,7 +24,9 @@ const getExpenseItems = () => {
 const updateExpenseItems = (expenseItems) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(url)
+      .post(updateUrl, {
+        ExpenseItems: expenseItems,
+      })
       .then((res) => {
         resolve(res);
       })

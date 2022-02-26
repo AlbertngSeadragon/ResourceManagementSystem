@@ -5,9 +5,9 @@ import { updateExpenseGroups } from "./services/functions/expenseGroupsQuery";
 
 function submitBtn({ groups, items, projects }) {
   const handleSubmit = async () => {
+    await updateExpenseItems(items);
     await updateProjects(projects);
     await updateExpenseGroups(groups);
-    await updateExpenseItems(items);
   };
 
   return (

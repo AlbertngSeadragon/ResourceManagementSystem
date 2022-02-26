@@ -1,6 +1,6 @@
 {
   "cloudServerLocation": "http://python-auto-scaling-group-1-1288581158.us-east-1.elb.amazonaws.com",
-  "mockServerLocation": "https://621760c071e7672e537c72ae.mockapi.io",
+  "updateServerLocation": "https://tcoosqlt0j.execute-api.us-east-1.amazonaws.com/dev",
   "api": {
     "expense": {
       "getExpense": "/getexpenseitems",
