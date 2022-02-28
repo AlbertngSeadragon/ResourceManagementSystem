@@ -13,6 +13,7 @@ nohup python3 main.py &
 # pgrep <process-type>
 # pgrep python
 # pgrep gunicorn
+# pkill gunicorn
 # sudo kill <process-id>
 
 # https://medium.com/analytics-vidhya/deploy-a-flask-app-on-amazon-aws-ec2-and-keep-it-running-while-you-are-offline-38d22571e2c5
@@ -32,6 +33,7 @@ pip3 install -r requirements.txt
 pip3 install gunicorn
 echo -e "host=''\nuser=''\npassword=''\ndatabase=''" >> .env
 gunicorn --bind 0.0.0.0:8080 main:app
+#nohup gunicorn --bind 0.0.0.0:8080 main:app
 #nohup python3 main.py &
 
 https://berkoc.medium.com/how-to-deploy-your-flask-app-to-aws-ec2-instance-with-nginx-gunicorn-b734df606a14
