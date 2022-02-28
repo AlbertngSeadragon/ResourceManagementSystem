@@ -11,7 +11,8 @@ echo -e "host=''\nuser=''\npassword=''\ndatabase=''" >> .env
 nohup python3 main.py &
 
 # pgrep <process-type>
-
+# pgrep python
+# pgrep gunicorn
 # sudo kill <process-id>
 
 # https://medium.com/analytics-vidhya/deploy-a-flask-app-on-amazon-aws-ec2-and-keep-it-running-while-you-are-offline-38d22571e2c5
