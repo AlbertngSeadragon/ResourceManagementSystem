@@ -1,12 +1,12 @@
 import axios from "axios";
 const { pdfServerLocation, api } = require("../config.json");
 
-let sendEchartsImageUrl = pdfServerLocation + api.pdf.sendEchartsImage;
+let sendPdfDataUrl = pdfServerLocation + api.pdf.sendPdfData;
 
-const sendEchartsImage = (dataUrl) => {
+const sendPdfData = (dataUrl, items) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(sendEchartsImageUrl, { dataUrl: dataUrl })
+      .post(sendPdfDataUrl, { dataUrl: dataUrl, items: items })
       .then((res) => {
         resolve(res);
       })
@@ -16,4 +16,4 @@ const sendEchartsImage = (dataUrl) => {
   });
 };
 
-export { sendEchartsImage };
+export { sendPdfData };

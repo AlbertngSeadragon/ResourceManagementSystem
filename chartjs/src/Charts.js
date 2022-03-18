@@ -573,7 +573,7 @@ function Charts() {
                 items={items}
                 projects={projects}
               ></SubmitBtn>
-              <DownloadBtn chart={chart}></DownloadBtn>
+              <DownloadBtn chart={chart} items={items}></DownloadBtn>
             </>
           )}
         </Grid>

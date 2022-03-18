@@ -4,6 +4,7 @@ const fs = require("fs");
 const cors = require("cors");
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
+const { createReport } = require("./helper");
 require("dotenv").config();
 
 const app = express();
@@ -51,53 +52,58 @@ const uploadToS3 = (fileName) => {
   // });
 };
 
-app.post("/sendImage", (req, res) => {
+// function savePdfToFile(pdf, fileName) {
+//   return new Promise((resolve, reject) => {
+
+//       // To determine when the PDF has finished being written successfully
+//       // we need to confirm the following 2 conditions:
+//       //
+//       //   1. The write stream has been closed
+//       //   2. PDFDocument.end() was called syncronously without an error being thrown
+
+//       let pendingStepCount = 2;
+
+//       const stepFinished = () => {
+//           if (--pendingStepCount == 0) {
+//               resolve();
+//           }
+//       };
+
+//       const writeStream = fs.createWriteStream(fileName);
+//       writeStream.on('close', stepFinished);
+//       pdf.pipe(writeStream);
+
+//       pdf.end();
+
+//       stepFinished();
+//   });
+// }
+
+app.post("/sendPdfData", (req, res) => {
   // Create a document
-  const doc = new PDFDocument();
+  const doc = new PDFDocument({ size: "A4", margin: 50 });
+  const writeStream = fs.createWriteStream("output.pdf");
 
-  // Pipe its output somewhere, like to a file or HTTP response
-  // See below for browser usage
-  doc.pipe(fs.createWriteStream("output.pdf"));
+  // console.log(req.body);
 
-  // Embed a font, set the font size, and render some text
-  doc.font("fonts/Roboto/Roboto-Light.ttf").fontSize(25);
-  doc.text("Resource Management System Report", 20, 10);
-
-  // Add an image, constrain it to a given size, and center it vertically and horizontally
-  doc.image(req.body.dataUrl, 75, 50, { width: 500 });
-
-  // Add another page
-  doc.addPage().fontSize(25).text("Here is some vector graphics...", 100, 100);
-
-  // Draw a triangle
-  doc.save().moveTo(100, 150).lineTo(100, 250).lineTo(200, 250).fill("#FF3300");
-
-  // Apply some transforms and render an SVG path with the 'even-odd' fill rule
-  doc
-    .scale(0.6)
-    .translate(470, -380)
-    .path("M 250,75 L 323,301 131,161 369,161 177,301 z")
-    .fill("red", "even-odd")
-    .restore();
-
-  // Add some text with annotations
-  doc
-    .addPage()
-    .fillColor("blue")
-    .text("Here is a link!", 100, 100)
-    .underline(100, 100, 160, 27, { color: "#0000FF" })
-    .link(100, 100, 160, 27, "http://google.com/");
-
-  // Finalize PDF file
-  doc.end();
+  createReport(doc, writeStream, req.body, "output.pdf");
 
   let redirectUrl;
 
-  (async function () {
-    redirectUrl = await uploadToS3("output.pdf");
-    console.log("redirectUrl", redirectUrl);
-    res.json({ redirectUrl: redirectUrl });
-  })();
+  writeStream.on("finish", function () {
+    // do stuff with the PDF file
+    (async function () {
+      redirectUrl = await uploadToS3("output.pdf");
+      console.log("redirectUrl", redirectUrl);
+      res.json({ redirectUrl: redirectUrl });
+    })();
+  });
+
+  // (async function () {
+  //   redirectUrl = await uploadToS3("output.pdf");
+  //   console.log("redirectUrl", redirectUrl);
+  //   res.json({ redirectUrl: redirectUrl });
+  // })();
 });
 
 app.listen(port, () => {

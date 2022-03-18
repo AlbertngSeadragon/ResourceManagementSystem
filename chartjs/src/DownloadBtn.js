@@ -1,19 +1,20 @@
 import React from "react";
-import { sendEchartsImage } from "./services/functions/sendEchartsImage";
+import { sendPdfData } from "./services/functions/sendPdfData";
 
-function DownloadBtn({ chart }) {
+function DownloadBtn({ chart, items }) {
   const canvasToImage = () => {
     let dataURL = chart.getDataURL();
     return dataURL;
   };
-  const handleCanvasToImage = async () => {
-    const fileUrl = await sendEchartsImage(canvasToImage());
-    console.log(fileUrl.data.redirectUrl);
+
+  const downloadPdf = async () => {
+    const fileUrl = await sendPdfData(canvasToImage(), items);
+    // console.log(fileUrl.data.redirectUrl);
     window.open(fileUrl.data.redirectUrl);
   };
 
   return (
-    <button onClick={handleCanvasToImage} style={{ width: "300px" }}>
+    <button onClick={downloadPdf} style={{ width: "300px" }}>
       Download PDF
     </button>
   );

@@ -16,7 +16,7 @@
       "updateGroup": "/updateExpenseGroups"
     },
     "pdf": {
-      "sendEchartsImage": "/sendImage"
+      "sendPdfData": "/sendPdfData"
     }
   }
 }
