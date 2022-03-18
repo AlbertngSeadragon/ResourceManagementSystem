@@ -3,7 +3,7 @@ import { updateProjects } from "./services/functions/projectsQuery";
 import { updateExpenseItems } from "./services/functions/expenseItemsQuery";
 import { updateExpenseGroups } from "./services/functions/expenseGroupsQuery";
 
-function submitBtn({ groups, items, projects }) {
+function SubmitBtn({ groups, items, projects }) {
   const handleSubmit = async () => {
     await updateExpenseItems(items);
     await updateProjects(projects);
@@ -17,4 +17,4 @@ function submitBtn({ groups, items, projects }) {
   );
 }
 
-export default submitBtn;
+export default SubmitBtn;

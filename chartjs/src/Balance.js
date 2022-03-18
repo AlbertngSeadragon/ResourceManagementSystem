@@ -6,10 +6,16 @@ import "./Balance.css";
 import axios from "axios";
 import * as echarts from "echarts";
 
-function Balance({ balanceChartPlots, projects, isModifiable }) {
+function Balance({
+  balanceChartPlots,
+  projects,
+  isModifiable,
+  setChartHandler,
+  chart,
+}) {
   const myChart = useRef(null);
   const [plots, setPlots] = useState([]);
-  const [chart, setChart] = useState(null);
+  // const [chart, setChart] = useState(null);
 
   useEffect(() => {
     // console.log(balanceChartPlots, projects);
@@ -323,7 +329,7 @@ function Balance({ balanceChartPlots, projects, isModifiable }) {
         //   },
         // ],
       });
-      setChart(newChart);
+      setChartHandler(newChart);
     }
   }, [plots, projects]);
   return (
