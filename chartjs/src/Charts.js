@@ -18,6 +18,7 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import SubmitBtn from "./SubmitBtn";
 import DownloadBtn from "./DownloadBtn";
+import Modal from "react-modal";
 
 import moment from "moment";
 
@@ -143,6 +144,8 @@ function Charts() {
   const [originalItems, setOriginalItems] = useState([]);
   const [chart, setChart] = useState(null);
 
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
   const [originalProjects, setOriginalProjects] = useState([]);
 
   function difference(setA, setB) {
@@ -255,6 +258,10 @@ function Charts() {
 
   const setChartHandler = function (chart) {
     setChart(chart);
+  };
+
+  const setIsOpenHandler = function (isOpen) {
+    setIsOpen(isOpen);
   };
 
   const balanceChartPlotsGenerator = function () {
@@ -372,6 +379,9 @@ function Charts() {
   };
 
   const handleChange = () => {
+    if (checked) {
+      openModal();
+    }
     setChecked((prev) => !prev);
     //Set all whatif to real when close the what-if mode
     for (let i = 0; i < items.length; i++) {
@@ -379,6 +389,14 @@ function Charts() {
     }
     setItems(items);
   };
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   // Use server data
   // useEffect(async () => {
@@ -471,7 +489,7 @@ function Charts() {
         <Grid item xs={12}> */}
       {/* <button onClick={loadData}>Load data</button> */}
       <Grid container spacing={1}>
-        <Grid xs={7}>
+        <Grid xs={9}>
           <br />
           <Balance
             balanceChartPlots={balanceChartPlots}
@@ -493,7 +511,7 @@ function Charts() {
             modifiedItems={modifiedItems}
           ></Expense>
         </Grid>
-        <Grid xs={2}>
+        {/* <Grid xs={2}>
           <ModifiedList
             isModifiable={isModifiable}
             modifiedItems={modifiedItems}
@@ -505,7 +523,7 @@ function Charts() {
             setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
             setModifiedItemsHandler={setModifiedItemsHandler}
           ></ModifiedList>
-        </Grid>
+        </Grid> */}
         <Grid xs={3}>
           <Draggable styled={{ position: "relative" }}>
             <div className="whatifcontent">
@@ -568,16 +586,38 @@ function Charts() {
           </Draggable>
           {isModifiable ? null : (
             <>
-              <SubmitBtn
-                groups={groups}
-                items={items}
-                projects={projects}
-              ></SubmitBtn>
               <DownloadBtn chart={chart} items={items}></DownloadBtn>
             </>
           )}
         </Grid>
       </Grid>
+      <Modal
+        isOpen={modalIsOpen}
+        preventScroll={true}
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+          },
+          overlay: { zIndex: 1000 },
+        }}
+        contentLabel="Example Modal"
+      >
+        <div>
+          <p style={{ fontSize: "1.5rem" }}>Confirm submission?</p>
+        </div>
+        <button onClick={closeModal}>Don't submit</button>
+        <SubmitBtn
+          groups={groups}
+          items={items}
+          projects={projects}
+          setIsOpenHandler={setIsOpenHandler}
+        ></SubmitBtn>
+      </Modal>
 
       {/* </Grid> */}
 
