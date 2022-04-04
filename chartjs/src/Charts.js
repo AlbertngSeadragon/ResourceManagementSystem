@@ -144,7 +144,8 @@ function Charts() {
   const [originalItems, setOriginalItems] = useState([]);
   const [chart, setChart] = useState(null);
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [layout, setLayout] = useState({ balance: 9, memo: 0, form: 3 });
 
   const [originalProjects, setOriginalProjects] = useState([]);
 
@@ -474,6 +475,13 @@ function Charts() {
     setGroups(ExpenseGroups);
     setProjects(Projects);
   }, []);
+  useEffect(() => {
+    if (isModifiable) {
+      setLayout({ balance: 7, memo: 2, form: 3 });
+    } else {
+      setLayout({ balance: 9, memo: 0, form: 3 });
+    }
+  }, [isModifiable]);
 
   useEffect(() => {
     if (groups.length && items.length && projects.length) {
@@ -489,7 +497,7 @@ function Charts() {
         <Grid item xs={12}> */}
       {/* <button onClick={loadData}>Load data</button> */}
       <Grid container spacing={1}>
-        <Grid xs={9}>
+        <Grid xs={layout.balance}>
           <br />
           <Balance
             balanceChartPlots={balanceChartPlots}
@@ -511,20 +519,22 @@ function Charts() {
             modifiedItems={modifiedItems}
           ></Expense>
         </Grid>
-        {/* <Grid xs={2}>
-          <ModifiedList
-            isModifiable={isModifiable}
-            modifiedItems={modifiedItems}
-            items={items}
-            projects={projects}
-            groups={groups}
-            setItemsHandler={setItemsHandler}
-            setGroupsHandler={setGroupsHandler}
-            setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
-            setModifiedItemsHandler={setModifiedItemsHandler}
-          ></ModifiedList>
-        </Grid> */}
-        <Grid xs={3}>
+        {isModifiable ? (
+          <Grid xs={layout.memo}>
+            <ModifiedList
+              isModifiable={isModifiable}
+              modifiedItems={modifiedItems}
+              items={items}
+              projects={projects}
+              groups={groups}
+              setItemsHandler={setItemsHandler}
+              setGroupsHandler={setGroupsHandler}
+              setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
+              setModifiedItemsHandler={setModifiedItemsHandler}
+            ></ModifiedList>
+          </Grid>
+        ) : null}
+        <Grid xs={layout.form}>
           <Draggable styled={{ position: "relative" }}>
             <div className="whatifcontent">
               {/* <Grid item xs={18}> */}

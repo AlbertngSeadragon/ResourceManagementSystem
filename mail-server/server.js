@@ -9,7 +9,7 @@ require("dotenv").config();
 app.get("/sendEmail", (req, res) => {
   // async..await is not allowed in global scope, must use a wrapper
   (async () => {
-    console.log(process.env.GMAIL_USERNAME, process.env.PASSWORD);
+    console.log(process.env.USERNAME, process.env.PASSWORD);
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: "Gmail",
