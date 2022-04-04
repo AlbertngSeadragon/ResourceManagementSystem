@@ -2,6 +2,7 @@
   "cloudServerLocation": "http://python-auto-scaling-group-1-1288581158.us-east-1.elb.amazonaws.com",
   "updateServerLocation": "https://tcoosqlt0j.execute-api.us-east-1.amazonaws.com/dev",
   "pdfServerLocation": "http://localhost:3009",
+  "mailServeerLocation": "http://localhost:3010",
   "api": {
     "expense": {
       "getExpense": "/getexpenseitems",
@@ -17,6 +18,9 @@
     },
     "pdf": {
       "sendPdfData": "/sendPdfData"
+    },
+    "mail": {
+      "sendEmail": "/sendEmail"
     }
   }
 }
