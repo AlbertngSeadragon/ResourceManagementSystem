@@ -1,4 +1,9 @@
 @host = http://localhost:3010
 
 ###
-GET {{host}}/sendEmail
+POST {{host}}/sendEmail
+content-type: application/json
+
+{
+    "content": "abc"
+}

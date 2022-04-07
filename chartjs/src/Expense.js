@@ -93,11 +93,15 @@ function Expense({
       setModifiedItemsHandler([
         ...modifiedItems,
         {
-          action: itemAction,
+          action: "Edit",
           id: itemId,
           bgColor: oldMovedItem.bgColor,
+          projectName: oldMovedItem.title,
+          itemName: oldMovedItem.description,
+          itemType: groups[newGroupOrder].title,
+          expense: oldMovedItem.expense,
           start_time: moment(dragTime).toString(),
-          description: modifyDescription,
+          // description: modifyDescription,
         },
       ]);
       console.log("Moved", itemId, dragTime, newGroupOrder);

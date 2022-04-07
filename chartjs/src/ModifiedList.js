@@ -10,8 +10,10 @@ function ModifiedList({
   projects,
   isModifiable,
   setModifiedItemsHandler,
+  groups,
+  unmodifiedItems,
 }) {
-  //   console.log("ModifiedList", modifiedItems);
+  console.log("ModifiedList", modifiedItems);
   //   useEffect(() => {}, [modifiedItems]);
   return (
     <Container>
@@ -33,7 +35,10 @@ function ModifiedList({
             setItemsHandler={setItemsHandler}
             projects={projects}
             isModifiable={isModifiable}
+            modifiedItems={modifiedItems}
             setModifiedItemsHandler={setModifiedItemsHandler}
+            groups={groups}
+            unmodifiedItems={unmodifiedItems}
           ></ItemCard>
         );
       })}

@@ -13,8 +13,10 @@ function EditItem({
   setItemsHandler,
   isModifiable,
   handleClose,
-  // setModifiedItemsHandler,
-  // modifiedItems,
+  setModifiedItemsHandler,
+  modifiedItems,
+  groups,
+  unmodifiedItems,
 }) {
   const [projectColor, setProjectColor] = useState(null);
 
@@ -71,17 +73,26 @@ function EditItem({
               ? data.title.label
               : selectedItemforEdit.title;
           items[i].isWhatIF = true;
-          // setModifiedItemsHandler([
-          //   ...modifiedItems,
-          //   {
-          //     action: "Edit",
-          //     group: items[i].group,
-          //     id: items[i].id,
-          //     bgColor: items[i].bgColor,
-          //     start_time: items[i].start_time,
-          //     description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
-          //   },
-          // ]);
+
+          const unmodifiedItem = unmodifiedItems.filter(
+            (unmodifiedItem) => unmodifiedItem.id === items[i].id
+          )[0];
+          console.log("unmodifiedItem", unmodifiedItem);
+          setModifiedItemsHandler([
+            ...modifiedItems,
+            {
+              action: "Edit",
+              group: items[i].group,
+              id: items[i].id,
+              bgColor: items[i].bgColor,
+              projectName: items[i].title,
+              itemName: items[i].description,
+              itemType: groups[items[i].group - 1].title,
+              expense: items[i].expense,
+              start_time: items[i].start_time,
+              // description: `Item description is changed to ${items[i].description}, with expense $${items[i].expense}.`,
+            },
+          ]);
         }
       }
       handleClose();
@@ -113,7 +124,7 @@ function EditItem({
   function selectProjectsID(selectedItemforEdit, projects) {
     for (let i = 0; i < projects.length; i++) {
       if (selectedItemforEdit.title === projects[i].projectName) {
-        console.log("XXXXXXXXXXXX", projects[i].id);
+        // console.log("XXXXXXXXXXXX", projects[i].id);
         return projects[i].id;
       }
     }

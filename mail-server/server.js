@@ -2,14 +2,15 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 app.use(cors());
+app.use(express.json());
 const port = 3010;
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-app.get("/sendEmail", (req, res) => {
+app.post("/sendEmail", (req, res) => {
+  console.log(req.body.content);
   // async..await is not allowed in global scope, must use a wrapper
   (async () => {
-    console.log(process.env.USERNAME, process.env.PASSWORD);
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: "Gmail",
@@ -25,7 +26,7 @@ app.get("/sendEmail", (req, res) => {
       to: "tcmak217@outlook.com", // list of receivers
       subject: "Hello ✔", // Subject line
       text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>", // html body
+      html: req.body.content, // html body
     });
 
     console.log("Message sent: %s", info.messageId);

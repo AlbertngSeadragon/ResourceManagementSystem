@@ -9,7 +9,17 @@ import Box from "@mui/material/Box";
 import RemoveItem from "./RemoveItem";
 import EditItem from "./EditItem";
 
-function ItemCard({ item, items, setItemsHandler, isModifiable, projects }) {
+function ItemCard({
+  item,
+  items,
+  setItemsHandler,
+  isModifiable,
+  projects,
+  groups,
+  modifiedItems,
+  setModifiedItemsHandler,
+  unmodifiedItems,
+}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -38,6 +48,10 @@ function ItemCard({ item, items, setItemsHandler, isModifiable, projects }) {
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
               handleClose={handleClose}
+              groups={groups}
+              projects={projects}
+              modifiedItems={modifiedItems}
+              setModifiedItemsHandler={setModifiedItemsHandler}
             />
             <EditItem
               items={items}
@@ -45,8 +59,11 @@ function ItemCard({ item, items, setItemsHandler, isModifiable, projects }) {
               selectedItemforEdit={item}
               setItemsHandler={setItemsHandler}
               isModifiable={isModifiable}
-              projects={projects}
               handleClose={handleClose}
+              groups={groups}
+              modifiedItems={modifiedItems}
+              setModifiedItemsHandler={setModifiedItemsHandler}
+              unmodifiedItems={unmodifiedItems}
             />
           </Typography>
         </Box>

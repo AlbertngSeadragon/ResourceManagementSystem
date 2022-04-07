@@ -100,6 +100,10 @@ export default function App({
         id: data.id,
         start_time: data.start_time,
         bgColor: data.bgColor,
+        projectName: data.title,
+        itemName: data.description,
+        itemType: groups[data.group - 1].title,
+        expense: data.expense,
         description: `${data.title} ${groups[data.group - 1].title} Item: ${
           data.description
         } with expense $${data.expense} is added to ${moment(

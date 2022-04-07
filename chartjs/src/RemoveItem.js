@@ -8,8 +8,10 @@ export default function RemoveItem({
   isModifiable,
   setAnchorEl,
   handleClose,
-  // setModifiedItemsHandler,
-  // modifiedItems,
+  groups,
+  projects,
+  setModifiedItemsHandler,
+  modifiedItems,
 }) {
   const itemRemovefromExpense = () => {
     if (isModifiable) {
@@ -21,17 +23,21 @@ export default function RemoveItem({
           useitems = useitems.filter(
             (item) => item.id !== selectedItemforRemove.id
           );
-          // setModifiedItemsHandler([
-          //   ...modifiedItems,
-          //   {
-          //     action: "Remove",
-          //     group: items[i].group,
-          //     id: items[i].id,
-          //     bgColor: items[i].bgColor,
-          //     start_time: items[i].start_time,
-          //     description: `Item ${items[i].description} is removed.`,
-          //   },
-          // ]);
+          setModifiedItemsHandler([
+            ...modifiedItems,
+            {
+              action: "Remove",
+              group: items[i].group,
+              id: items[i].id,
+              bgColor: items[i].bgColor,
+              projectName: items[i].title,
+              itemName: items[i].description,
+              itemType: groups[items[i].group - 1].title,
+              expense: items[i].expense,
+              start_time: items[i].start_time,
+              // description: `Item ${items[i].description} is removed.`,
+            },
+          ]);
           let j = i;
           //console.log("after", useitems[i].id, selectedItem.id)
           while (j < useitems.length) {

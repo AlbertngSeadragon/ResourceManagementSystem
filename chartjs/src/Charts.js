@@ -146,6 +146,7 @@ function Charts() {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [layout, setLayout] = useState({ balance: 9, memo: 0, form: 3 });
+  const [unmodifiedItems, setUnmodifiedItems] = useState([]);
 
   const [originalProjects, setOriginalProjects] = useState([]);
 
@@ -414,6 +415,7 @@ function Charts() {
   //             ? moment()
   //             : moment(item.start_time.match(/\d{4}-\d{2}-\d{2}/)),
   //       }));
+  //       setUnmodifiedItems(items);
   //       setItems(items);
   //       console.log(items);
   //     })
@@ -471,10 +473,13 @@ function Charts() {
 
   // Use local data
   useEffect(() => {
+    // console.log("trigger setUnmodifiedItems");
+    setUnmodifiedItems(ExpenseItems);
     setItems(ExpenseItems);
     setGroups(ExpenseGroups);
     setProjects(Projects);
   }, []);
+
   useEffect(() => {
     if (isModifiable) {
       setLayout({ balance: 7, memo: 2, form: 3 });
@@ -531,6 +536,7 @@ function Charts() {
               setGroupsHandler={setGroupsHandler}
               setBalanceChartPlotsHandler={setBalanceChartPlotsHandler}
               setModifiedItemsHandler={setModifiedItemsHandler}
+              unmodifiedItems={unmodifiedItems}
             ></ModifiedList>
           </Grid>
         ) : null}
@@ -626,6 +632,8 @@ function Charts() {
           items={items}
           projects={projects}
           setIsOpenHandler={setIsOpenHandler}
+          unmodifiedItems={unmodifiedItems}
+          modifiedItems={modifiedItems}
         ></SubmitBtn>
       </Modal>
 
