@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { updateProjects } from "./services/functions/projectsQuery";
 import { updateExpenseItems } from "./services/functions/expenseItemsQuery";
 import { updateExpenseGroups } from "./services/functions/expenseGroupsQuery";
@@ -16,8 +16,25 @@ function SubmitBtn({
   modifiedItems,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [emailItemList, setEmailItemList] = useState([]);
 
-  const createEmailContent = (modifiedItems) => {
+  const removeDuplicatedEditedItems = (modifiedItems) => {
+    let itemList = [];
+    let idList = [];
+    modifiedItems.forEach((modifiedItem) => {
+      if (idList.includes(modifiedItem.id)) {
+        itemList = itemList.filter((item) => item.id !== modifiedItem.id);
+        itemList.push(modifiedItem);
+      } else {
+        itemList.push(modifiedItem);
+        idList.push(modifiedItem.id);
+      }
+    });
+    console.log("itemList", itemList);
+    return itemList;
+  };
+
+  const createEmailContent = (emailItemList) => {
     const addedItems =
       `<h1>Added items</h1>
     <table style="border: 1px solid;">
@@ -29,7 +46,7 @@ function SubmitBtn({
         <th style="border: 1px solid;">Start Date</th>
         <th style="border: 1px solid;">End Date</th>
       </tr>` +
-      modifiedItems
+      emailItemList
         .filter((item) => item.action === "Add item")
         .map((item) => {
           return `<tr>
@@ -46,12 +63,12 @@ function SubmitBtn({
 
     const editedItems =
       `<h1>Edited items</h1>` +
-      modifiedItems
+      emailItemList
         .filter((item) => item.action === "Edit")
         .map((item, index) => {
-          const unmodifiedItem = unmodifiedItems.filter(
-            (unmodifiedItem) => unmodifiedItem.id === item.id
-          )[0];
+          const unmodifiedItem = JSON.parse(
+            localStorage.getItem("BeforeItems")
+          ).filter((beforeItem) => beforeItem.id === item.id)[0];
           console.log("unmodifiedItem", unmodifiedItem);
           return `
           <h2>${index + 1}</h2>
@@ -110,7 +127,7 @@ function SubmitBtn({
         <th style="border: 1px solid;">Start Date</th>
         <th style="border: 1px solid;">End Date</th>
       </tr>` +
-      modifiedItems
+      emailItemList
         .filter((item) => item.action === "Remove")
         .map((item) => {
           return `<tr>
@@ -131,13 +148,18 @@ function SubmitBtn({
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    await sendEmail({ content: createEmailContent(modifiedItems) });
+    await sendEmail({ content: createEmailContent(emailItemList) });
     await updateExpenseItems(items);
     await updateProjects(projects);
     await updateExpenseGroups(groups);
     setIsLoading(false);
     setIsOpenHandler(false);
   };
+
+  useEffect(() => {
+    console.log("emailItemList", removeDuplicatedEditedItems(modifiedItems));
+    setEmailItemList(removeDuplicatedEditedItems(modifiedItems));
+  }, [modifiedItems]);
 
   return (
     <>

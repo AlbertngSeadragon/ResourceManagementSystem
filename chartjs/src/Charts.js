@@ -184,6 +184,9 @@ function Charts() {
           return { ...item, title: item.title + " (original)" };
         })
       );
+      localStorage.setItem("BeforeItems", JSON.stringify(items));
+      localStorage.setItem("BeforeGroups", JSON.stringify(groups));
+      localStorage.setItem("BeforeProjects", JSON.stringify(projects));
     } else {
       setProjects(
         projects.filter((project) => {
@@ -194,9 +197,6 @@ function Charts() {
       setOriginalProjects([]);
     }
 
-    localStorage.setItem("BeforeItems", JSON.stringify(items));
-    localStorage.setItem("BeforeGroups", JSON.stringify(groups));
-    localStorage.setItem("BeforeProjects", JSON.stringify(projects));
     //console.log("HandelModify", JSON.stringify(projects));
     //setBeforeModifiedItems(items);
     //setBeforeModifiedGroups(groups);
