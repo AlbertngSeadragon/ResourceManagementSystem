@@ -33,7 +33,8 @@ limiter = Limiter(
 #     return 'Cant Retrieve other projects'
 
 @app.route("/getexpensegroups", methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+# @limiter.limit("1/minute")
+@limiter.limit("1/second")
 @cross_origin()
 def getexpensegroups():
     if request.method == 'GET':
@@ -41,7 +42,8 @@ def getexpensegroups():
     return 'Cant Retrieve expnese groups'
 
 @app.route("/getprojects", methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+# @limiter.limit("1/minute")
+@limiter.limit("1/second")
 @cross_origin()
 def getprojects():
     if request.method == 'GET':
@@ -49,7 +51,8 @@ def getprojects():
     return 'Cant Retrieve projects'
 
 @app.route("/getexpenseitems", methods=['GET', 'POST'])
-@limiter.limit("1/minute")
+# @limiter.limit("1/minute")
+@limiter.limit("1/second")
 @cross_origin()
 def getexpenseitems():
     if request.method == 'GET':
