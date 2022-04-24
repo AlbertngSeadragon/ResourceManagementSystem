@@ -1,4 +1,66 @@
-@host = https://9ynao8frph.execute-api.us-east-1.amazonaws.com/dev
+@host = https://tcoosqlt0j.execute-api.us-east-1.amazonaws.com/dev
 
 ### 
-GET {{host}}/getexpenseitems
+POST {{host}}/updateExpenseItems
+Content-Type: application/json
+
+{
+    "ExpenseItems":[
+        {
+            "id": 1,
+            "group": 3,
+            "title": "Graph Database Storage Design",
+            "start_time": "moment("2015-09-01")",
+            "end_time": "moment("2015-09-01")",
+            "bgColor": "rgb(54, 162, 235)",
+            "expense": 150000,
+            "description": "ACM/IEEE Design Automation Conference",
+            "isWhatIF": false,
+        },
+        {
+            "id": 2,
+            "group": 5,
+            "title": "Graph Database Storage Design",
+            "start_time": "moment("2016-12-01")",
+            "end_time": "moment("2020-12-01")",
+            "bgColor": "rgb(54, 162, 235)",
+            "expense": 480000,
+            "description": "Research Student: Albert",
+            "isWhatIF": false,
+        },
+        {
+            "id": 3,
+            "group": 2,
+            "title": "Graph Database Storage Design",
+            "start_time": "moment("2018-03-01")",
+            "end_time":"moment("2018-03-01")",
+            "bgColor": "rgb(54, 162, 235)",
+            "expense": 300000,
+            "description": "Server purchasement",
+            "isWhatIF": false,
+        },
+        {
+            "id": 4,
+            "group": 4,
+            "title": "Optimizations for Distributed Data Analytics in Cloud Environment",
+            "start_time": "moment("2020-09-01")",
+            "end_time": "moment("2022-09-01")",
+            "bgColor": "rgb(255, 99, 132)",
+            "expense": 240000,
+            "description": "Research Student: Timmy",
+            "isWhatIF": false,
+        },
+
+        {
+            "id": 5,
+            "group": 2,
+            "title": "Optimizations for Distributed Data Analytics in Cloud Environment",
+            "start_time": "moment("2022-09-01")",
+            "end_time": "moment("2022-09-01")",
+            "bgColor": "rgb(255, 99, 132)",
+            "expense": 500000,
+            "description": "EC2 fee",
+            "isWhatIF": false,
+        }
+  ]
+}

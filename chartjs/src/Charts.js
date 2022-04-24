@@ -401,57 +401,57 @@ function Charts() {
   }
 
   // Use server data
-  useEffect(async () => {
-    await getExpenseItems()
-      .then((res) => {
-        let items = res.data.ExpenseItems.map((item) => ({
-          ...item,
-          end_time:
-            item.end_time === "moment()"
-              ? moment()
-              : moment(item.end_time.match(/\d{4}-\d{2}-\d{2}/)),
-          start_time:
-            item.start_time === "moment()"
-              ? moment()
-              : moment(item.start_time.match(/\d{4}-\d{2}-\d{2}/)),
-        }));
-        setUnmodifiedItems(items);
-        setItems(items);
-        console.log(items);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    await getExpenseGroups()
-      .then((res) => {
-        setGroups(res.data.ExpenseGroups);
-        console.log(res.data.ExpenseGroups);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    await getProjects()
-      .then((res) => {
-        let projects = res.data.Projects.map((project) => ({
-          ...project,
-          end_time:
-            project.end_time === "moment()"
-              ? moment()
-              : moment(project.end_time.match(/\d{4}-\d{2}-\d{2}/)),
-          start_time:
-            project.start_time === "moment()"
-              ? moment()
-              : moment(project.start_time.match(/\d{4}-\d{2}-\d{2}/)),
-        }));
-        setProjects(projects);
-        // console.log(projects);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // setBalanceChartPlots(balanceChartPlotsGenerator());
-    // console.log("triggered");
-  }, []);
+  // useEffect(async () => {
+  //   await getExpenseItems()
+  //     .then((res) => {
+  //       let items = res.data.ExpenseItems.map((item) => ({
+  //         ...item,
+  //         end_time:
+  //           item.end_time === "moment()"
+  //             ? moment()
+  //             : moment(item.end_time.match(/\d{4}-\d{2}-\d{2}/)),
+  //         start_time:
+  //           item.start_time === "moment()"
+  //             ? moment()
+  //             : moment(item.start_time.match(/\d{4}-\d{2}-\d{2}/)),
+  //       }));
+  //       setUnmodifiedItems(items);
+  //       setItems(items);
+  //       console.log(items);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   await getExpenseGroups()
+  //     .then((res) => {
+  //       setGroups(res.data.ExpenseGroups);
+  //       console.log(res.data.ExpenseGroups);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   await getProjects()
+  //     .then((res) => {
+  //       let projects = res.data.Projects.map((project) => ({
+  //         ...project,
+  //         end_time:
+  //           project.end_time === "moment()"
+  //             ? moment()
+  //             : moment(project.end_time.match(/\d{4}-\d{2}-\d{2}/)),
+  //         start_time:
+  //           project.start_time === "moment()"
+  //             ? moment()
+  //             : moment(project.start_time.match(/\d{4}-\d{2}-\d{2}/)),
+  //       }));
+  //       setProjects(projects);
+  //       // console.log(projects);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   // setBalanceChartPlots(balanceChartPlotsGenerator());
+  //   // console.log("triggered");
+  // }, []);
 
   // useEffect(() => {
   //   let newSet = new Set(items.map((item) => item.title));
@@ -472,13 +472,13 @@ function Charts() {
   // }, [items]);
 
   // Use local data
-  // useEffect(() => {
-  //   // console.log("trigger setUnmodifiedItems");
-  //   setUnmodifiedItems(ExpenseItems);
-  //   setItems(ExpenseItems);
-  //   setGroups(ExpenseGroups);
-  //   setProjects(Projects);
-  // }, []);
+  useEffect(() => {
+    // console.log("trigger setUnmodifiedItems");
+    setUnmodifiedItems(ExpenseItems);
+    setItems(ExpenseItems);
+    setGroups(ExpenseGroups);
+    setProjects(Projects);
+  }, []);
 
   useEffect(() => {
     if (isModifiable) {
