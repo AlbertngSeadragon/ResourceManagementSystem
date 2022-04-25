@@ -6,13 +6,6 @@ import * as RiIcons from "react-icons/ri";
 
 export const SidebarData = [
   {
-    title: "Home",
-    path: "/home",
-    icon: <AiIcons.AiFillHome></AiIcons.AiFillHome>,
-    cName: "nav-text",
-  },
-
-  {
     title: "Charts",
     path: "/charts",
     icon: <AiIcons.AiOutlineLineChart></AiIcons.AiOutlineLineChart>,
@@ -30,13 +23,6 @@ export const SidebarData = [
     title: "Settings",
     path: "/settings",
     icon: <IoIcons.IoMdSettings></IoIcons.IoMdSettings>,
-    cName: "nav-text",
-  },
-
-  {
-    title: "Log out",
-    path: "/",
-    icon: <AiIcons.AiOutlineLogout></AiIcons.AiOutlineLogout>,
     cName: "nav-text",
   },
 ];

@@ -5,19 +5,26 @@ import Home from "./Home";
 import Account from "./Account";
 import Settings from "./Settings";
 import Charts from "./Charts";
+import Signup from "./Signup";
+import Login from "./Login";
+import { AuthProvider } from "./contexts/AuthContext";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar></Navbar>
-        <Switch>
-          <Route path="/" exact component={Home}></Route>
-          <Route path="/home" component={Home}></Route>
-          <Route path="/charts" component={Charts}></Route>
-          <Route path="/account" component={Account}></Route>
-          <Route path="/settings" component={Settings}></Route>
-        </Switch>
+        <AuthProvider>
+          <Navbar></Navbar>
+          <Switch>
+            <PrivateRoute path="/" exact component={Charts}></PrivateRoute>
+            <PrivateRoute path="/charts" component={Charts}></PrivateRoute>
+            <PrivateRoute path="/account" component={Account}></PrivateRoute>
+            <PrivateRoute path="/settings" component={Settings}></PrivateRoute>
+            <Route path="/signup" component={Signup}></Route>
+            <Route path="/login" component={Login}></Route>
+          </Switch>
+        </AuthProvider>
       </Router>
     </div>
   );

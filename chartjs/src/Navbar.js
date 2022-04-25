@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
+import { useAuth } from "./contexts/AuthContext";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
+  const history = useHistory();
+  const { logout } = useAuth();
   const showSidebar = () => {
     setSidebar(!sidebar);
   };
+
+  async function handleLogout() {
+    await logout();
+    history.push("./login");
+  }
+
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -36,6 +45,12 @@ function Navbar() {
                 </li>
               );
             })}
+            <li key={4} className="nav-text" onClick={handleLogout}>
+              <Link to="#">
+                <AiIcons.AiOutlineLogout></AiIcons.AiOutlineLogout>
+                <span>Log out</span>
+              </Link>
+            </li>
           </ul>
         </nav>
       </IconContext.Provider>
