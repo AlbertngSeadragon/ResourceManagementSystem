@@ -148,10 +148,10 @@ function SubmitBtn({
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    await sendEmail({ content: createEmailContent(emailItemList) });
-    await updateExpenseItems(items);
-    await updateProjects(projects);
-    await updateExpenseGroups(groups);
+    // await sendEmail({ content: createEmailContent(emailItemList) });
+    // await updateExpenseItems(items);
+    // await updateProjects(projects);
+    // await updateExpenseGroups(groups);
     setIsLoading(false);
     setIsOpenHandler(false);
   };
